@@ -37,12 +37,13 @@ public class AklToussaintHeuristic implements Algorithm {
                 maxCoordSum = point;
             }
             // minimum and maximum differences of x- and y-coordinates
+            // TODO: a-b or |a-b| or ||a|-|b|| or something else?
             if (minCoordDiff == null
-                    || Math.abs(point.getX() - point.getY()) < Math.abs(minCoordDiff.getX() - minCoordDiff.getY())) {
+                    || point.getX() - point.getY() < minCoordDiff.getX() - minCoordDiff.getY()) {
                 minCoordDiff = point;
             }
             if (maxCoordDiff == null
-                    || Math.abs(point.getX() - point.getY()) > Math.abs(maxCoordDiff.getX() - maxCoordDiff.getY())) {
+                    || point.getX() - point.getY() > maxCoordDiff.getX() - maxCoordDiff.getY()) {
                 maxCoordDiff = point;
             }
         }

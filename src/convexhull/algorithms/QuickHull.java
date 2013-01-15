@@ -1,6 +1,6 @@
 package convexhull.algorithms;
 
-import java.awt.geom.Point2D.Double;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class QuickHull implements Algorithm {
 
     @Override
-    public ArrayList<Double> useAlgorithm(ArrayList<Double> points) {
+    public ArrayList<Point2D.Double> useAlgorithm(ArrayList<Point2D.Double> points) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
