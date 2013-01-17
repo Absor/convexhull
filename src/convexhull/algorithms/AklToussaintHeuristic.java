@@ -1,18 +1,21 @@
 package convexhull.algorithms;
 
+import convexhull.datastructures.LinkedList;
+import convexhull.datastructures.LinkedListNode;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 public class AklToussaintHeuristic implements Algorithm {
 
     @Override
-    public ArrayList<Point2D.Double> useAlgorithm(ArrayList<Point2D.Double> points) {
+    public LinkedList useAlgorithm(LinkedList points) {
         Point2D.Double minX = null, maxX = null,
                 minY = null, maxY = null,
                 minCoordSum = null, maxCoordSum = null,
                 minCoordDiff = null, maxCoordDiff = null;
 
-        for (Point2D.Double point : points) {
+        LinkedListNode node = points.getHead();
+        while(node != null) {
+            Point2D.Double point = node.getPoint();
             // minimum and maximum x value
             if (minX == null || point.getX() < minX.getX()) {
                 minX = point;
@@ -46,6 +49,7 @@ public class AklToussaintHeuristic implements Algorithm {
                     || point.getX() - point.getY() > maxCoordDiff.getX() - maxCoordDiff.getY()) {
                 maxCoordDiff = point;
             }
+            node = node.getNext();
         }
         
         System.out.println(minX + "\n" + maxX + "\n" + minY + "\n" + maxY + "\n" + minCoordSum + "\n" + maxCoordSum + "\n" + minCoordDiff + "\n" + maxCoordDiff);

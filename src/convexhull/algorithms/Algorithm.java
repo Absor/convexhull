@@ -1,7 +1,6 @@
 package convexhull.algorithms;
 
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import convexhull.datastructures.LinkedList;
 
 /**
  *
@@ -9,5 +8,5 @@ import java.util.ArrayList;
  */
 public interface Algorithm {
 
-    public ArrayList<Point2D.Double> useAlgorithm(ArrayList<Point2D.Double> points);
+    public LinkedList useAlgorithm(LinkedList points);
 }

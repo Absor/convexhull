@@ -5,11 +5,12 @@ import convexhull.algorithms.Algorithm;
 import convexhull.algorithms.GiftWrapping;
 import convexhull.algorithms.GrahamScan;
 import convexhull.algorithms.QuickHull;
+import convexhull.datastructures.LinkedList;
+import convexhull.datastructures.LinkedListNode;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ConvexHull {
      */
     public static void main(String[] args) {
         // parsing
-        ArrayList<Point2D.Double> points;
+        LinkedList points;
         try {
             points = parseFile(args[0]);
         } catch (Exception ex) {
@@ -64,12 +65,16 @@ public class ConvexHull {
         }
 
         // for testing
-        System.out.println(points);
+        LinkedListNode node = points.getHead();
+        while (node != null) {
+            System.out.println(node.getPoint());
+            node = node.getNext();
+        }
     }
 
-    private static ArrayList<Point2D.Double> parseFile(String pathname) throws Exception {
+    private static LinkedList parseFile(String pathname) throws Exception {
         File file = new File(pathname);
-        ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
+        LinkedList points = new LinkedList();
 
         // open file
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -85,7 +90,7 @@ public class ConvexHull {
                 double y = Double.parseDouble(split[1]);
                 Point2D.Double newPoint = new Point2D.Double(x, y);
                 // add to list
-                points.add(newPoint);
+                points.insert(newPoint);
             }
         }
         // close file

@@ -1,8 +1,9 @@
 package convexhull.algorithms;
 
+import convexhull.datastructures.LinkedList;
+import convexhull.datastructures.LinkedListNode;
 import convexhull.main.ConvexHull;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 /**
  *
@@ -11,17 +12,20 @@ import java.util.ArrayList;
 public class GiftWrapping implements Algorithm {
 
     @Override
-    public ArrayList<Point2D.Double> useAlgorithm(ArrayList<Point2D.Double> points) {
+    public LinkedList useAlgorithm(LinkedList points) {
         // Find the point with minimum x coordinate: O(n).
         Point2D.Double minXPoint = null;
-        for (Point2D.Double point : points) {
+        LinkedListNode node = points.getHead();
+        while (node != null) {
+            Point2D.Double point = node.getPoint();
             if (minXPoint == null || point.getX() < minXPoint.getX()) {
                 minXPoint = point;
             }
+            node = node.getNext();
         }
 
-        ArrayList<Point2D.Double> hullPoints = new ArrayList<Point2D.Double>();
-        hullPoints.add(minXPoint);
+        LinkedList hullPoints = new LinkedList();
+        hullPoints.insert(minXPoint);
 
         Point2D.Double endPoint = minXPoint;
         Point2D.Double newEndPoint = null;
@@ -34,9 +38,11 @@ public class GiftWrapping implements Algorithm {
         // Run time is O(n*h).
         do {
             // initial candidate for new end point
-            newEndPoint = points.get(0);
-            for (int i = 1; i < points.size(); i++) {
-                Point2D.Double temp = points.get(i);
+            LinkedListNode current = points.getHead();
+            newEndPoint = current.getPoint();
+            current = current.getNext();
+            while(current != null) {    
+                Point2D.Double temp = current.getPoint();
                 // Area of triangle P0:endPoint P1:newEndPoint P2:temp is
                 // (1/2) * det([[x0, x1, x2], [y0, y1, y2], [1, 1, 1]]).
                 // 
@@ -56,9 +62,10 @@ public class GiftWrapping implements Algorithm {
                 if (triangleArea > 0) {
                     newEndPoint = temp;
                 }
+                current = current.getNext();
             }
             // Add to hull points and update end point.
-            hullPoints.add(newEndPoint);
+            hullPoints.insert(newEndPoint);
             endPoint = newEndPoint;
         } while (!endPoint.equals(minXPoint));
 
