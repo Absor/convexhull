@@ -1,1 +1,5 @@
 Ongelma: akl-toussaintissa "minimum and maximum differences of x- and y-coordinates": a-b vai |a-b| vai ||a|-|b|| vai jotain muuta?
+
+Edistyminen: Gift Wrapping algo saatu toimimaan (luultavasti).
+
+Seuraavaksi: akl-toussaint loppuun ja graham scannin aloitus. LinkedList pitää saada hieman parempaan kuntoon.
