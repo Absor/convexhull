@@ -1,5 +1,6 @@
 package convexhull.algorithms;
 
+import convexhull.main.ConvexHull;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -20,11 +21,13 @@ public class GiftWrapping implements Algorithm {
         }
 
         ArrayList<Point2D.Double> hullPoints = new ArrayList<Point2D.Double>();
-
         hullPoints.add(minXPoint);
 
         Point2D.Double endPoint = minXPoint;
         Point2D.Double newEndPoint = null;
+
+        // Algorithm run timer
+        ConvexHull.startTimer();
 
         // Do until hull closes, that is, for all hull points: O(h).
         // Inner loop checks every point of the set: O(n).
@@ -58,6 +61,8 @@ public class GiftWrapping implements Algorithm {
             hullPoints.add(newEndPoint);
             endPoint = newEndPoint;
         } while (!endPoint.equals(minXPoint));
+
+        System.out.println("Gift Wrapping algorithm ran in " + ConvexHull.stopTimer() + "ns.");
 
         return hullPoints;
     }
