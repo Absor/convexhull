@@ -9,8 +9,10 @@ import convexhull.datastructures.LinkedList;
 import convexhull.datastructures.LinkedListNode;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 /**
  *
@@ -21,7 +23,7 @@ public class ConvexHull {
     private static long startTime;
 
     /**
-     * 
+     *
      * @param args Requires arguments in order: filename at/noat algorithm
      */
     public static void main(String[] args) {
@@ -30,7 +32,7 @@ public class ConvexHull {
         try {
             points = parseFile(args[0]);
         } catch (Exception ex) {
-            System.out.println("Error handling file: " + ex);
+            System.out.println("Error handling input file: " + ex);
             return;
         }
 
@@ -64,16 +66,15 @@ public class ConvexHull {
             return;
         }
 
-        // for testing
-        LinkedListNode node = points.getHead();
-        while (node != null) {
-            System.out.println(node.getPoint());
-            node = node.getNext();
+        try {
+            saveToFile(args[3], points);
+        } catch (Exception ex) {
+            System.out.println("Error handling output file: " + ex);
         }
     }
 
-    private static LinkedList parseFile(String pathname) throws Exception {
-        File file = new File(pathname);
+    private static LinkedList parseFile(String filename) throws Exception {
+        File file = new File(filename);
         LinkedList points = new LinkedList();
 
         // open file
@@ -97,6 +98,25 @@ public class ConvexHull {
         br.close();
 
         return points;
+    }
+
+    private static void saveToFile(String filename, LinkedList points) throws Exception {
+        File file = new File(filename);
+
+        // open file
+        BufferedWriter vw = new BufferedWriter(new FileWriter(file));
+
+        // write to file
+        LinkedListNode node = points.getHead();
+        while (node != null) {
+            Point2D.Double point = node.getPoint();
+            vw.append(point.getX() + " " + point.getY());
+            vw.newLine();
+            node = node.getNext();
+        }
+        
+        // close file
+        vw.close();
     }
 
     public static void startTimer() {
