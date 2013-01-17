@@ -26,6 +26,9 @@ public class GiftWrapping implements Algorithm {
         Point2D.Double endPoint = minXPoint;
         Point2D.Double newEndPoint = null;
 
+        // Do until hull closes, that is, for all hull points: O(h).
+        // Inner loop checks every point of the set: O(n).
+        // Run time is O(n*h).
         do {
             // initial candidate for new end point
             newEndPoint = points.get(0);
@@ -54,7 +57,7 @@ public class GiftWrapping implements Algorithm {
             // Add to hull points and update end point.
             hullPoints.add(newEndPoint);
             endPoint = newEndPoint;
-        } while (!endPoint.equals(minXPoint)); // Do until hull closes.
+        } while (!endPoint.equals(minXPoint));
 
         return hullPoints;
     }
