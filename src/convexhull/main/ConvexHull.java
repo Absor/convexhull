@@ -2,6 +2,7 @@ package convexhull.main;
 
 import convexhull.algorithms.AklToussaintHeuristic;
 import convexhull.algorithms.Algorithm;
+import convexhull.algorithms.GiftWrapping;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,10 +24,17 @@ public class ConvexHull {
         ArrayList<Point2D.Double> points = parseFile(args[0]);
         
         // use akl-toussaint (argument)
-        Algorithm akltoussaint = new AklToussaintHeuristic();
-        points = akltoussaint.useAlgorithm(points);
+//        Algorithm akltoussaint = new AklToussaintHeuristic();
+//        points = akltoussaint.useAlgorithm(points);
         
         // use the chosen algorithm (argument)
+        
+        // gift wrapping
+        Algorithm giftWrapping = new GiftWrapping();
+        points = giftWrapping.useAlgorithm(points);
+        
+        // for testing
+        System.out.println(points);
     }
 
     private static ArrayList<Point2D.Double> parseFile(String pathname) {
