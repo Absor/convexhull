@@ -82,13 +82,13 @@ public class LinkedListTest {
     /**
      * Test of mergeSort method, of class LinkedList.
      */
-    @Test
-    public void testMergeSort() {
-        System.out.println("mergeSort");
-        Comparator<Double> comp = null;
-        LinkedList instance = new LinkedList();
-        instance.mergeSort(comp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    @Test
+//    public void testMergeSort() {
+//        System.out.println("mergeSort");
+//        Comparator<Double> comp = null;
+//        LinkedList instance = new LinkedList();
+//        instance.mergeSort(comp);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 }
