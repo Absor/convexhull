@@ -73,7 +73,7 @@ public class ConvexHull {
         }
     }
 
-    private static LinkedList parseFile(String filename) throws Exception {
+    public static LinkedList parseFile(String filename) throws Exception {
         File file = new File(filename);
         LinkedList points = new LinkedList();
 
@@ -96,11 +96,11 @@ public class ConvexHull {
         }
         // close file
         br.close();
-
+        
         return points;
     }
 
-    private static void saveToFile(String filename, LinkedList points) throws Exception {
+    public static void saveToFile(String filename, LinkedList points) throws Exception {
         File file = new File(filename);
 
         // open file
@@ -120,11 +120,11 @@ public class ConvexHull {
     }
 
     public static void startTimer() {
-        startTime = System.nanoTime();
+        startTime = System.currentTimeMillis();
     }
 
     public static long stopTimer() {
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         return endTime - startTime;
     }
 }

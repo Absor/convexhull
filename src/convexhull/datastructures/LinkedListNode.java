@@ -25,6 +25,6 @@ public class LinkedListNode {
     }
 
     public Point2D.Double getPoint() {
-        return point;
+        return this.point;
     }
 }
