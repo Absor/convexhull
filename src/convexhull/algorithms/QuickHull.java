@@ -54,11 +54,6 @@ public class QuickHull implements Algorithm {
         }
         System.out.println("Iterating..");
 
-        node = positive.getHead();
-        while (node != null) {
-            System.out.println("(" + node.getPoint().getX() + "," + node.getPoint().getY() + ")");
-            node = node.getNext();
-        }
 
         LinkedList pos = iterate(positive);
         //if(true) return pos;
@@ -77,15 +72,11 @@ public class QuickHull implements Algorithm {
     private Double checkRotation(Point2D.Double A, Point2D.Double B, Point2D.Double P) {
 
         return (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()));
-        /*+ B.getX() * P.getY()
-         + P.getX() * B.getY()
-         - P.getX() * A.getY()
-         - A.getX() * B.getY()
-         - B.getX() * P.getY());*/
+
     }
 
     private LinkedList iterate(LinkedList points) {
-        System.out.println(points.getLength());
+       //System.out.println(points.getLength());
         LinkedListNode head = points.getHead();
         if (points.getLength() <3 ) { // || head.getNext() == null || head.getNext().getNext() == null) {
             return new LinkedList();
@@ -133,7 +124,7 @@ public class QuickHull implements Algorithm {
             if (checkRotation(A, P, current.getPoint()) > 0) {
                 positive.insert(current.getPoint());
             }
-            if (checkRotation(B, P, current.getPoint()) > 0) {
+            if (checkRotation(P, B, current.getPoint()) > 0) {
                 negative.insert(current.getPoint());
             }
             current = current.getNext();
