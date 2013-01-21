@@ -18,7 +18,7 @@ public class QuickHull implements Algorithm {
         LinkedListNode node = points.getHead();
         while (node != null) { // Find the points with the smallest and greatest X coordinates
             current = node.getPoint();
-            if (minX == null || minX.getX() < current.getX()) {
+            if (minX == null || minX.getX() > current.getX()) {
                 minX = current;
             }
             if (maxX == null || maxX.getX() < current.getX()) {
@@ -42,8 +42,10 @@ public class QuickHull implements Algorithm {
         System.out.println("Found Min and Max X.");
         while (node != null) { // iterate over all points and split them
             sign = checkRotation(minX, maxX, node.getPoint());
+            System.out.println(sign);
             if (sign < 0) {
                 negative.insert(node.getPoint());
+
             }
             if (sign > 0) {
                 positive.insert(node.getPoint());
@@ -51,7 +53,15 @@ public class QuickHull implements Algorithm {
             node = node.getNext();
         }
         System.out.println("Iterating..");
+
+        node = positive.getHead();
+        while (node != null) {
+            System.out.println("(" + node.getPoint().getX() + "," + node.getPoint().getY() + ")");
+            node = node.getNext();
+        }
+
         LinkedList pos = iterate(positive);
+        //if(true) return pos;
         if (pos != null) {
             node = pos.getHead();
         }
@@ -66,18 +76,19 @@ public class QuickHull implements Algorithm {
 
     private Double checkRotation(Point2D.Double A, Point2D.Double B, Point2D.Double P) {
 
-        return (A.getX() * B.getY()
-                + B.getX() * P.getY()
-                + P.getX() * B.getY()
-                - P.getX() * A.getY()
-                - A.getX() * B.getY()
-                - B.getX() * P.getY());
+        return (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()));
+        /*+ B.getX() * P.getY()
+         + P.getX() * B.getY()
+         - P.getX() * A.getY()
+         - A.getX() * B.getY()
+         - B.getX() * P.getY());*/
     }
 
     private LinkedList iterate(LinkedList points) {
+        System.out.println(points.getLength());
         LinkedListNode head = points.getHead();
-        if (head == null || head.getNext() == null || head.getNext().getNext() == null) {
-            return null;
+        if (points.getLength() <3 ) { // || head.getNext() == null || head.getNext().getNext() == null) {
+            return new LinkedList();
         }
         Point2D.Double A = head.getPoint();
         Point2D.Double B = head.getNext().getPoint();
@@ -85,26 +96,30 @@ public class QuickHull implements Algorithm {
         LinkedListNode current;
         LinkedList negative = new LinkedList();
         LinkedList positive = new LinkedList();
-        LinkedList result = new LinkedList();
+
         current = head;
         double dist;
         double maxDist = 0;
         double sign;
-       // P = null;
+        // P = null;
 
         // Find a point from the inserted list that has the maximum distance from the line AB
         P = A;
+        //  System.out.println("A (" + A.getX() + "," + A.getY() + ")  B (" + B.getX() + "," + B.getY() + ")");
         while (current != null) {
+
             tempPoint = current.getPoint();
-            double normalLength = Math.hypot(B.getX() - A.getX(), B.getY() - A.getY());
-            dist = Math.abs((tempPoint.getX() - A.getX()) * (B.getY() - A.getY()) - (tempPoint.getY() - A.getY()) * (B.getX() - A.getX())) / normalLength;
+            //System.out.println("Iterating over (" + tempPoint.getX() + "," + tempPoint.getY() + ")");
+            //double normalLength = Math.hypot(B.getX() - A.getX(), B.getY() - A.getY());
+            dist = Math.abs((tempPoint.getX() - A.getX()) * (B.getY() - A.getY()) - (tempPoint.getY() - A.getY()) * (B.getX() - A.getX())); // normalLength;
             current = current.getNext();
             if (maxDist < dist) {
                 maxDist = dist;
                 P = tempPoint;
             }
         }
-        System.out.println("max dist: " + maxDist + " - P X coordinate: " + P.getX());
+
+        //System.out.println("max dist: " + maxDist + " - P X coordinate: " + P.getX());
         // Triangle ABP is the pivot triangle; lines AP and BP divide the dataset
         // P is part of the convex hull
 
@@ -131,19 +146,23 @@ public class QuickHull implements Algorithm {
         LinkedList res2 = iterate(negative);
 
         // Merge results..
-
+        
+        LinkedList result = new LinkedList();
+        
         result.insert(A);
         current = res1.getHead();
         while (current != null) {
             result.insert(current.getPoint());
             current = current.getNext();
         }
+        
+        result.insert(B);
         current = res2.getHead();
         while (current != null) {
             result.insert(current.getPoint());
             current = current.getNext();
         }
-        result.insert(B);
+        
         return result;
     }
 }
