@@ -10,6 +10,11 @@ import java.awt.geom.Point2D;
  */
 public class QuickHull implements Algorithm {
 
+    /**
+     *
+     * @param points
+     * @return
+     */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
         Point2D.Double minX = null;

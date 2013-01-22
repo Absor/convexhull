@@ -8,5 +8,10 @@ import convexhull.datastructures.LinkedList;
  */
 public interface Algorithm {
 
+    /**
+     *
+     * @param points
+     * @return
+     */
     public LinkedList useAlgorithm(LinkedList points);
 }

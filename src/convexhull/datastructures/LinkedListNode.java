@@ -16,14 +16,26 @@ public class LinkedListNode {
         this.next = null;
     }
 
+    /**
+     *
+     * @return
+     */
     public LinkedListNode getNext() {
         return this.next;
     }
 
+    /**
+     *
+     * @param next
+     */
     public void setNext(LinkedListNode next) {
         this.next = next;
     }
 
+    /**
+     *
+     * @return
+     */
     public Point2D.Double getPoint() {
         return this.point;
     }

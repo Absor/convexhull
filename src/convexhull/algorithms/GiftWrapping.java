@@ -11,6 +11,11 @@ import java.awt.geom.Point2D;
  */
 public class GiftWrapping implements Algorithm {
 
+    /**
+     *
+     * @param points    set of points to run the algorithm on
+     * @return          convex hull points
+     */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
         // Algorithm run timer

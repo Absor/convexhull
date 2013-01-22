@@ -4,8 +4,17 @@ import convexhull.datastructures.LinkedList;
 import convexhull.datastructures.LinkedListNode;
 import java.awt.geom.Point2D;
 
+/**
+ *
+ * @author
+ */
 public class AklToussaintHeuristic implements Algorithm {
 
+    /**
+     *
+     * @param points    set of points to run the algorithm on
+     * @return          points remaining in set after running the heuristic
+     */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
         Point2D.Double minX = null, maxX = null,

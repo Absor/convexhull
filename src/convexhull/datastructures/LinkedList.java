@@ -13,12 +13,19 @@ public class LinkedList {
     private LinkedListNode tail;
     private int length;
 
+    /**
+     *
+     */
     public LinkedList() {
         this.head = null;
         this.tail = null;
         this.length = 0;
     }
 
+    /**
+     *
+     * @param point
+     */
     public void insert(Point2D.Double point) {
         if (this.tail == null) {
             this.head = new LinkedListNode(point);
@@ -30,10 +37,18 @@ public class LinkedList {
         length++;
     }
 
+    /**
+     *
+     * @return
+     */
     public LinkedListNode getHead() {
         return this.head;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLength() {
         return this.length;
     }

@@ -18,21 +18,36 @@ import static org.junit.Assert.*;
  */
 public class AlgorithmTest {
     
+    /**
+     *
+     */
     public AlgorithmTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -52,8 +67,16 @@ public class AlgorithmTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class AlgorithmImpl implements Algorithm {
 
+        /**
+         *
+         * @param points
+         * @return
+         */
         public LinkedList useAlgorithm(LinkedList points) {
             return null;
         }
