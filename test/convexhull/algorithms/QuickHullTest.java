@@ -78,7 +78,7 @@ public class QuickHullTest {
         // algorithm results
         LinkedList algoResult = quickAlgo.useAlgorithm(input);
 
-        if (Helper.setsMatch(result, algoResult)) {
+        if (!Helper.setsMatch(result, algoResult)) {
             fail("Algorithm returns wrong result.");
         }
     }

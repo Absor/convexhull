@@ -78,7 +78,7 @@ public class GiftWrappingTest {
         // algorithm results
         LinkedList algoResult = giftAlgo.useAlgorithm(input);
 
-        if (Helper.setsMatch(result, algoResult)) {
+        if (!Helper.setsMatch(result, algoResult)) {
             fail("Algorithm returns wrong result.");
         }
     }

@@ -10,6 +10,8 @@ import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -68,6 +70,25 @@ public class Helper {
                 return false;
             }
             node1 = node1.getNext();
+        }
+        return true;
+    }
+    
+    // checks that two lists have the same points and in same order
+    public static boolean sameOrder(LinkedList list1, ArrayList<Point2D.Double> list2) {
+        // if the lengths don't match
+        if (list1.getLength() != list2.size()) {
+            return false;
+        }
+        
+        // go through the lists
+        LinkedListNode list1Node = list1.getHead();
+        for (Point2D.Double point2 : list2) {
+            // compare all points: if not the same, return false
+            if (!list1Node.getPoint().equals(point2)) {
+                return false;
+            }
+            list1Node = list1Node.getNext();
         }
         return true;
     }

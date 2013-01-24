@@ -56,14 +56,30 @@ public class GrahamScanTest {
      * Test of useAlgorithm method, of class GrahamScan.
      */
     @Test
-    public void testUseAlgorithm() {
+     public void testUseAlgorithm() {
         System.out.println("useAlgorithm");
-        LinkedList points = null;
-        GrahamScan instance = new GrahamScan();
-        LinkedList expResult = null;
-        LinkedList result = instance.useAlgorithm(points);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // input set
+        LinkedList input = null;
+        try {
+            input = Helper.parseFile("testfile");
+        } catch (Exception ex) {
+            fail("Could not parse input file.");
+        }
+        // known results
+        LinkedList result = null;
+        try {
+            result = Helper.parseFile("testresult");
+        } catch (Exception ex) {
+            fail("Could not parse result file.");
+        }
+
+        GrahamScan grahamAlgo = new GrahamScan();
+
+        // algorithm results
+        LinkedList algoResult = grahamAlgo.useAlgorithm(input);
+
+        if (!Helper.setsMatch(result, algoResult)) {
+            fail("Algorithm returns wrong result.");
+        }
     }
 }

@@ -4,9 +4,8 @@ import java.awt.geom.Point2D;
 import java.util.Comparator;
 
 /**
- * The "container" for a singly linked list that holds Point2D.Double
- * objects.
- * 
+ * The "container" for a singly linked list that holds Point2D.Double objects.
+ *
  * @author Heikki Haapala
  */
 public class LinkedList {
@@ -14,11 +13,12 @@ public class LinkedList {
     private LinkedListNode head = null;
     private LinkedListNode tail = null;
     private int length = 0;
+    private Comparator<Point2D.Double> comparator = null;
 
     /**
      * Adds a single Point2D.Double to the end of the linked list.
      *
-     * @param point     the point to be inserted into the linked list
+     * @param point the point to be inserted into the linked list
      */
     public void insert(Point2D.Double point) {
         if (this.tail == null) {
@@ -37,8 +37,8 @@ public class LinkedList {
 
     /**
      * Returns the first node of the linked list.
-     * 
-     * @return  the first node in the linked list
+     *
+     * @return the first node in the linked list
      */
     public LinkedListNode getHead() {
         return this.head;
@@ -46,59 +46,84 @@ public class LinkedList {
 
     /**
      * Returns how many nodes are in the linked list.
-     * 
-     * @return  the number of nodes in the list
+     *
+     * @return the number of nodes in the list
      */
     public int getLength() {
         return this.length;
     }
-    
-    public void sort(Comparator<Point2D.Double> comp) {
-        
+
+    /**
+     * Sorts the list using recursive merge sort.
+     *
+     * @param comparator comparator to use when sorting
+     */
+    public void sort(Comparator<Point2D.Double> comparator) {
+        this.comparator = comparator;
+        this.head = mergeSort(this.head);
+        this.comparator = null;
     }
 
-    private void mergeSort() {
+    private LinkedListNode mergeSort(LinkedListNode head) {
         // no sorting if list is empty or has only one node
-        if (this.head == null || this.head.getNext() == null) {
-            return;
+        if (head == null || head.getNext() == null) {
+            return head;
         }
         //get the middle of the list
-        LinkedListNode middle = getMiddle();
+        LinkedListNode middle = getMiddle(head);
         //split the list into two halfs
         LinkedListNode otherHalf = middle.getNext();
         middle.setNext(null);
 
         // recursive sorting
-//        return merge(merge_sort(head), merge_sort(otherHalf));
+        return merge(mergeSort(head), mergeSort(otherHalf));
     }
 
-//    //Merge subroutine to merge two sorted lists
-//    private LinkedList merge(Node a, Node b) {
-//        Node dummyHead, curr;
-//        dummyHead = new Node();
-//        curr = dummyHead;
-//        while (a != null && b != null) {
-//            if (a.info <= b.info) {
-//                curr.next = a;
-//                a = a.next;
-//            } else {
-//                curr.next = b;
-//                b = b.next;
-//            }
-//            curr = curr.next;
-//        }
-//        curr.next = (a == null) ? b : a;
-//        return dummyHead.next;
-//    }
+    //Merge subroutine to merge two sorted lists
+    private LinkedListNode merge(LinkedListNode a, LinkedListNode b) {
+        // start node
+        LinkedListNode current = null;
+        if (comparator.compare(a.getPoint(), b.getPoint()) <= 0) {
+            current = a;
+            a = a.getNext();
+        } else {
+            current = b;
+            b = b.getNext();
+        }
+        
+        // remember the head
+        LinkedListNode first = current;
 
-    // finds the middle element of the list for splitting
-    private LinkedListNode getMiddle() {
-        if (this.getHead() == null) {
-            return this.getHead();
+        // repeat until one of the lists ends
+        while (a != null && b != null) {
+            if (comparator.compare(a.getPoint(), b.getPoint()) <= 0) {
+                current.setNext(a);
+                a = a.getNext();
+            } else {
+                current.setNext(b);
+                b = b.getNext();
+            }
+            current = current.getNext();
+        }
+        
+        // add the rest of the other list to the end
+        if (a == null) {
+            current.setNext(b);
+        } else {
+            current.setNext(a);
+        }
+        
+        return first;
+    }
+
+    // finds the middle element of the node list for splitting
+    private LinkedListNode getMiddle(LinkedListNode head) {
+        if (head == null) {
+            return head;
         }
         LinkedListNode slow, fast;
-        slow = this.getHead();
-        fast = this.getHead();
+        slow = head;
+        fast = head;
         while (fast.getNext() != null && fast.getNext().getNext() != null) {
             slow = slow.getNext();
             fast = fast.getNext().getNext();

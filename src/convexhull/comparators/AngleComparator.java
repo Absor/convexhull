@@ -8,9 +8,13 @@ import java.util.Comparator;
  * @author Heikki Haapala
  */
 public class AngleComparator implements Comparator<Point2D.Double> {
-    
+
     private Point2D.Double refPoint;
 
+    /**
+     *
+     * @param refPoint
+     */
     public AngleComparator(Point2D.Double refPoint) {
         this.refPoint = refPoint;
     }
@@ -23,6 +27,7 @@ public class AngleComparator implements Comparator<Point2D.Double> {
      */
     @Override
     public int compare(Point2D.Double point1, Point2D.Double point2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO
+        return (int) (point1.getX()-point2.getX());
     }
 }
