@@ -5,15 +5,20 @@ import convexhull.datastructures.LinkedList;
 import java.awt.geom.Point2D;
 
 /**
+ * 
+ * Class for QuickHull algo
+ * Wikipedia: Quick Hull is a method of computing the convex hull of a finite set of points in the plane.
+ * It uses a divide and conquer approach similar to that of QuickSort, which its name derives from. Its average case complexity is considered to be O(n * log(n)), whereas in the worst case it takes O(n2) (quadratic).
  *
  * @author Aleksi Markkanen
  */
 public class QuickHull implements Algorithm {
 
     /**
-     *
-     * @param points
-     * @return
+     *Runs a QuickHull algorithm on the input points.
+     * 
+     * @param points Set of points whose convex hull needs to be computed
+     * @return Points that constitute the convex hull of the input set
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
@@ -73,13 +78,25 @@ public class QuickHull implements Algorithm {
         return neg;
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+/**
+ * Takes three points and returns their orientation w.r. each other
+ * @param A First point
+ * @param B Second point
+ * @param P Third point
+ * @return Value is negative if points are given in clockwise orientation, positive if counter-clockwise and zero if the points lie on the same line
+ */
     private Double checkRotation(Point2D.Double A, Point2D.Double B, Point2D.Double P) {
 
         return (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()));
 
     }
-
+/**
+ * Method takes as input points. First two, A and B, are parts of the convex hull. 
+ * Then we find a point P = argmax(dist(AB,P)). P is now a part of the convex hull.
+ * Then the data set is split and iterate calls itself recursively until the points are exhausted. 
+ * @param points Input points
+ * @return Convex hull of the inputted list of points
+ */
     private LinkedList iterate(LinkedList points) {
        //System.out.println(points.getLength());
         LinkedListNode head = points.getHead();
