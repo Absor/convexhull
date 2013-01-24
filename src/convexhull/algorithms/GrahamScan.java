@@ -3,6 +3,7 @@ package convexhull.algorithms;
 import convexhull.comparators.AngleComparator;
 import convexhull.datastructures.LinkedList;
 import convexhull.datastructures.LinkedListNode;
+import convexhull.main.ConvexHull;
 import java.awt.geom.Point2D;
 
 /**
@@ -18,12 +19,20 @@ public class GrahamScan implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
+        // run timer
+        ConvexHull.startTimer();
+        
         // find point with minimum y-coordinate O(n)
         Point2D.Double minYPoint = findMinY(points);
         // create comparator with the min y point as reference
         AngleComparator angleComparator = new AngleComparator(minYPoint);
         // sort points with merge sort O(n*log n)
         points.sort(angleComparator);
+        
+        //TODO algorithm itself
+        
+        // stop timer
+        System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");
         
         return points;
     }

@@ -1,11 +1,21 @@
 DONE:
 Gift Wrapping
+LinkedList
 Merge sort for linked list
-+ tests for them
++ testit
 
 TODO:
 Akl-Toussaint
 Graham Scan
 QuickHull
 AngleComparator
-+ tests for them
++ testit
+
+Olemme päässeet jo eroon Javan tietorakenteista, vain algoritmitoteutukset ovat
+kesken ja näitä hitaasti hiotaankin toimiviksi. Akl-Toussaint taitaa jäädä
+muiden algojen jälkeen toteutettavaksi.
+
+Tällä viikolla meni paljon aikaa testien toteutukseen ja JavaDocin
+kunnostukseen, pitäisi olla kunnossa ainakin toteutettujen luokkien osalta.
+
+Suurempia ongelmia ei ole.
