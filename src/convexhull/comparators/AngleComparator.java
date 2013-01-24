@@ -8,6 +8,12 @@ import java.util.Comparator;
  * @author Heikki Haapala
  */
 public class AngleComparator implements Comparator<Point2D.Double> {
+    
+    private Point2D.Double refPoint;
+
+    public AngleComparator(Point2D.Double refPoint) {
+        this.refPoint = refPoint;
+    }
 
     /**
      *

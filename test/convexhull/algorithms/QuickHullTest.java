@@ -64,14 +64,14 @@ public class QuickHullTest {
         // input set
         LinkedList input = null;
         try {
-            input = ConvexHull.parseFile("testfile");
+            input = FileHandler.parseFile("testfile");
         } catch (Exception ex) {
             fail("Could not parse input file.");
         }
         // known results
         LinkedList result = null;
         try {
-            result = ConvexHull.parseFile("testresult");
+            result = FileHandler.parseFile("testresult");
         } catch (Exception ex) {
             fail("Could not parse result file.");
         }

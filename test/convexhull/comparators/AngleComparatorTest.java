@@ -60,10 +60,10 @@ public class AngleComparatorTest {
         System.out.println("compare");
         Double point1 = null;
         Double point2 = null;
-        AngleComparator instance = new AngleComparator();
+//        AngleComparator instance = new AngleComparator();
         int expResult = 0;
-        int result = instance.compare(point1, point2);
-        assertEquals(expResult, result);
+//        int result = instance.compare(point1, point2);
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

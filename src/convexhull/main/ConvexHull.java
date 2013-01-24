@@ -27,6 +27,13 @@ public class ConvexHull {
      * @param args Requires arguments in order: filename at/noat algorithm
      */
     public static void main(String[] args) {
+        // if not all arguments are present, don't do anything
+        if (args.length < 4) {
+            // TODO message
+            System.out.println("Not all parameters set.");
+            return;
+        }
+        
         // parsing
         LinkedList points;
         try {
@@ -79,7 +86,7 @@ public class ConvexHull {
      * @return
      * @throws Exception
      */
-    public static LinkedList parseFile(String filename) throws Exception {
+    private static LinkedList parseFile(String filename) throws Exception {
         File file = new File(filename);
         LinkedList points = new LinkedList();
 
@@ -112,7 +119,7 @@ public class ConvexHull {
      * @param points
      * @throws Exception
      */
-    public static void saveToFile(String filename, LinkedList points) throws Exception {
+    private static void saveToFile(String filename, LinkedList points) throws Exception {
         File file = new File(filename);
 
         // open file
