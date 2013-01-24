@@ -1,5 +1,6 @@
 package convexhull.algorithms;
 
+import convexhull.comparators.AngleComparator;
 import convexhull.datastructures.LinkedList;
 
 /**
@@ -15,6 +16,9 @@ public class GrahamScan implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AngleComparator angleComparator = new AngleComparator(null);
+        points.sort(angleComparator);
+        
+        return null;
     }
 }

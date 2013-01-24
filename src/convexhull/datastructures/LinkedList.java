@@ -52,22 +52,26 @@ public class LinkedList {
     public int getLength() {
         return this.length;
     }
+    
+    public void sort(Comparator<Point2D.Double> comp) {
+        
+    }
 
-//    public void mergeSort(Comparator<Point2D.Double> comp) {
-//        // no sorting if list is empty or has only one node
-//        if (this.head == null || this.head.getNext() == null) {
-//            return;
-//        }
-//        //get the middle of the list
-//        LinkedListNode middle = getMiddle();
-//        //split the list into two halfs
-//        LinkedListNode otherHalf = middle.getNext();
-//        middle.setNext(null);
-//
-//        // recursive sorting
+    private void mergeSort() {
+        // no sorting if list is empty or has only one node
+        if (this.head == null || this.head.getNext() == null) {
+            return;
+        }
+        //get the middle of the list
+        LinkedListNode middle = getMiddle();
+        //split the list into two halfs
+        LinkedListNode otherHalf = middle.getNext();
+        middle.setNext(null);
+
+        // recursive sorting
 //        return merge(merge_sort(head), merge_sort(otherHalf));
-//    }
-//
+    }
+
 //    //Merge subroutine to merge two sorted lists
 //    private LinkedList merge(Node a, Node b) {
 //        Node dummyHead, curr;
@@ -86,18 +90,19 @@ public class LinkedList {
 //        curr.next = (a == null) ? b : a;
 //        return dummyHead.next;
 //    }
-//
-//    //Finding the middle element of the list for splitting
-//    public LinkedListNode getMiddle() {
-//        if (head == null) {
-//            return head;
-//        }
-//        Node slow, fast;
-//        slow = fast = head;
-//        while (fast.next != null && fast.next.next != null) {
-//            slow = slow.next;
-//            fast = fast.next.next;
-//        }
-//        return slow;
-//    }
+
+    // finds the middle element of the list for splitting
+    private LinkedListNode getMiddle() {
+        if (this.getHead() == null) {
+            return this.getHead();
+        }
+        LinkedListNode slow, fast;
+        slow = this.getHead();
+        fast = this.getHead();
+        while (fast.getNext() != null && fast.getNext().getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        return slow;
+    }
 }
