@@ -4,50 +4,50 @@ import java.awt.geom.Point2D;
 import java.util.Comparator;
 
 /**
- *
- * @author
+ * The "container" for a singly linked list that holds Point2D.Double
+ * objects.
+ * 
+ * @author Heikki Haapala
  */
 public class LinkedList {
 
-    private LinkedListNode head;
-    private LinkedListNode tail;
-    private int length;
+    private LinkedListNode head = null;
+    private LinkedListNode tail = null;
+    private int length = 0;
 
     /**
+     * Adds a single Point2D.Double to the end of the linked list.
      *
-     */
-    public LinkedList() {
-        this.head = null;
-        this.tail = null;
-        this.length = 0;
-    }
-
-    /**
-     *
-     * @param point
+     * @param point     the point to be inserted into the linked list
      */
     public void insert(Point2D.Double point) {
         if (this.tail == null) {
+            // if the list is empty make a new node with the point and set it as
+            // the head and tail of the list
             this.head = new LinkedListNode(point);
             this.tail = this.head;
         } else {
+            // if the list is not empty add the node as the next of the last
             this.tail.setNext(new LinkedListNode(point));
+            // and set the added node as the last
             this.tail = this.tail.getNext();
         }
-        length++;
+        this.length++;
     }
 
     /**
-     *
-     * @return
+     * Returns the first node of the linked list.
+     * 
+     * @return  the first node in the linked list
      */
     public LinkedListNode getHead() {
         return this.head;
     }
 
     /**
-     *
-     * @return
+     * Returns how many nodes are in the linked list.
+     * 
+     * @return  the number of nodes in the list
      */
     public int getLength() {
         return this.length;
