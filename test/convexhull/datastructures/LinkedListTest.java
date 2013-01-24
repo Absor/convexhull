@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package convexhull.datastructures;
 
 import convexhull.algorithms.Helper;
@@ -9,9 +5,6 @@ import convexhull.comparators.AngleComparator;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,22 +17,22 @@ import static org.junit.Assert.*;
  * @author Heikki Haapala
  */
 public class LinkedListTest {
-    
+
     public LinkedListTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -112,20 +105,20 @@ public class LinkedListTest {
         AngleComparator comparator = new AngleComparator(new Point2D.Double(0, 0));
         // use the merge sort
         points1.sort(comparator);
-        
+
         // make also an arraylist of the same points
         ArrayList<Point2D.Double> points2 = new ArrayList<Point2D.Double>();
         LinkedListNode node = points1.getHead();
-        while(node != null) {
+        while (node != null) {
             points2.add(node.getPoint());
             node = node.getNext();
         }
-        
+
         // sort the arraylist using the same comparator
         Collections.sort(points2, comparator);
-        
+
         // compare the results
-        if(!Helper.sameOrder(points1, points2)) {
+        if (!Helper.sameOrder(points1, points2)) {
             fail("Sorting returned the list in wrong order.");
         }
     }

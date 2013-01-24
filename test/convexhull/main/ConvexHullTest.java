@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package convexhull.main;
 
 import org.junit.After;
@@ -16,34 +12,34 @@ import static org.junit.Assert.*;
  * @author Heikki Haapala
  */
 public class ConvexHullTest {
-    
+
     /**
      *
      */
     public ConvexHullTest() {
     }
-    
+
     /**
      *
      */
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     /**
      *
      */
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     /**
      *
      */
     @Before
     public void setUp() {
     }
-    
+
     /**
      *
      */

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package convexhull.algorithms;
 
 import convexhull.datastructures.LinkedList;
@@ -11,11 +7,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
+ * Contains utility methods for tests.
  *
- * @author heha
+ * @author Heikki Haapala
  */
 public class Helper {
 
@@ -47,7 +43,7 @@ public class Helper {
         return points;
     }
 
-    // Checks that two linked lists contain same points.
+    // checks that two linked lists contain same points.
     public static boolean setsMatch(LinkedList result1, LinkedList result2) {
         if (result1.getLength() != result2.getLength()) {
             return false;
@@ -73,14 +69,14 @@ public class Helper {
         }
         return true;
     }
-    
+
     // checks that two lists have the same points and in same order
     public static boolean sameOrder(LinkedList list1, ArrayList<Point2D.Double> list2) {
         // if the lengths don't match
         if (list1.getLength() != list2.size()) {
             return false;
         }
-        
+
         // go through the lists
         LinkedListNode list1Node = list1.getHead();
         for (Point2D.Double point2 : list2) {

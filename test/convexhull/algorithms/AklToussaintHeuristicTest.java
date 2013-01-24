@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package convexhull.algorithms;
 
 import convexhull.datastructures.LinkedList;
@@ -17,34 +13,34 @@ import static org.junit.Assert.*;
  * @author Heikki Haapala
  */
 public class AklToussaintHeuristicTest {
-    
+
     /**
      *
      */
     public AklToussaintHeuristicTest() {
     }
-    
+
     /**
      *
      */
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     /**
      *
      */
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     /**
      *
      */
     @Before
     public void setUp() {
     }
-    
+
     /**
      *
      */

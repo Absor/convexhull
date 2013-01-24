@@ -128,6 +128,7 @@ public class LinkedList {
             slow = slow.getNext();
             fast = fast.getNext().getNext();
         }
+        // when fast reaches the end, slow is half way there
         return slow;
     }
 }

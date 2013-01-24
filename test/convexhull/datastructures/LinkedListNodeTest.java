@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package convexhull.datastructures;
 
 import java.awt.geom.Point2D.Double;
@@ -17,34 +13,34 @@ import static org.junit.Assert.*;
  * @author Heikki Haapala
  */
 public class LinkedListNodeTest {
-    
+
     /**
      *
      */
     public LinkedListNodeTest() {
     }
-    
+
     /**
      *
      */
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     /**
      *
      */
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     /**
      *
      */
     @Before
     public void setUp() {
     }
-    
+
     /**
      *
      */
