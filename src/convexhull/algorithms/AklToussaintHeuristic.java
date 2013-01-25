@@ -10,9 +10,9 @@ import java.awt.geom.Point2D;
  * Quote from Wikipedia (http://en.wikipedia.org/wiki/Convex_hull_algorithms)
  * <p>
  * "The following simple heuristic is often used as the first step in
- * implementations of convex hull algorithms to improve their performance. It is
- * based on the efficient convex hull algorithm by Selim Akl and G. T.
- * Toussaint, 1978.
+ * implementations of convex hull algorithms to improve their
+ * performance. It is based on the efficient convex hull algorithm by Selim Akl
+ * and G. T. Toussaint, 1978.
  * <p>
  * The idea is to quickly exclude many points that would not be part of the
  * convex hull anyway. This method is based on the following idea. Find the two
@@ -49,7 +49,7 @@ public class AklToussaintHeuristic implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
-
+        this.setPoints(points);
 
         System.out.println(minX + "\n" + maxX + "\n" + minY + "\n" + maxY + "\n" + minCoordSum + "\n" + maxCoordSum + "\n" + minCoordDiff + "\n" + maxCoordDiff);
 

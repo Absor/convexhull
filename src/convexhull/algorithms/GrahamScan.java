@@ -29,7 +29,7 @@ public class GrahamScan implements Algorithm {
         // sort points with merge sort O(n*log n)
         points.sort(angleComparator);
         
-        //TODO algorithm itself
+        //TODO algorithm itself - minYPoint is ready as the first in list
         
         // stop timer
         System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");
