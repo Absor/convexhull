@@ -4,58 +4,54 @@ import java.awt.geom.Point2D;
 import java.util.Comparator;
 
 /**
+ * Provides comparator for sorting points by their polar angle, in increasing
+ * order.
  *
  * @author Heikki Haapala
  */
 public class AngleComparator implements Comparator<Point2D.Double> {
 
-    private Point2D.Double refPoint;
+    private Point2D.Double pole;
 
     /**
      * Constructor for the class.
      *
-     * @param refPoint the reference point from which the vectors are formed
+     * @param pole the point that will be used as the pole of the polar
+     * coordinates
      */
-    public AngleComparator(Point2D.Double refPoint) {
-        this.refPoint = refPoint;
+    public AngleComparator(Point2D.Double pole) {
+        this.pole = pole;
     }
 
     /**
-     * Points are sorted in increasing order of the angle they and the
-     * point refPoint make with the x-axis.
+     * Comparing method for two points.
      *
      * @param point1 point 1 to compare
      * @param point2 point 2 to compare
-     * @return -1 if angle between refPoint->point1 and x-axis is smaller than
-     *             the angle between refPoint->point2 and x-axis
-     *          1 if it's the other way around and
-     *          0 if the angles are equal
+     * @return -1 if polar angle of point1 is smaller than the polar angle of
+     * point2 1 if it's the other way around and 0 if the angles are equal
      */
     @Override
     public int compare(Point2D.Double point1, Point2D.Double point2) {
-        // these points represent vectors refPoint->point
-        Point2D.Double vector1 = new Point2D.Double(
-                point1.getX() - this.refPoint.getX(),
-                point1.getY() - this.refPoint.getY());
-        Point2D.Double vector2 = new Point2D.Double(
-                point2.getX() - this.refPoint.getX(),
-                point2.getY() - this.refPoint.getY());
-        
-        // rising order of angles
-        double difference = angleWithXAxis(vector1) - angleWithXAxis(vector2);
-                
+        // 
+        double difference = polarAngle(point1) - polarAngle(point2);
+        // rising order of angles     
         if (difference < 0) {
-            // point 1 smaller
+            // point 1 angle smaller
             return -1;
         } else if (difference == 0) {
             return 0;
         }
-        // point 2 smaller
+        // point 2 angle smaller
         return 1;
     }
 
-    // returns angle between vector and x-axis in radians
-    private double angleWithXAxis(Point2D.Double vector) {
-        return Math.atan2(vector.getY(), vector.getX());
+    // returns the polar angle of the point with the predefined point as the
+    // pole
+    private double polarAngle(Point2D.Double point) {
+        Point2D.Double scaledPoint = new Point2D.Double(
+                point.getX() - this.pole.getX(),
+                point.getY() - this.pole.getY());
+        return Math.atan2(scaledPoint.getY(), scaledPoint.getX());
     }
 }

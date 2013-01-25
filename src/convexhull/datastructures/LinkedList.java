@@ -54,6 +54,15 @@ public class LinkedList {
     }
 
     /**
+     * Setter for the length of the list if it needs to be updated manually.
+     * 
+     * @param length the new length
+     */
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    /**
      * Sorts the list using recursive merge sort.
      *
      * @param comparator comparator to use when sorting
@@ -90,7 +99,7 @@ public class LinkedList {
             current = b;
             b = b.getNext();
         }
-        
+
         // remember the head
         LinkedListNode first = current;
 
@@ -105,14 +114,14 @@ public class LinkedList {
             }
             current = current.getNext();
         }
-        
+
         // add the rest of the other list to the end
         if (a == null) {
             current.setNext(b);
         } else {
             current.setNext(a);
         }
-        
+
         return first;
     }
 
