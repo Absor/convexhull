@@ -1,12 +1,10 @@
 package convexhull.comparators;
 
-import java.awt.geom.Point2D.Double;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -53,14 +51,6 @@ public class AngleComparatorTest {
      */
     @Test
     public void testCompare() {
-        System.out.println("compare");
-        Double point1 = null;
-        Double point2 = null;
-//        AngleComparator instance = new AngleComparator();
-        int expResult = 0;
-//        int result = instance.compare(point1, point2);
-//        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // tested in linked list sort test
     }
 }

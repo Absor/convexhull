@@ -1,6 +1,7 @@
 package convexhull.algorithms;
 
 import convexhull.datastructures.LinkedList;
+import java.awt.geom.Point2D;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,13 +55,25 @@ public class AlgorithmTest {
     @Test
     public void testUseAlgorithm() {
         System.out.println("useAlgorithm");
-        LinkedList points = null;
         Algorithm instance = new AlgorithmImpl();
-        LinkedList expResult = null;
+        LinkedList points = new LinkedList();
+        points.insert(new Point2D.Double(1, 2));
         LinkedList result = instance.useAlgorithm(points);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // first implementation should return null
+        assertNull(result);
+    }
+    
+    /**
+     * Test of useAlgorithm method, of class Algorithm.
+     */
+    @Test
+    public void testUseAlgorithm2() {
+        System.out.println("useAlgorithm");
+        Algorithm instance = new AlgorithmImpl2();
+        LinkedList result = instance.useAlgorithm(null);
+        // second implementation should return an empty list
+        assertNull(result.getHead());
+        assertEquals(0, result.getLength());
     }
 
     /**
@@ -75,6 +88,21 @@ public class AlgorithmTest {
          */
         public LinkedList useAlgorithm(LinkedList points) {
             return null;
+        }
+    }
+    
+    /**
+     *
+     */
+    public class AlgorithmImpl2 implements Algorithm {
+
+        /**
+         *
+         * @param points
+         * @return
+         */
+        public LinkedList useAlgorithm(LinkedList points) {
+            return new LinkedList();
         }
     }
 }
