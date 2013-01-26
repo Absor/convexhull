@@ -81,7 +81,7 @@ public class LinkedListTest {
         // empty list length 0
         assertEquals(0, points.getLength());
         try {
-            points = Helper.parseFile("testfile");
+            points = Helper.parseFile("test100");
         } catch (Exception ex) {
             fail("Could not parse input file.");
         }
@@ -97,7 +97,7 @@ public class LinkedListTest {
         System.out.println("sort");
         LinkedList points1 = null;
         try {
-            points1 = Helper.parseFile("testfile");
+            points1 = Helper.parseFile("test100");
         } catch (Exception ex) {
             fail("Could not parse input file.");
         }
@@ -121,5 +121,60 @@ public class LinkedListTest {
         if (!Helper.sameOrder(points1, points2)) {
             fail("Sorting returned the list in wrong order.");
         }
+    }
+
+    /**
+     * Test of sort method, of class LinkedList.
+     */
+    @Test
+    public void testSort2() {
+        System.out.println("sort2");
+        LinkedList points = null;
+        try {
+            points = Helper.parseFile("test100");
+        } catch (Exception ex) {
+            fail("Could not parse input file.");
+        }
+        // create comparator with minimum y point
+        AngleComparator comparator = new AngleComparator(new Point2D.Double(0.4117650626370341, -2.869145785655391));
+        // use the merge sort
+        points.sort(comparator);
+        
+        // check if the list is intanct
+        int length = 1;
+        LinkedListNode head = points.getHead();
+        while (head.getNext() != null) {
+            length++;
+            head = head.getNext();
+        }
+        // when we get to the end, we have to be at the tail node
+        assertEquals("next-links are not intact after sorting.",
+                points.getTail(), head);
+        assertEquals("Sorted list length doesn't match.", length, points.getLength());
+
+        length = 1;
+        LinkedListNode tail = points.getTail();
+        while (tail.getPrev() != null) {
+            length++;
+            tail = tail.getPrev();
+        }
+        // when we get to the beginning, we have to be at the head node
+        assertEquals("prev-links are not intact after sorting.",
+                points.getHead(), tail);
+        assertEquals("Sorted list length doesn't match.", length, points.getLength());
+    }
+
+    /**
+     * Test of setLength method, of class LinkedList.
+     */
+    @Test
+    public void testSetLength() {
+        System.out.println("setLength");
+        LinkedList instance = new LinkedList();
+        // new instance lenght should be zero
+        assertEquals(0, instance.getLength());
+        instance.setLength(10);
+        // should now be 10
+        assertEquals(10, instance.getLength());
     }
 }

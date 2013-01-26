@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.Comparator;
 
 /**
- * The "container" for a singly linked list that holds Point2D.Double objects.
+ * The "container" for a doubly linked list that holds Point2D.Double objects.
  *
  * @author Heikki Haapala
  */
@@ -27,8 +27,12 @@ public class LinkedList {
             this.head = new LinkedListNode(point);
             this.tail = this.head;
         } else {
-            // if the list is not empty add the node as the next of the last
-            this.tail.setNext(new LinkedListNode(point));
+            // if the list is not empty 
+            LinkedListNode newNode = new LinkedListNode(point);
+            // add the node as the next of the last
+            this.tail.setNext(newNode);
+            // tail as the previous of the new node
+            newNode.setPrev(this.tail);
             // and set the added node as the last
             this.tail = this.tail.getNext();
         }
@@ -45,6 +49,33 @@ public class LinkedList {
     }
 
     /**
+     * Sets a new head for the list. For manual list manipulation.
+     *
+     * @param head new head node
+     */
+    public void setHead(LinkedListNode head) {
+        this.head = head;
+    }
+
+    /**
+     * Returns the last node of the linked list.
+     *
+     * @return the first node in the linked list
+     */
+    public LinkedListNode getTail() {
+        return this.tail;
+    }
+
+    /**
+     * Sets a new tail for the list. For manual list manipulation.
+     *
+     * @param tail new tail node
+     */
+    public void setTail(LinkedListNode tail) {
+        this.tail = tail;
+    }
+
+    /**
      * Returns how many nodes are in the linked list.
      *
      * @return the number of nodes in the list
@@ -55,7 +86,7 @@ public class LinkedList {
 
     /**
      * Setter for the length of the list if it needs to be updated manually.
-     * 
+     *
      * @param length the new length
      */
     public void setLength(int length) {
@@ -69,70 +100,91 @@ public class LinkedList {
      */
     public void sort(Comparator<Point2D.Double> comparator) {
         this.comparator = comparator;
-        this.head = mergeSort(this.head);
+        LinkedList sortedList = mergeSort(this);
+        this.head = sortedList.getHead();
+        this.tail = sortedList.getTail();
         this.comparator = null;
     }
 
-    private LinkedListNode mergeSort(LinkedListNode head) {
+    // SORTING HELPER METHODS
+    private LinkedList mergeSort(LinkedList list) {
         // no sorting if list is empty or has only one node
-        if (head == null || head.getNext() == null) {
-            return head;
+        if (list.getHead() == null || list.getHead().getNext() == null) {
+            return list;
         }
         //get the middle of the list
-        LinkedListNode middle = getMiddle(head);
+        LinkedListNode middle = getMiddle(list);
         //split the list into two halfs
         LinkedListNode otherHalf = middle.getNext();
         middle.setNext(null);
+        otherHalf.setPrev(null);
+        // mid as the end of the old list
+        LinkedListNode oldTail = list.getTail();
+        list.setTail(middle);
+        // make a new list of the rest of the split
+        LinkedList newList = new LinkedList();
+        newList.setHead(otherHalf);
+        newList.setTail(oldTail);
 
         // recursive sorting
-        return merge(mergeSort(head), mergeSort(otherHalf));
+        return merge(mergeSort(list), mergeSort(newList));
     }
 
     //Merge subroutine to merge two sorted lists
-    private LinkedListNode merge(LinkedListNode a, LinkedListNode b) {
+    private LinkedList merge(LinkedList a, LinkedList b) {
+        LinkedListNode aNode = a.getHead();
+        LinkedListNode bNode = b.getHead();
+
         // start node
         LinkedListNode current = null;
-        if (comparator.compare(a.getPoint(), b.getPoint()) <= 0) {
-            current = a;
-            a = a.getNext();
+        if (comparator.compare(aNode.getPoint(), bNode.getPoint()) <= 0) {
+            current = aNode;
+            aNode = aNode.getNext();
         } else {
-            current = b;
-            b = b.getNext();
+            current = bNode;
+            bNode = bNode.getNext();
         }
 
-        // remember the head
-        LinkedListNode first = current;
+        // remember the head (reusing a)
+        a.setHead(current);
 
         // repeat until one of the lists ends
-        while (a != null && b != null) {
-            if (comparator.compare(a.getPoint(), b.getPoint()) <= 0) {
-                current.setNext(a);
-                a = a.getNext();
+        while (aNode != null && bNode != null) {
+            if (this.comparator.compare(aNode.getPoint(), bNode.getPoint()) <= 0) {
+                current.setNext(aNode);
+                aNode = aNode.getNext();
             } else {
-                current.setNext(b);
-                b = b.getNext();
+                current.setNext(bNode);
+                bNode = bNode.getNext();
             }
+            // fix the prev-link
+            current.getNext().setPrev(current);
+            // continue
             current = current.getNext();
         }
 
-        // add the rest of the other list to the end
-        if (a == null) {
-            current.setNext(b);
+        // add the rest of the other list to the end and set the end node
+        if (aNode == null) {
+            current.setNext(bNode);
+            a.setTail(b.getTail());
         } else {
-            current.setNext(a);
+            current.setNext(aNode);
+            // no need to change tail
         }
+        // fix the prev-link
+        current.getNext().setPrev(current);
 
-        return first;
+        return a;
     }
 
     // finds the middle element of the node list for splitting
-    private LinkedListNode getMiddle(LinkedListNode head) {
-        if (head == null) {
-            return head;
+    private LinkedListNode getMiddle(LinkedList list) {
+        if (list.getHead() == null) {
+            return null;
         }
         LinkedListNode slow, fast;
-        slow = head;
-        fast = head;
+        slow = list.getHead();
+        fast = list.getHead();
         while (fast.getNext() != null && fast.getNext().getNext() != null) {
             slow = slow.getNext();
             fast = fast.getNext().getNext();
