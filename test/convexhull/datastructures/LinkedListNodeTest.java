@@ -88,4 +88,31 @@ public class LinkedListNodeTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getPrev method, of class LinkedListNode.
+     */
+    @Test
+    public void testGetPrev() {
+        System.out.println("getPrev");
+        LinkedListNode instance = null;
+        LinkedListNode expResult = null;
+        LinkedListNode result = instance.getPrev();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPrev method, of class LinkedListNode.
+     */
+    @Test
+    public void testSetPrev() {
+        System.out.println("setPrev");
+        LinkedListNode prev = null;
+        LinkedListNode instance = null;
+        instance.setPrev(prev);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

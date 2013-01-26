@@ -177,4 +177,44 @@ public class LinkedListTest {
         // should now be 10
         assertEquals(10, instance.getLength());
     }
+
+    /**
+     * Test of setHead method, of class LinkedList.
+     */
+    @Test
+    public void testSetHead() {
+        System.out.println("setHead");
+        LinkedListNode head = null;
+        LinkedList instance = new LinkedList();
+        instance.setHead(head);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTail method, of class LinkedList.
+     */
+    @Test
+    public void testGetTail() {
+        System.out.println("getTail");
+        LinkedList instance = new LinkedList();
+        LinkedListNode expResult = null;
+        LinkedListNode result = instance.getTail();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTail method, of class LinkedList.
+     */
+    @Test
+    public void testSetTail() {
+        System.out.println("setTail");
+        LinkedListNode tail = null;
+        LinkedList instance = new LinkedList();
+        instance.setTail(tail);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }
