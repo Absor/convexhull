@@ -28,13 +28,27 @@ public class GrahamScan implements Algorithm {
         AngleComparator angleComparator = new AngleComparator(minYPoint);
         // sort points with merge sort O(n*log n)
         points.sort(angleComparator);
-
+        
         //TODO algorithm itself - minYPoint is ready as the first in list
-        LinkedListNode node = points.getHead().getNext();
-        while (node != null) {
-            Point2D.Double point = node.getPoint();
-            
-            node = node.getNext();
+        LinkedListNode mNode = points.getHead().getNext();
+        LinkedListNode iNode = mNode.getNext();
+        while (iNode != null) {
+            Point2D.Double point1 = mNode.getPrev().getPoint();
+            Point2D.Double point2 = mNode.getPoint();
+            Point2D.Double point3 = iNode.getPoint();
+            while (triangleArea(point1, point2, point3) <= 0) {
+                if (mNode.getPrev() != null) {
+                    mNode = mNode.getPrev();
+                    point1 = mNode.getPrev().getPoint();
+                    point2 = mNode.getPoint();
+                } else if (iNode == null) {
+                    break;
+                } else {
+                    iNode = iNode.getNext();
+                    point3 = iNode.getPoint();
+                }
+            }
+            mNode = mNode.getNext();
         }
 
         // stop timer
