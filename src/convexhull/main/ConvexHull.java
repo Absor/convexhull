@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  *
@@ -24,59 +25,115 @@ public class ConvexHull {
 
     /**
      *
-     * @param args Requires arguments in order: filename at/noat algorithm
+     * @param args Requires arguments in order: infile at/noat algorithm outfile
      */
     public static void main(String[] args) {
-        // if not all arguments are present, don't do anything
-        if (args.length < 4) {
-            // TODO message
-            System.out.println("Not all parameters set.");
-            return;
-        }
-        
-        // parsing
-        LinkedList points;
-        try {
-            points = parseFile(args[0]);
-        } catch (Exception ex) {
-            System.out.println("Error handling input file: " + ex);
-            return;
-        }
+        LinkedList points = null;
 
-        // Akl-Toussaint heuristic
-        if (args[1].equals("at")) {
-            System.out.println("Using Akl-Toussaint.");
-            Algorithm akltoussaint = new AklToussaintHeuristic();
-            points = akltoussaint.useAlgorithm(points);
-        } else if (args[1].equals("noat")) {
-            System.out.println("Not using Akl-Toussaint.");
+        Scanner in = new Scanner(System.in);
+        String input;
+        boolean ok = false;
+
+        if (args.length >= 1) {
+            input = args[0];
         } else {
-            System.out.println("Bad argument: " + args[1]);
-            return;
+            input = "";
         }
 
-        // use the chosen algorithm
-        if (args[2].equals("gift")) {
-            System.out.println("Using Gift Wrapping algorithm.");
-            Algorithm giftWrapping = new GiftWrapping();
-            points = giftWrapping.useAlgorithm(points);
-        } else if (args[2].equals("quick")) {
-            System.out.println("Using QuickHull algorithm.");
-            Algorithm quickHull = new QuickHull();
-            points = quickHull.useAlgorithm(points);
-        } else if (args[2].equals("graham")) {
-            System.out.println("Using Graham Scan algorithm.");
-            Algorithm grahamScan = new GrahamScan();
-            points = grahamScan.useAlgorithm(points);
+        while (!ok) {
+            // parsing
+            try {
+                points = parseFile(input);
+                ok = true;
+            } catch (Exception ex) {
+                System.out.println("Could not read input file. Filename was: \"" + input + "\"");
+                System.out.print("Input a filename to open: ");
+                input = in.nextLine();
+            }
+            System.out.println();
+        }
+
+        if (args.length >= 2) {
+            input = args[1];
         } else {
-            System.out.println("Bad argument: " + args[2]);
-            return;
+            input = "";
+        }
+        ok = false;
+
+        while (!ok) {
+            // Akl-Toussaint heuristic
+            if (input.equals("at")) {
+                System.out.println("Using Akl-Toussaint heuristic.");
+                Algorithm akltoussaint = new AklToussaintHeuristic();
+                points = akltoussaint.useAlgorithm(points);
+                ok = true;
+            } else if (input.equals("noat")) {
+                System.out.println("Not using Akl-Toussaint heuristic.");
+                ok = true;
+            } else {
+                System.out.println("Bad argument: \"" + input + "\"");
+                System.out.println("Valid arguments:");
+                System.out.println("at : use Akl-Toussaint heuristic.");
+                System.out.println("noat : don't use Akl-Toussaint heuristic.");
+                System.out.print("Input new argument: ");
+                input = in.nextLine();
+            }
+            System.out.println();
         }
 
-        try {
-            saveToFile(args[3], points);
-        } catch (Exception ex) {
-            System.out.println("Error handling output file: " + ex);
+        if (args.length >= 3) {
+            input = args[2];
+        } else {
+            input = "";
+        }
+        ok = false;
+
+        while (!ok) {
+            // use the chosen algorithm
+            if (input.equals("gift")) {
+                System.out.println("Using Gift Wrapping algorithm.");
+                Algorithm giftWrapping = new GiftWrapping();
+                points = giftWrapping.useAlgorithm(points);
+                ok = true;
+            } else if (input.equals("quick")) {
+                System.out.println("Using QuickHull algorithm.");
+                Algorithm quickHull = new QuickHull();
+                points = quickHull.useAlgorithm(points);
+                ok = true;
+            } else if (input.equals("graham")) {
+                System.out.println("Using Graham scan algorithm.");
+                Algorithm grahamScan = new GrahamScan();
+                points = grahamScan.useAlgorithm(points);
+                ok = true;
+            } else {
+                System.out.println("Bad argument: \"" + input + "\"");
+                System.out.println("Valid arguments:");
+                System.out.println("gift : use Gift Wrapping algorithm.");
+                System.out.println("quick : use QuickHull algorithm.");
+                System.out.println("graham : use Graham scan algorithm.");
+                System.out.print("Input new argument: ");
+                input = in.nextLine();
+            }
+            System.out.println();
+        }
+
+        if (args.length >= 4) {
+            input = args[3];
+        } else {
+            input = "";
+        }
+        ok = false;
+
+        while (!ok) {
+            try {
+                saveToFile(input, points);
+                ok = true;
+            } catch (Exception ex) {
+                System.out.println("Could not write to output file. Filename was: \"" + input + "\"");
+                System.out.print("Input a new filename: ");
+                input = in.nextLine();
+            }
+            System.out.println();
         }
     }
 
@@ -109,7 +166,7 @@ public class ConvexHull {
         }
         // close file
         br.close();
-        
+
         return points;
     }
 
@@ -133,7 +190,7 @@ public class ConvexHull {
             vw.newLine();
             node = node.getNext();
         }
-        
+
         // close file
         vw.close();
     }

@@ -7,3 +7,4 @@
 ### Viikkoraportit
 * [viikko1](convexhull/blob/master/viikkoraportit/viikko1)
 * [viikko2](convexhull/blob/master/viikkoraportit/viikko2)
+* [viikko2](convexhull/blob/master/viikkoraportit/viikko3)
