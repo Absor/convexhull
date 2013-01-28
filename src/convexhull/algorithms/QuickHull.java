@@ -2,6 +2,7 @@ package convexhull.algorithms;
 
 import convexhull.datastructures.LinkedListNode;
 import convexhull.datastructures.LinkedList;
+import convexhull.main.ConvexHull;
 import java.awt.geom.Point2D;
 
 /**
@@ -24,6 +25,7 @@ public class QuickHull implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
+        ConvexHull.startTimer();
         Point2D.Double minX = null;
         Point2D.Double maxX = null;
         Point2D.Double current = null;
@@ -77,6 +79,7 @@ public class QuickHull implements Algorithm {
         // Insert the first point as the last, thus closing the polygon.
         // This is in compliance with the Matlab output of the convex hull.
         neg.insert(neg.getHead().getPoint());
+        System.out.println("Algorithm ran in " + ConvexHull.stopTimer() + "ms");
         return neg;
 
     }
