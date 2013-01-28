@@ -25,7 +25,10 @@ public class ConvexHull {
 
     /**
      *
-     * @param args Requires arguments in order: infile at/noat algorithm outfile
+     * @param args[0] input filename
+     * @param args[1] at or noat to choose whether to use the Akl-Toussaint
+     * @param args[2] algorithm chooser string (gift/quick/graham)
+     * @param args[3] output filename or print to print to console
      */
     public static void main(String[] args) {
         LinkedList points = null;
@@ -125,13 +128,24 @@ public class ConvexHull {
         ok = false;
 
         while (!ok) {
-            try {
-                saveToFile(input, points);
+            if (!input.equals("print")) {
+                try {
+                    saveToFile(input, points);
+                    ok = true;
+                } catch (Exception ex) {
+                    System.out.println("Could not write to output file. Filename was: \"" + input + "\"");
+                    System.out.print("Input a new filename or print to print to console: ");
+                    input = in.nextLine();
+                }
+            } else {
+                System.out.println("Printing hull points to console (x y).");
+                LinkedListNode node = points.getHead();
+                while(node != null) {
+                    Point2D.Double point = node.getPoint();
+                    System.out.println(point.getX() + " " + point.getY());
+                    node = node.getNext();
+                }
                 ok = true;
-            } catch (Exception ex) {
-                System.out.println("Could not write to output file. Filename was: \"" + input + "\"");
-                System.out.print("Input a new filename: ");
-                input = in.nextLine();
             }
             System.out.println();
         }
