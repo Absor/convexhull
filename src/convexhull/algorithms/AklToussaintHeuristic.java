@@ -43,7 +43,7 @@ public class AklToussaintHeuristic implements Algorithm {
 
         ConvexHull.startTimer();
 
-        LinkedList octagonPoints = this.setPoints(points);
+        LinkedList octagonPoints = this.octagonPoints(points);
 
         // need at least a triangle to remove points
         if (octagonPoints.getLength() < 3) {
@@ -90,63 +90,34 @@ public class AklToussaintHeuristic implements Algorithm {
     }
 
     // Helper method for finding the points needed.
-    private LinkedList setPoints(LinkedList points) {
+    private LinkedList octagonPoints(LinkedList points) {
         // array for points, indexes:
         // 0 = min(x), 1 = min(x-y), 2 = max(y), 3 = max(x+y)
         // 4 = max(x), 5 = max(x-y), 6 = min(y), 7 = min(x+y)
         Point2D.Double[] octagonPoints = new Point2D.Double[8];
         LinkedListNode node = points.getHead();
+        // array indexes to first point
+        presetArray(octagonPoints, node.getPoint());
+        node = node.getNext();
         while (node != null) {
             Point2D.Double point = node.getPoint();
             // minimum and maximum x value
-            if (octagonPoints[0] == null || point.getX() < octagonPoints[0].getX()) {
-                octagonPoints[0] = point;
-            }
-            if (octagonPoints[4] == null || point.getX() > octagonPoints[4].getX()) {
-                octagonPoints[4] = point;
-            }
+            octagonPoints[0] = minXPoint(point, octagonPoints[0]);
+            octagonPoints[4] = maxXPoint(point, octagonPoints[4]);
             // minimum and maximum y value
-            if (octagonPoints[6] == null || point.getY() < octagonPoints[6].getY()) {
-                octagonPoints[6] = point;
-            }
-            if (octagonPoints[2] == null || point.getY() > octagonPoints[2].getY()) {
-                octagonPoints[2] = point;
-            }
+            octagonPoints[6] = minYPoint(point, octagonPoints[6]);
+            octagonPoints[2] = maxYPoint(point, octagonPoints[2]);;
             // minimum and maximum sum of coordinates
-            if (octagonPoints[7] == null
-                    || point.getX() + point.getY() < octagonPoints[7].getX() + octagonPoints[7].getY()) {
-                octagonPoints[7] = point;
-            }
-            if (octagonPoints[3] == null
-                    || point.getX() + point.getY() > octagonPoints[3].getX() + octagonPoints[3].getY()) {
-                octagonPoints[3] = point;
-            }
+            octagonPoints[7] = minCoordSum(point, octagonPoints[7]);
+            octagonPoints[3] = maxCoordSum(point, octagonPoints[3]);
             // minimum and maximum differences of x- and y-coordinates
-            if (octagonPoints[1] == null
-                    || point.getX() - point.getY() < octagonPoints[1].getX() - octagonPoints[1].getY()) {
-                octagonPoints[1] = point;
-            }
-            if (octagonPoints[5] == null
-                    || point.getX() - point.getY() > octagonPoints[5].getX() - octagonPoints[5].getY()) {
-                octagonPoints[5] = point;
-            }
+            octagonPoints[1] = minCoordDiff(point, octagonPoints[1]);
+            octagonPoints[5] = maxCoordDiff(point, octagonPoints[5]);
             node = node.getNext();
         }
 
         // add points to list in order and delete duplicates
-        LinkedList newList = new LinkedList();
-        newList.insert(octagonPoints[0]);
-        LinkedListNode last = newList.getHead();
-        for (int i = 1; i < 8; i++) {
-            if (!octagonPoints[i].equals(last.getPoint())) {
-                newList.insert(octagonPoints[i]);
-                last = last.getNext();
-            }
-        }
-
-        newList.insert(newList.getHead().getPoint());
-
-        return newList;
+        return linkedListFromArray(octagonPoints);
     }
 
     /*
@@ -167,5 +138,97 @@ public class AklToussaintHeuristic implements Algorithm {
                 - p1.getX() * p0.getY()
                 - p0.getX() * p2.getY());
         return triangleArea;
+    }
+
+    // turns array of points to linked list of points without doubles except the
+    // first and the last point
+    private LinkedList linkedListFromArray(Point2D.Double[] points) {
+        LinkedList newList = new LinkedList();
+        newList.insert(points[0]);
+        LinkedListNode current = newList.getHead();
+        for (int i = 1; i < 8; i++) {
+            if (!points[i].equals(current.getPoint())) {
+                newList.insert(points[i]);
+                current = current.getNext();
+            }
+        }
+        newList.insert(newList.getHead().getPoint());
+        return newList;
+    }
+    
+    // sets all array indexes to given point
+    private Point2D.Double[] presetArray(Point2D.Double[] array, Point2D.Double point) {
+        for(int i = 0; i < array.length; i++) {
+            array[i] = point;
+        }
+        return array;
+    }
+
+    // return the point with lesser x coordinate
+    private Point2D.Double minXPoint(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getX() < point2.getX()) {
+            return point1;
+        }
+        return point2;
+    }
+
+    // return the point with greater x coordinate
+    private Point2D.Double maxXPoint(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getX() > point2.getX()) {
+            return point1;
+        }
+        return point2;
+    }
+
+    // return the point with lesser y coordinate
+    private Point2D.Double minYPoint(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getY() < point2.getY()) {
+            return point1;
+        }
+        return point2;
+    }
+
+    // return the point with greater y coordinate
+    private Point2D.Double maxYPoint(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getY() > point2.getY()) {
+            return point1;
+        }
+        return point2;
+    }
+
+    // return the point with lesser sum of coordinates
+    private Point2D.Double minCoordSum(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getX() + point1.getY() < point2.getX() + point2.getY()) {
+            return point1;
+        } else {
+            return point2;
+        }
+    }
+
+    // return the point with greater sum of coordinates
+    private Point2D.Double maxCoordSum(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getX() + point1.getY() > point2.getX() + point2.getY()) {
+            return point1;
+        } else {
+            return point2;
+        }
+    }
+    
+     // return the point with lesser difference of coordinates
+    private Point2D.Double minCoordDiff(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getX() - point1.getY() < point2.getX() - point2.getY()) {
+            return point1;
+        } else {
+            return point2;
+        }
+    }
+
+    // return the point with greater difference of coordinates
+    private Point2D.Double maxCoordDiff(Point2D.Double point1, Point2D.Double point2) {
+        if (point1.getX() - point1.getY() > point2.getX() - point2.getY()) {
+            return point1;
+        } else {
+            return point2;
+        }
     }
 }
