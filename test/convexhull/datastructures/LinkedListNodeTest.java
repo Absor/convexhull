@@ -1,5 +1,6 @@
 package convexhull.datastructures;
 
+import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -54,12 +55,13 @@ public class LinkedListNodeTest {
     @Test
     public void testGetNext() {
         System.out.println("getNext");
-        LinkedListNode instance = null;
-        LinkedListNode expResult = null;
-        LinkedListNode result = instance.getNext();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LinkedListNode instance = new LinkedListNode(new Point2D.Double(1, 2));
+        // next should be null for a new node
+        assertNull(instance.getNext());
+        // add a node as next and check if it actually got there
+        LinkedListNode next = new LinkedListNode(new Point2D.Double(2, 3));
+        instance.setNext(next);
+        assertEquals(next, instance.getNext());
     }
 
     /**
@@ -68,11 +70,16 @@ public class LinkedListNodeTest {
     @Test
     public void testSetNext() {
         System.out.println("setNext");
-        LinkedListNode next = null;
-        LinkedListNode instance = null;
+        LinkedListNode instance = new LinkedListNode(new Point2D.Double(1, 2));
+        // next should be null for a new node
+        assertNull(instance.getNext());
+        // add a node as next and check if it actually got there
+        LinkedListNode next = new LinkedListNode(new Point2D.Double(2, 3));
         instance.setNext(next);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(next, instance.getNext());
+        // null as next and test
+        instance.setNext(null);
+        assertNull(instance.getNext());
     }
 
     /**
@@ -81,12 +88,14 @@ public class LinkedListNodeTest {
     @Test
     public void testGetPoint() {
         System.out.println("getPoint");
-        LinkedListNode instance = null;
-        Double expResult = null;
-        Double result = instance.getPoint();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // create a point and a node with the point
+        Point2D.Double point = new Point2D.Double(1, 2);
+        LinkedListNode instance = new LinkedListNode(point);
+        // check if the point is in the node
+        assertEquals(point, instance.getPoint());
+        // node with null point and assert
+        instance = new LinkedListNode(null);
+        assertNull(instance.getPoint());
     }
 
     /**
@@ -95,12 +104,13 @@ public class LinkedListNodeTest {
     @Test
     public void testGetPrev() {
         System.out.println("getPrev");
-        LinkedListNode instance = null;
-        LinkedListNode expResult = null;
-        LinkedListNode result = instance.getPrev();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LinkedListNode instance = new LinkedListNode(new Point2D.Double(1, 2));
+        // prev should be null for a new node
+        assertNull(instance.getPrev());
+        // add a node as next and check if it actually got there
+        LinkedListNode prev = new LinkedListNode(new Point2D.Double(2, 3));
+        instance.setPrev(prev);
+        assertEquals(prev, instance.getPrev());
     }
 
     /**
@@ -109,10 +119,15 @@ public class LinkedListNodeTest {
     @Test
     public void testSetPrev() {
         System.out.println("setPrev");
-        LinkedListNode prev = null;
-        LinkedListNode instance = null;
+        LinkedListNode instance = new LinkedListNode(new Point2D.Double(1, 2));
+        // next should be null for a new node
+        assertNull(instance.getPrev());
+        // add a node as next and check if it actually got there
+        LinkedListNode prev = new LinkedListNode(new Point2D.Double(2, 3));
         instance.setPrev(prev);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(prev, instance.getPrev());
+        // null as next and test
+        instance.setPrev(null);
+        assertNull(instance.getPrev());
     }
 }

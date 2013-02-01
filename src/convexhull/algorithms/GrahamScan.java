@@ -32,24 +32,24 @@ public class GrahamScan implements Algorithm {
         //TODO algorithm itself - minYPoint is ready as the first in list
         LinkedListNode mNode = points.getHead().getNext();
         LinkedListNode iNode = mNode.getNext();
-        while (iNode != null) {
-            Point2D.Double point1 = mNode.getPrev().getPoint();
-            Point2D.Double point2 = mNode.getPoint();
-            Point2D.Double point3 = iNode.getPoint();
-            while (triangleArea(point1, point2, point3) <= 0) {
-                if (mNode.getPrev() != null) {
-                    mNode = mNode.getPrev();
-                    point1 = mNode.getPrev().getPoint();
-                    point2 = mNode.getPoint();
-                } else if (iNode == null) {
-                    break;
-                } else {
-                    iNode = iNode.getNext();
-                    point3 = iNode.getPoint();
-                }
-            }
-            mNode = mNode.getNext();
-        }
+//        while (iNode != null) {
+//            Point2D.Double point1 = mNode.getPrev().getPoint();
+//            Point2D.Double point2 = mNode.getPoint();
+//            Point2D.Double point3 = iNode.getPoint();
+//            while (triangleArea(point1, point2, point3) <= 0) {
+//                if (mNode.getPrev() != null) {
+//                    mNode = mNode.getPrev();
+//                    point1 = mNode.getPrev().getPoint();
+//                    point2 = mNode.getPoint();
+//                } else if (iNode == null) {
+//                    break;
+//                } else {
+//                    iNode = iNode.getNext();
+//                    point3 = iNode.getPoint();
+//                }
+//            }
+//            mNode = mNode.getNext();
+//        }
 
         // stop timer
         System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");

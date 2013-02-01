@@ -184,11 +184,14 @@ public class LinkedListTest {
     @Test
     public void testSetHead() {
         System.out.println("setHead");
-        LinkedListNode head = null;
         LinkedList instance = new LinkedList();
-        instance.setHead(head);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setHead(new LinkedListNode(new Point2D.Double(1, 2)));
+        // check if the new head has the point now
+        assertEquals(new Point2D.Double(1, 2), instance.getHead().getPoint());
+        
+        instance.setHead(null);
+        // check for null now
+        assertNull(instance.getHead());
     }
 
     /**
@@ -198,11 +201,13 @@ public class LinkedListTest {
     public void testGetTail() {
         System.out.println("getTail");
         LinkedList instance = new LinkedList();
-        LinkedListNode expResult = null;
-        LinkedListNode result = instance.getTail();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // empty list tail should be null
+        assertNull(instance.getTail());
+        // add test point
+        Point2D.Double testPoint = new Point2D.Double(1, 2);
+        instance.insert(testPoint);
+        // tail should now contain the test point
+        assertEquals(testPoint, instance.getTail().getPoint());
     }
 
     /**
@@ -210,11 +215,14 @@ public class LinkedListTest {
      */
     @Test
     public void testSetTail() {
-        System.out.println("setTail");
-        LinkedListNode tail = null;
+        System.out.println("setHead");
         LinkedList instance = new LinkedList();
-        instance.setTail(tail);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setTail(new LinkedListNode(new Point2D.Double(1, 2)));
+        // check if the new head has the point now
+        assertEquals(new Point2D.Double(1, 2), instance.getTail().getPoint());
+        
+        instance.setTail(null);
+        // check for null now
+        assertNull(instance.getHead());
     }
 }

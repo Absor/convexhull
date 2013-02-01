@@ -53,21 +53,28 @@ public class ConvexHullTest {
     @Test
     public void testMain() {
         System.out.println("main");
-        String[] args = null;
+        String[] args = {"test100", "at", "gift", "OUT"};
         ConvexHull.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // just should not crash :P
     }
 
     /**
-     * Test of startTimer method, of class ConvexHull.
+     * Test of startTimer and stopTimer methods, of class ConvexHull.
      */
     @Test
-    public void testStartTimer() {
+    public void testTimer() {
         System.out.println("startTimer");
+        long startTime = System.currentTimeMillis();
         ConvexHull.startTimer();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        long endTime = System.currentTimeMillis();
+        long time = ConvexHull.stopTimer();
+        long time2 = endTime - startTime;
+        long difference = Math.abs(time-time2);
+        // difference of the timers should be max one ms
+        if (difference > 1) {
+            fail("Timer difference too great.");
+        }
     }
 
     /**
@@ -75,11 +82,6 @@ public class ConvexHullTest {
      */
     @Test
     public void testStopTimer() {
-        System.out.println("stopTimer");
-        long expResult = 0L;
-        long result = ConvexHull.stopTimer();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // tested with startTimer
     }
 }

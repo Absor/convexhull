@@ -49,17 +49,46 @@ public class AklToussaintHeuristicTest {
     }
 
     /**
-     * Test of useAlgorithm method, of class AklToussaintHeuristic.
+     * Test of useAlgorithm method, of class AklToussaintHeuristic. Testing with
+     * akl-toussaint and gift wrapping algorithm to know if we still get the
+     * right results.
      */
     @Test
     public void testUseAlgorithm() {
+        // test with 100 points
+        testAlgorithm("test100", "result100");
+        // test with 10000 points
+        testAlgorithm("test10000", "result10000");
+    }
+
+    private void testAlgorithm(String inputfile, String resultfile) {
         System.out.println("useAlgorithm");
-        LinkedList points = null;
-        AklToussaintHeuristic instance = new AklToussaintHeuristic();
-        LinkedList expResult = null;
-        LinkedList result = instance.useAlgorithm(points);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        // input set
+        LinkedList input = null;
+        try {
+            input = Helper.parseFile(inputfile);
+        } catch (Exception ex) {
+            fail("Could not parse input file.");
+        }
+        // known results
+        LinkedList result = null;
+        try {
+            result = Helper.parseFile(resultfile);
+        } catch (Exception ex) {
+            fail("Could not parse result file.");
+        }
+
+        AklToussaintHeuristic akltoussaint = new AklToussaintHeuristic();
+        GiftWrapping gift = new GiftWrapping();
+
+        // first through akl-toussaint and then gift wrapping
+        LinkedList aklResult = akltoussaint.useAlgorithm(input);
+        LinkedList giftResult = gift.useAlgorithm(aklResult);
+
+        // check results
+        if (!Helper.setsMatch(result, giftResult)) {
+            fail("Algorithm returns wrong result.");
+        }
     }
 }
