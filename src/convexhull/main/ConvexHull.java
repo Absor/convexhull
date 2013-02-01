@@ -48,6 +48,8 @@ public class ConvexHull {
             try {
                 points = parseFile(input);
                 ok = true;
+                System.out.println("Points read from file: " + input);
+                System.out.println("Input: a list of " + points.getLength() + " points.\n");
             } catch (Exception ex) {
                 System.out.println("Could not read input file. Filename was: \"" + input + "\"");
                 System.out.print("Input a filename to open: ");
@@ -119,6 +121,7 @@ public class ConvexHull {
             }
             System.out.println();
         }
+        System.out.println("Output: a list of " + points.getLength() + " points.");
 
         if (args.length >= 4) {
             input = args[3];
@@ -132,6 +135,7 @@ public class ConvexHull {
                 try {
                     saveToFile(input, points);
                     ok = true;
+                    System.out.println("Points saved to file: " + input);
                 } catch (Exception ex) {
                     System.out.println("Could not write to output file. Filename was: \"" + input + "\"");
                     System.out.print("Input a new filename or print to print to console: ");
@@ -140,7 +144,7 @@ public class ConvexHull {
             } else {
                 System.out.println("Printing hull points to console (x y).");
                 LinkedListNode node = points.getHead();
-                while(node != null) {
+                while (node != null) {
                     Point2D.Double point = node.getPoint();
                     System.out.println(point.getX() + " " + point.getY());
                     node = node.getNext();
