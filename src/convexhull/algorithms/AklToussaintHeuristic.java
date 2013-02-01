@@ -40,21 +40,29 @@ public class AklToussaintHeuristic implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
-
         ConvexHull.startTimer();
 
         LinkedList octagonPoints = this.octagonPoints(points);
-
         // need at least a triangle to remove points
         if (octagonPoints.getLength() < 3) {
             System.out.println("Akl-Toussaint didn't remove any points.");
             return points;
         }
-
-        LinkedList outsideNodes = new LinkedList();
-        int removed = 0;
-
         // go through all points to remove points that are inside the octagon
+        LinkedList outsideNodes = removePointsInsideOctagon(points, octagonPoints);
+        // add octagon points to outsideNodes (they are part of the hull)
+        outsideNodes.insertAll(octagonPoints);
+
+        System.out.println("Akl-Toussaint heuristic removed " + (points.getLength() - outsideNodes.getLength()) + " nodes.");
+        System.out.println("Akl-Toussaint heuristic ran in " + ConvexHull.stopTimer() + "ms.");
+
+        return outsideNodes;
+    }
+
+    // returns points of param points that are not inside the octagon defined by
+    // param octagonPoints
+    private LinkedList removePointsInsideOctagon(LinkedList points, LinkedList octagonPoints) {
+        LinkedList outsideNodes = new LinkedList();
         LinkedListNode pNode = points.getHead();
         while (pNode != null) {
             LinkedListNode oNode = octagonPoints.getHead().getNext();
@@ -66,26 +74,11 @@ public class AklToussaintHeuristic implements Algorithm {
                 }
                 oNode = oNode.getNext();
             }
-            if (inside) {
-                removed++;
-            } else {
+            if (!inside) {
                 outsideNodes.insert(pNode.getPoint());
             }
             pNode = pNode.getNext();
         }
-
-        // TODO check counter
-        System.out.println("Akl-Toussaint heuristic removed " + removed + " nodes.");
-
-        // add octagon points to outsideNodes (they are part of the hull)
-        LinkedListNode oNode = octagonPoints.getHead();
-        while (oNode != null) {
-            outsideNodes.insert(oNode.getPoint());
-            oNode = oNode.getNext();
-        }
-
-        System.out.println("Akl-Toussaint heuristic ran in " + ConvexHull.stopTimer() + "ms.");
-
         return outsideNodes;
     }
 
@@ -155,10 +148,10 @@ public class AklToussaintHeuristic implements Algorithm {
         newList.insert(newList.getHead().getPoint());
         return newList;
     }
-    
+
     // sets all array indexes to given point
     private Point2D.Double[] presetArray(Point2D.Double[] array, Point2D.Double point) {
-        for(int i = 0; i < array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             array[i] = point;
         }
         return array;
@@ -213,8 +206,8 @@ public class AklToussaintHeuristic implements Algorithm {
             return point2;
         }
     }
-    
-     // return the point with lesser difference of coordinates
+
+    // return the point with lesser difference of coordinates
     private Point2D.Double minCoordDiff(Point2D.Double point1, Point2D.Double point2) {
         if (point1.getX() - point1.getY() < point2.getX() - point2.getY()) {
             return point1;

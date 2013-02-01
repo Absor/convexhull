@@ -38,6 +38,19 @@ public class LinkedList {
         }
         this.length++;
     }
+    
+    /**
+     * Adds all points from another linked list to this list.
+     *
+     * @param points points to be inserted into the linked list
+     */
+    public void insertAll(LinkedList points) {
+        LinkedListNode node = points.getHead();
+        while (node != null) {
+            this.insert(node.getPoint());
+            node = node.getNext();
+        }
+    }
 
     /**
      * Returns the first node of the linked list.
