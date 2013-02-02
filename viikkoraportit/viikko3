@@ -2,6 +2,7 @@ DONE:
 Akl-Toussaint toimii.
 QuickHull toimii.
 LinkedList muuttui kahteen suuntaan linkitetyksi. Mergesort muutettu myös.
+100% testit valmiina.
 
 TODO:
-Graham scan.
+Graham scan + javadoc sille ja mainille.

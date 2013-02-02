@@ -62,7 +62,7 @@ public class ConvexHullTest {
      * Test of startTimer and stopTimer methods, of class ConvexHull.
      */
     @Test
-    public void testTimer() {
+    public void testStartTimer() {
         System.out.println("startTimer");
         long startTime = System.currentTimeMillis();
         ConvexHull.startTimer();

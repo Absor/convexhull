@@ -139,7 +139,7 @@ public class LinkedListTest {
         AngleComparator comparator = new AngleComparator(new Point2D.Double(0.4117650626370341, -2.869145785655391));
         // use the merge sort
         points.sort(comparator);
-        
+
         // check if the list is intanct
         int length = 1;
         LinkedListNode head = points.getHead();
@@ -188,7 +188,7 @@ public class LinkedListTest {
         instance.setHead(new LinkedListNode(new Point2D.Double(1, 2)));
         // check if the new head has the point now
         assertEquals(new Point2D.Double(1, 2), instance.getHead().getPoint());
-        
+
         instance.setHead(null);
         // check for null now
         assertNull(instance.getHead());
@@ -220,9 +220,30 @@ public class LinkedListTest {
         instance.setTail(new LinkedListNode(new Point2D.Double(1, 2)));
         // check if the new head has the point now
         assertEquals(new Point2D.Double(1, 2), instance.getTail().getPoint());
-        
+
         instance.setTail(null);
         // check for null now
         assertNull(instance.getHead());
+    }
+
+    /**
+     * Test of insertAll method, of class LinkedList.
+     */
+    @Test
+    public void testInsertAll() {
+        System.out.println("insertAll");
+        LinkedList instance = new LinkedList();
+        LinkedList instance2 = new LinkedList();
+        instance2.insert(new Point2D.Double(2, 3));
+        instance2.insert(new Point2D.Double(3, 3));
+        instance2.insert(new Point2D.Double(4, 3));
+        instance2.insert(new Point2D.Double(5, 3));
+        instance2.insert(new Point2D.Double(6, 3));
+        // insert points from 2 to 1
+        instance.insertAll(instance2);
+        // should be the same lenght now
+        assertEquals(instance2.getLength(), instance.getLength());
+        // should contain same points now
+        assertTrue(Helper.setsMatch(instance, instance2));
     }
 }
