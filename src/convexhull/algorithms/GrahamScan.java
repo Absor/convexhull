@@ -25,31 +25,48 @@ public class GrahamScan implements Algorithm {
         // find point with minimum y-coordinate O(n)
         Point2D.Double minYPoint = findMinY(points);
         // create comparator with the min y point as reference
-        AngleComparator angleComparator = new AngleComparator(minYPoint);
         // sort points with merge sort O(n*log n)
-        points.sort(angleComparator);
-        
+        points.sort(new AngleComparator(minYPoint));
+
         //TODO algorithm itself - minYPoint is ready as the first in list
         LinkedListNode mNode = points.getHead().getNext();
         LinkedListNode iNode = mNode.getNext();
-//        while (iNode != null) {
-//            Point2D.Double point1 = mNode.getPrev().getPoint();
-//            Point2D.Double point2 = mNode.getPoint();
-//            Point2D.Double point3 = iNode.getPoint();
-//            while (triangleArea(point1, point2, point3) <= 0) {
-//                if (mNode.getPrev() != null) {
-//                    mNode = mNode.getPrev();
-//                    point1 = mNode.getPrev().getPoint();
-//                    point2 = mNode.getPoint();
-//                } else if (iNode == null) {
-//                    break;
-//                } else {
-//                    iNode = iNode.getNext();
-//                    point3 = iNode.getPoint();
-//                }
+        while (mNode.getNext() != null) {
+            Point2D.Double point1 = mNode.getPrev().getPoint();
+            Point2D.Double point2 = mNode.getPoint();
+            Point2D.Double point3 = iNode.getPoint();
+            while (triangleArea(point1, point2, point3) < -2E-15 || Math.abs(0 - triangleArea(point1, point2, point3)) < -2E-15) {
+                System.out.println(triangleArea(point1, point2, point3));
+                mNode = mNode.getPrev();
+                point1 = mNode.getPrev().getPoint();
+                point2 = mNode.getPoint();
+            }
+
+            mNode = mNode.getNext();
+        }
+        
+//        // find index k1 of first point not equal to points[0]
+//        int k1;
+//        for (k1 = 1; k1 < N; k1++)
+//            if (!points[0].equals(points[k1])) break;
+//        if (k1 == N) return;        // all points equal
+//
+//        // find index k2 of first point not collinear with points[0] and points[k1]
+//        int k2;
+//        for (k2 = k1 + 1; k2 < N; k2++)
+//            if (Point2D.ccw(points[0], points[k1], points[k2]) != 0) break;
+//        hull.push(points[k2-1]);    // points[k2-1] is second extreme point
+//
+//        // Graham scan; note that points[N-1] is extreme point different from points[0]
+//        for (int i = k2; i < N; i++) {
+//            Point2D top = hull.pop();
+//            while (Point2D.ccw(hull.peek(), top, points[i]) <= 0) {
+//                top = hull.pop();
 //            }
-//            mNode = mNode.getNext();
+//            hull.push(top);
+//            hull.push(points[i]);
 //        }
+
 
         // stop timer
         System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");

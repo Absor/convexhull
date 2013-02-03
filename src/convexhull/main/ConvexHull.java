@@ -7,6 +7,7 @@ import convexhull.algorithms.GrahamScan;
 import convexhull.algorithms.QuickHull;
 import convexhull.datastructures.LinkedList;
 import convexhull.datastructures.LinkedListNode;
+import convexhull.graphics.PointPrinter;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Scanner;
+import javax.swing.JFrame;
 
 /**
  *
@@ -29,9 +31,10 @@ public class ConvexHull {
      * @param args[1] at or noat to choose whether to use the Akl-Toussaint
      * @param args[2] algorithm chooser string (gift/quick/graham)
      * @param args[3] output filename or print to print to console
+     * @param args[3] draw or nodraw to draw points on screen
      */
     public static void main(String[] args) {
-        LinkedList points = null;
+        LinkedList allPoints = null;
 
         Scanner in = new Scanner(System.in);
         String input;
@@ -46,10 +49,10 @@ public class ConvexHull {
         while (!ok) {
             // parsing
             try {
-                points = parseFile(input);
+                allPoints = parseFile(input);
                 ok = true;
                 System.out.println("Points read from file: " + input);
-                System.out.println("Input: a list of " + points.getLength() + " points.\n");
+                System.out.println("Input: a list of " + allPoints.getLength() + " points.\n");
             } catch (Exception ex) {
                 System.out.println("Could not read input file. Filename was: \"" + input + "\"");
                 System.out.print("Input a filename to open: ");
@@ -65,12 +68,14 @@ public class ConvexHull {
         }
         ok = false;
 
+        LinkedList hullPoints = allPoints;
+
         while (!ok) {
             // Akl-Toussaint heuristic
             if (input.equals("at")) {
                 System.out.println("Using Akl-Toussaint heuristic.");
                 Algorithm akltoussaint = new AklToussaintHeuristic();
-                points = akltoussaint.useAlgorithm(points);
+                hullPoints = akltoussaint.useAlgorithm(allPoints);
                 ok = true;
             } else if (input.equals("noat")) {
                 System.out.println("Not using Akl-Toussaint heuristic.");
@@ -98,17 +103,17 @@ public class ConvexHull {
             if (input.equals("gift")) {
                 System.out.println("Using Gift Wrapping algorithm.");
                 Algorithm giftWrapping = new GiftWrapping();
-                points = giftWrapping.useAlgorithm(points);
+                hullPoints = giftWrapping.useAlgorithm(hullPoints);
                 ok = true;
             } else if (input.equals("quick")) {
                 System.out.println("Using QuickHull algorithm.");
                 Algorithm quickHull = new QuickHull();
-                points = quickHull.useAlgorithm(points);
+                hullPoints = quickHull.useAlgorithm(hullPoints);
                 ok = true;
             } else if (input.equals("graham")) {
                 System.out.println("Using Graham scan algorithm.");
                 Algorithm grahamScan = new GrahamScan();
-                points = grahamScan.useAlgorithm(points);
+                hullPoints = grahamScan.useAlgorithm(hullPoints);
                 ok = true;
             } else {
                 System.out.println("Bad argument: \"" + input + "\"");
@@ -121,7 +126,7 @@ public class ConvexHull {
             }
             System.out.println();
         }
-        System.out.println("Output: a list of " + points.getLength() + " points.");
+        System.out.println("Output: a list of " + hullPoints.getLength() + " points.");
 
         if (args.length >= 4) {
             input = args[3];
@@ -133,7 +138,7 @@ public class ConvexHull {
         while (!ok) {
             if (!input.equals("print")) {
                 try {
-                    saveToFile(input, points);
+                    saveToFile(input, hullPoints);
                     ok = true;
                     System.out.println("Points saved to file: " + input);
                 } catch (Exception ex) {
@@ -143,13 +148,36 @@ public class ConvexHull {
                 }
             } else {
                 System.out.println("Printing hull points to console (x y).");
-                LinkedListNode node = points.getHead();
+                LinkedListNode node = hullPoints.getHead();
                 while (node != null) {
                     Point2D.Double point = node.getPoint();
                     System.out.println(point.getX() + " " + point.getY());
                     node = node.getNext();
                 }
                 ok = true;
+            }
+            System.out.println();
+        }
+
+        if (args.length >= 5) {
+            input = args[4];
+        } else {
+            input = "";
+        }
+        ok = false;
+
+        while (!ok) {
+            if (input.equals("draw")) {
+                System.out.println("Drawing points on screen.");
+                printOnScreen(allPoints, hullPoints);
+                ok = true;
+            } else {
+                System.out.println("Bad argument: \"" + input + "\"");
+                System.out.println("Valid arguments:");
+                System.out.println("draw : draw points on screen.");
+                System.out.println("nodraw : don't draw points on screen.");
+                System.out.print("Input new argument: ");
+                input = in.nextLine();
             }
             System.out.println();
         }
@@ -227,5 +255,14 @@ public class ConvexHull {
     public static long stopTimer() {
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
+    }
+
+    private static void printOnScreen(LinkedList allPoints, LinkedList hullPoints) {
+        JFrame frame = new JFrame("Points");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new PointPrinter(allPoints, hullPoints));
+        frame.setSize(500, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }
