@@ -21,7 +21,11 @@ public class PointPrinter extends JPanel {
 
     private LinkedList hullPoints;
     private LinkedList allPoints;
-    private double max;
+    private double xCorrection;
+    private double yCorrection;
+    private double pointAreaWidth;
+    private double pointAreaHeight;
+    private double maxX, minX, maxY, minY;
 
     public PointPrinter(LinkedList allPoints, LinkedList hullPoints) {
         this.hullPoints = hullPoints;
@@ -35,60 +39,83 @@ public class PointPrinter extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setColor(Color.BLUE);
-
         Dimension size = getSize();
         Insets insets = getInsets();
 
-        int width = size.width - insets.left - insets.right;
-        int height = size.height - insets.top - insets.bottom;
+        int width = size.width - insets.left - insets.right - 10;
+        int height = size.height - insets.top - insets.bottom - 10;
 
-        double scaler = (Math.min(width, height) / 2) / this.max * 0.95;
+        double xScaler = width / pointAreaWidth;
+        double yScaler = height / pointAreaHeight;
+
+        g2d.setColor(Color.BLACK);
+
+        Shape xAxle = new Line2D.Double(0, yScaler * yCorrection + 5, width + 10, yScaler * yCorrection + 5);
+        g2d.draw(xAxle);
+        Shape yAxle = new Line2D.Double(xScaler * xCorrection + 5, 0, xScaler * xCorrection + 5, height + 10);
+        g2d.draw(yAxle);
+
+        g2d.setColor(Color.BLUE);
 
         LinkedListNode node = this.hullPoints.getHead();
         while (node != null) {
             Point2D.Double point1 = node.getPoint();
-            double x1 = point1.getX() * scaler + (width / 2);
-            double y1 = point1.getY() * scaler + (height / 2);
-            Shape circle = new Ellipse2D.Double(x1-3, y1-3, 7, 7);
+            double x1 = (point1.getX() + xCorrection) * xScaler + 5;
+            double y1 = (point1.getY() + yCorrection) * yScaler + 5;
+            Shape circle = new Ellipse2D.Double(x1 - 3, y1 - 3, 7, 7);
             g2d.draw(circle);
             if (node.getPrev() != null) {
                 Point2D.Double point2 = node.getPrev().getPoint();
-                double x2 = point2.getX() * scaler + (width / 2);
-                double y2 = point2.getY() * scaler + (height / 2);
+                double x2 = (point2.getX() + xCorrection) * xScaler + 5;
+                double y2 = (point2.getY() + yCorrection) * yScaler + 5;
                 Shape line = new Line2D.Double(x1, y1, x2, y2);
                 g2d.draw(line);
             }
             node = node.getNext();
         }
-        
+
         g2d.setColor(Color.RED);
-        
+
         node = this.allPoints.getHead();
         while (node != null) {
             Point2D.Double point1 = node.getPoint();
-            double x1 = point1.getX() * scaler + (width / 2);
-            double y1 = point1.getY() * scaler + (height / 2);
-            Shape circle = new Ellipse2D.Double(x1-1, y1-1, 3, 3);
+            double x1 = (point1.getX() + xCorrection) * xScaler + 5;
+            double y1 = (point1.getY() + yCorrection) * yScaler + 5;
+            Shape circle = new Ellipse2D.Double(x1 - 1, y1 - 1, 3, 3);
             g2d.draw(circle);
             node = node.getNext();
         }
+        
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("X: [" + minX + "," + maxX + "]", 10, 20);
+        g2d.drawString("Y: [" + minY + "," + maxY + "]", 10, 35);
     }
 
     private void findMax() {
         LinkedListNode node = this.allPoints.getHead();
-        this.max = node.getPoint().getX();
+        maxX = node.getPoint().getX();
+        minX = node.getPoint().getX();
+        maxY = node.getPoint().getY();
+        minY = node.getPoint().getY();
+        node = node.getNext();
         while (node != null) {
             Point2D.Double point = node.getPoint();
-            double absX = Math.abs(point.getX());
-            if (absX > this.max) {
-                this.max = absX;
+            if (point.getX() > maxX) {
+                maxX = point.getX();
+            } else if (point.getX() < minX) {
+                minX = point.getX();
             }
-            double absY = Math.abs(point.getY());
-            if (absY > this.max) {
-                this.max = absY;
+            if (point.getY() > maxY) {
+                maxY = point.getY();
+            } else if (point.getY() < minY) {
+                minY = point.getY();
             }
             node = node.getNext();
         }
+
+        this.xCorrection = -minX;
+        this.yCorrection = -minY;
+        this.pointAreaWidth = maxX - minX;
+        this.pointAreaHeight = maxY - minY;
     }
 }

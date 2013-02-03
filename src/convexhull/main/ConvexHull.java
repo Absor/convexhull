@@ -264,7 +264,7 @@ public class ConvexHull {
         JFrame frame = new JFrame("Points");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new PointPrinter(allPoints, hullPoints));
-        frame.setSize(500, 500);
+        frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
