@@ -171,6 +171,9 @@ public class ConvexHull {
                 System.out.println("Drawing points on screen.");
                 printOnScreen(allPoints, hullPoints);
                 ok = true;
+            } else if (input.equals("nodraw")) {
+                System.out.println("Not drawing points on screen.");
+                ok = true;
             } else {
                 System.out.println("Bad argument: \"" + input + "\"");
                 System.out.println("Valid arguments:");

@@ -53,7 +53,7 @@ public class ConvexHullTest {
     @Test
     public void testMain() {
         System.out.println("main");
-        String[] args = {"test100", "at", "gift", "OUT"};
+        String[] args = {"test100", "at", "gift", "OUT", "nodraw"};
         ConvexHull.main(args);
         // just should not crash :P
     }
@@ -71,9 +71,9 @@ public class ConvexHullTest {
         long time = ConvexHull.stopTimer();
         long time2 = endTime - startTime;
         long difference = Math.abs(time-time2);
-        // difference of the timers should be max one ms
-        if (difference > 1) {
-            fail("Timer difference too great.");
+        // difference of the timers should be max 2ms
+        if (difference > 2) {
+            fail("Timer difference (" + difference + "ms)too great.");
         }
     }
 

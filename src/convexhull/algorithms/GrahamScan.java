@@ -28,22 +28,22 @@ public class GrahamScan implements Algorithm {
         // sort points with merge sort O(n*log n)
         points.sort(new AngleComparator(minYPoint));
 
-        //TODO algorithm itself - minYPoint is ready as the first in list
-        LinkedListNode mNode = points.getHead().getNext();
-        LinkedListNode iNode = mNode.getNext();
-        while (mNode.getNext() != null) {
-            Point2D.Double point1 = mNode.getPrev().getPoint();
-            Point2D.Double point2 = mNode.getPoint();
-            Point2D.Double point3 = iNode.getPoint();
-            while (triangleArea(point1, point2, point3) < -2E-15 || Math.abs(0 - triangleArea(point1, point2, point3)) < -2E-15) {
-                System.out.println(triangleArea(point1, point2, point3));
-                mNode = mNode.getPrev();
-                point1 = mNode.getPrev().getPoint();
-                point2 = mNode.getPoint();
-            }
-
-            mNode = mNode.getNext();
-        }
+//        //TODO algorithm itself - minYPoint is ready as the first in list
+//        LinkedListNode mNode = points.getHead().getNext();
+//        LinkedListNode iNode = mNode.getNext();
+//        while (mNode.getNext() != null) {
+//            Point2D.Double point1 = mNode.getPrev().getPoint();
+//            Point2D.Double point2 = mNode.getPoint();
+//            Point2D.Double point3 = iNode.getPoint();
+//            while (triangleArea(point1, point2, point3) < -2E-15 || Math.abs(0 - triangleArea(point1, point2, point3)) < -2E-15) {
+//                System.out.println(triangleArea(point1, point2, point3));
+//                mNode = mNode.getPrev();
+//                point1 = mNode.getPrev().getPoint();
+//                point2 = mNode.getPoint();
+//            }
+//
+//            mNode = mNode.getNext();
+//        }
         
 //        // find index k1 of first point not equal to points[0]
 //        int k1;
