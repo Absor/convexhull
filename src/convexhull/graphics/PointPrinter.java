@@ -28,6 +28,7 @@ public class PointPrinter extends JPanel {
     private double maxX, minX, maxY, minY;
 
     public PointPrinter(LinkedList allPoints, LinkedList hullPoints) {
+        setBackground(Color.WHITE);
         this.hullPoints = hullPoints;
         this.allPoints = allPoints;
         findMax();
@@ -42,17 +43,17 @@ public class PointPrinter extends JPanel {
         Dimension size = getSize();
         Insets insets = getInsets();
 
-        int width = size.width - insets.left - insets.right - 10;
-        int height = size.height - insets.top - insets.bottom - 10;
+        int width = size.width - insets.left - insets.right - 20;
+        int height = size.height - insets.top - insets.bottom - 20;
 
         double xScaler = width / pointAreaWidth;
         double yScaler = height / pointAreaHeight;
 
         g2d.setColor(Color.BLACK);
 
-        Shape xAxle = new Line2D.Double(0, yScaler * yCorrection + 5, width + 10, yScaler * yCorrection + 5);
+        Shape xAxle = new Line2D.Double(0, yScaler * yCorrection + 10, width + 20, yScaler * yCorrection + 10);
         g2d.draw(xAxle);
-        Shape yAxle = new Line2D.Double(xScaler * xCorrection + 5, 0, xScaler * xCorrection + 5, height + 10);
+        Shape yAxle = new Line2D.Double(xScaler * xCorrection + 10, 0, xScaler * xCorrection + 5, height + 20);
         g2d.draw(yAxle);
 
         g2d.setColor(Color.BLUE);
@@ -60,14 +61,14 @@ public class PointPrinter extends JPanel {
         LinkedListNode node = this.hullPoints.getHead();
         while (node != null) {
             Point2D.Double point1 = node.getPoint();
-            double x1 = (point1.getX() + xCorrection) * xScaler + 5;
-            double y1 = (point1.getY() + yCorrection) * yScaler + 5;
+            double x1 = (point1.getX() + xCorrection) * xScaler + 10;
+            double y1 = (point1.getY() + yCorrection) * yScaler + 10;
             Shape circle = new Ellipse2D.Double(x1 - 3, y1 - 3, 7, 7);
             g2d.draw(circle);
             if (node.getPrev() != null) {
                 Point2D.Double point2 = node.getPrev().getPoint();
-                double x2 = (point2.getX() + xCorrection) * xScaler + 5;
-                double y2 = (point2.getY() + yCorrection) * yScaler + 5;
+                double x2 = (point2.getX() + xCorrection) * xScaler + 10;
+                double y2 = (point2.getY() + yCorrection) * yScaler + 10;
                 Shape line = new Line2D.Double(x1, y1, x2, y2);
                 g2d.draw(line);
             }
@@ -79,13 +80,13 @@ public class PointPrinter extends JPanel {
         node = this.allPoints.getHead();
         while (node != null) {
             Point2D.Double point1 = node.getPoint();
-            double x1 = (point1.getX() + xCorrection) * xScaler + 5;
-            double y1 = (point1.getY() + yCorrection) * yScaler + 5;
+            double x1 = (point1.getX() + xCorrection) * xScaler + 10;
+            double y1 = (point1.getY() + yCorrection) * yScaler + 10;
             Shape circle = new Ellipse2D.Double(x1 - 1, y1 - 1, 3, 3);
             g2d.draw(circle);
             node = node.getNext();
         }
-        
+
         g2d.setColor(Color.BLACK);
         g2d.drawString("X: [" + minX + "," + maxX + "]", 10, 20);
         g2d.drawString("Y: [" + minY + "," + maxY + "]", 10, 35);

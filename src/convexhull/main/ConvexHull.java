@@ -8,6 +8,7 @@ import convexhull.algorithms.QuickHull;
 import convexhull.datastructures.LinkedList;
 import convexhull.datastructures.LinkedListNode;
 import convexhull.graphics.PointPrinter;
+import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
