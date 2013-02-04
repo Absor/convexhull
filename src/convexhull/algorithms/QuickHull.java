@@ -110,57 +110,26 @@ public class QuickHull implements Algorithm {
      */
     private LinkedList iterate(LinkedList points) {
 
-        LinkedListNode head = points.getHead();
-        // Only one point in the input.
-        //It is included in the results list, so we will return only an empty list.
-
-        if (points.getLength() < 2) {
-            return new LinkedList();
-        }
-        // Two points. Second one has to be a part of the hull,
-        // and is not included in the results.
-
-        if (points.getLength() == 2) {
-            LinkedList res = new LinkedList();
-            res.insert(head.getNext().getPoint());
-            return res;
-        }
-        // Three input points. Third point is the only candidate for maximizing the
-        // distance from the line going through the first two.
-        // It is therefore part of the convex hull and needs to be included in the results.
-        if (points.getLength() == 3) {
-            LinkedList res = new LinkedList();
-            res.insert(head.getNext().getPoint());
-            res.insert(head.getNext().getNext().getPoint());
-            return res;
+        // Check for trivial input.
+        if (points.getLength() < 4) {
+            return trivialHull(points);
         }
 
         // Aux. variables
+        LinkedListNode head = points.getHead();
         Point2D.Double A = head.getPoint();
         Point2D.Double B = head.getNext().getPoint();
-        Point2D.Double tempPoint, P;
+
         LinkedListNode current;
         LinkedList negative = new LinkedList();
         LinkedList positive = new LinkedList();
-        current = head;
+        
         double dist;
         double maxDist = 0;
         double sign;
 
-        // Find a point from the inserted list that has the maximum distance from the line AB
-        // We put P = A as a way to initialize P; this bears no actual meaning.
-        P = A;
-        while (current != null) {
-            tempPoint = current.getPoint();
-            // This is not the normal Euclidean distance, but linearly equivalent to it.
-            dist = Math.abs((tempPoint.getX() - A.getX()) * (B.getY() - A.getY()) - (tempPoint.getY() - A.getY()) * (B.getX() - A.getX()));
-            current = current.getNext();
-            if (maxDist < dist) {
-                maxDist = dist;
-                P = tempPoint;
-            }
-        }
-
+        // Find a point from the inserted list that has the maximum distance from the line AB     
+        Point2D.Double P = findPivotPoint(A, B, head);
         // Triangle ABP is the "pivot triangle"; lines AP and BP divide the dataset,
         // if extended indefinitely.
         // P is part of the convex hull
@@ -208,5 +177,50 @@ public class QuickHull implements Algorithm {
         }
 
         return result;
+    }
+
+    /**
+     * If input for iterate() is trivial, this method is called
+     *
+     * @param points List of points of length <4.
+     * @return Empty list for <1 point, otherwise trivial hulls of the input
+     * list.
+     */
+    private LinkedList trivialHull(LinkedList points) {
+        LinkedList res = new LinkedList();
+        if (points.getLength() < 2) {
+            return res;
+        } else if (points.getLength() == 2) {
+            res.insert(points.getHead().getNext().getPoint());
+            return res;
+        } else {
+            res.insert(points.getHead().getNext().getNext().getPoint());
+            res.insert(points.getHead().getNext().getPoint());
+            return res;
+        }
+    }
+
+    /**
+     *
+     * @param A
+     * @param B
+     * @param head
+     * @return
+     */
+    private Point2D.Double findPivotPoint(Point2D.Double A, Point2D.Double B, LinkedListNode head) {
+        Point2D.Double tempPoint, P;
+        double dist;
+        double maxDist = 0;
+        P = A;
+        for (LinkedListNode current = head; current != null; current = current.getNext()) {
+            tempPoint = current.getPoint();
+            // This is not the normal Euclidean distance, but linearly equivalent to it.
+            dist = Math.abs((tempPoint.getX() - A.getX()) * (B.getY() - A.getY()) - (tempPoint.getY() - A.getY()) * (B.getX() - A.getX()));
+            if (maxDist < dist) {
+                maxDist = dist;
+                P = tempPoint;
+            }
+        }
+        return P;
     }
 }
