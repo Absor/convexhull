@@ -88,4 +88,33 @@ public class Helper {
         }
         return true;
     }
+    
+    public static String testAlgorithm(Algorithm algorithm, String inputfile, String resultfile) {
+        System.out.println("useAlgorithm");
+        // input set
+        LinkedList input = null;
+        try {
+            input = Helper.parseFile(inputfile);
+        } catch (Exception ex) {
+            return "Could not parse input file.";
+        }
+        // known results
+        LinkedList result = null;
+        try {
+            result = Helper.parseFile(resultfile);
+        } catch (Exception ex) {
+            return "Could not parse result file.";
+        }
+
+        // algorithm results
+        LinkedList algoResult = algorithm.useAlgorithm(input);
+
+        if (!Helper.setsMatch(result, algoResult)) {
+            for (LinkedListNode node = algoResult.getHead(); node != null; node = node.getNext()) {
+                System.out.println(node.getPoint());
+            }
+            return "Algorithm returns wrong result with: " + inputfile + " and " + resultfile;
+        }
+        return null;
+    }
 }

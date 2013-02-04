@@ -53,42 +53,28 @@ public class GrahamScanTest {
      */
     @Test
     public void testUseAlgorithm() {
+        Algorithm algorithm = new GrahamScan();
+        String result;
         // test with 2 points
-        testAlgorithm("test2", "result2");
+        if ((result = Helper.testAlgorithm(algorithm, "test2", "result2")) != null) {
+            fail(result);
+        }
         // test with 3 points
-        testAlgorithm("test3", "result3");
+        if ((result = Helper.testAlgorithm(algorithm, "test3", "result3")) != null ||
+                (result = Helper.testAlgorithm(algorithm, "test3", "test3")) != null) {
+            fail(result);
+        }
         // test with 100 points
-        testAlgorithm("test100", "result100");
+        if ((result = Helper.testAlgorithm(algorithm, "test100", "result100")) != null) {
+            fail(result);
+        }
         // test with 10000 points
-        testAlgorithm("test10000", "result10000");
+        if ((result = Helper.testAlgorithm(algorithm, "test10000", "result10000")) != null) {
+            fail(result);
+        }
         // test with a ready hull of points
-        testAlgorithm("result100", "result100");
-    }
-    
-    private void testAlgorithm(String inputfile, String resultfile) {
-        System.out.println("useAlgorithm");
-        // input set
-        LinkedList input = null;
-        try {
-            input = Helper.parseFile(inputfile);
-        } catch (Exception ex) {
-            fail("Could not parse input file.");
-        }
-        // known results
-        LinkedList result = null;
-        try {
-            result = Helper.parseFile(resultfile);
-        } catch (Exception ex) {
-            fail("Could not parse result file.");
-        }
-
-        GrahamScan algorithm = new GrahamScan();
-
-        // algorithm results
-        LinkedList algoResult = algorithm.useAlgorithm(input);
-
-        if (!Helper.setsMatch(result, algoResult)) {
-            fail("Algorithm returns wrong result with: " + inputfile);
+        if ((result = Helper.testAlgorithm(algorithm, "result100", "result100")) != null) {
+            fail(result);
         }
     }
 }

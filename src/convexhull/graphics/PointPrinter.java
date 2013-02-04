@@ -46,8 +46,14 @@ public class PointPrinter extends JPanel {
         int width = size.width - insets.left - insets.right - 20;
         int height = size.height - insets.top - insets.bottom - 20;
 
-        double xScaler = width / pointAreaWidth;
-        double yScaler = height / pointAreaHeight;
+        double xScaler = width;
+        if (pointAreaWidth != 0) {
+            xScaler /= pointAreaWidth;
+        }
+        double yScaler = height;
+        if (pointAreaHeight != 0) {
+            yScaler /= pointAreaHeight;
+        }
 
         g2d.setColor(Color.BLACK);
 
