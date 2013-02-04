@@ -63,6 +63,8 @@ public class AklToussaintHeuristicTest {
         testAlgorithm("test100", "result100");
         // test with 10000 points
         testAlgorithm("test10000", "result10000");
+        // test with a ready hull of points
+        testAlgorithm("result100", "result100");
     }
 
     private void testAlgorithm(String inputfile, String resultfile) {
@@ -92,7 +94,7 @@ public class AklToussaintHeuristicTest {
 
         // check results
         if (!Helper.setsMatch(result, giftResult)) {
-            fail("Algorithm returns wrong result.");
+            fail("Algorithm returns wrong result with: " + inputfile);
         }
     }
 }

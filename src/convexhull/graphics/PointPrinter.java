@@ -55,7 +55,7 @@ public class PointPrinter extends JPanel {
         g2d.draw(xAxle);
         Shape yAxle = new Line2D.Double(xScaler * xCorrection + 10, 0, xScaler * xCorrection + 5, height + 20);
         g2d.draw(yAxle);
-
+        
         g2d.setColor(Color.BLUE);
 
         LinkedListNode node = this.hullPoints.getHead();

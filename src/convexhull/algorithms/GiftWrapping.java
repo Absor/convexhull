@@ -32,6 +32,10 @@ public class GiftWrapping implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
+        if (points.getLength() < 3) {
+            return points;
+        }
+        
         // Algorithm run timer
         ConvexHull.startTimer();
 
@@ -65,6 +69,7 @@ public class GiftWrapping implements Algorithm {
                 }
                 current = current.getNext();
             }
+            System.out.println(endPoint);
             // Add to hull points and update end point.
             hullPoints.insert(newEndPoint);
             endPoint = newEndPoint;
