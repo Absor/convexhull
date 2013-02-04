@@ -59,7 +59,7 @@ public class PointPrinter extends JPanel {
 
         Shape xAxle = new Line2D.Double(0, yScaler * yCorrection + 10, width + 20, yScaler * yCorrection + 10);
         g2d.draw(xAxle);
-        Shape yAxle = new Line2D.Double(xScaler * xCorrection + 10, 0, xScaler * xCorrection + 5, height + 20);
+        Shape yAxle = new Line2D.Double(xScaler * xCorrection + 10, 0, xScaler * xCorrection + 10, height + 20);
         g2d.draw(yAxle);
         
         g2d.setColor(Color.BLUE);

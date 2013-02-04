@@ -69,14 +69,14 @@ public class ConvexHull {
         }
         ok = false;
 
-        LinkedList hullPoints = allPoints;
+        LinkedList aklPoints = allPoints;
 
         while (!ok) {
             // Akl-Toussaint heuristic
             if (input.equals("at")) {
                 System.out.println("Using Akl-Toussaint heuristic.");
                 Algorithm akltoussaint = new AklToussaintHeuristic();
-                hullPoints = akltoussaint.useAlgorithm(allPoints);
+                aklPoints = akltoussaint.useAlgorithm(allPoints);
                 ok = true;
             } else if (input.equals("noat")) {
                 System.out.println("Not using Akl-Toussaint heuristic.");
@@ -99,23 +99,36 @@ public class ConvexHull {
         }
         ok = false;
 
+        LinkedList hullPoints = aklPoints;
+
         while (!ok) {
             // use the chosen algorithm
             if (input.equals("gift")) {
                 System.out.println("Using Gift Wrapping algorithm.");
                 Algorithm giftWrapping = new GiftWrapping();
-                hullPoints = giftWrapping.useAlgorithm(hullPoints);
+                hullPoints = giftWrapping.useAlgorithm(aklPoints);
                 ok = true;
             } else if (input.equals("quick")) {
                 System.out.println("Using QuickHull algorithm.");
                 Algorithm quickHull = new QuickHull();
-                hullPoints = quickHull.useAlgorithm(hullPoints);
+                hullPoints = quickHull.useAlgorithm(aklPoints);
                 ok = true;
             } else if (input.equals("graham")) {
                 System.out.println("Using Graham scan algorithm.");
                 Algorithm grahamScan = new GrahamScan();
-                hullPoints = grahamScan.useAlgorithm(hullPoints);
+                hullPoints = grahamScan.useAlgorithm(aklPoints);
                 ok = true;
+            } else if (input.equals("all")) {
+                System.out.println("Using Gift Wrapping algorithm.");
+                Algorithm giftWrapping = new GiftWrapping();
+                giftWrapping.useAlgorithm(aklPoints);
+                System.out.println("Using QuickHull algorithm.");
+                Algorithm quickHull = new QuickHull();
+                quickHull.useAlgorithm(aklPoints);
+                System.out.println("Using Graham scan algorithm.");
+                Algorithm grahamScan = new GrahamScan();
+                grahamScan.useAlgorithm(aklPoints);
+                return;
             } else {
                 System.out.println("Bad argument: \"" + input + "\"");
                 System.out.println("Valid arguments:");
