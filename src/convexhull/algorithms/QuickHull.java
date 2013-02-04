@@ -133,7 +133,15 @@ public class QuickHull implements Algorithm {
         // Triangle ABP is the "pivot triangle"; lines AP and BP divide the dataset,
         // if extended indefinitely.
         // P is part of the convex hull
-
+        
+        // If no candidates are found, we return only the endpoints of the line AB and
+        // terminate the recursion.
+        // Pathological case.
+        if(P == null) {
+            positive.insert(A);
+            positive.insert(B);
+            return positive;
+        }
         current = head;
         positive.insert(A);
         positive.insert(P);
@@ -201,11 +209,12 @@ public class QuickHull implements Algorithm {
     }
 
     /**
-     *
-     * @param A
-     * @param B
-     * @param head
-     * @return
+     * Finds a point P from the inputted list so that P = argmax(dist(AB,P)).
+     * If there is no P so that dist(AB,P) > 0, return null.
+     * @param A First point
+     * @param B Second point
+     * @param head List
+     * @return Point P, null if N/A
      */
     private Point2D.Double findPivotPoint(Point2D.Double A, Point2D.Double B, LinkedListNode head) {
         Point2D.Double tempPoint, P;
@@ -220,6 +229,9 @@ public class QuickHull implements Algorithm {
                 maxDist = dist;
                 P = tempPoint;
             }
+        }
+        if (maxDist == 0) {
+            return null;
         }
         return P;
     }
