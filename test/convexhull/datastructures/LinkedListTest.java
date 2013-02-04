@@ -3,6 +3,7 @@ package convexhull.datastructures;
 import convexhull.algorithms.Helper;
 import convexhull.comparators.AngleComparator;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.junit.After;
@@ -245,5 +246,20 @@ public class LinkedListTest {
         assertEquals(instance2.getLength(), instance.getLength());
         // should contain same points now
         assertTrue(Helper.setsMatch(instance, instance2));
+    }
+
+    /**
+     * Test of contains method, of class LinkedList.
+     */
+    @Test
+    public void testContains() {
+        System.out.println("contains");
+        Double point = null;
+        LinkedList instance = new LinkedList();
+        boolean expResult = false;
+        boolean result = instance.contains(point);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

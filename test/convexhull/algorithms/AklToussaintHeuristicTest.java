@@ -86,7 +86,7 @@ public class AklToussaintHeuristicTest {
         }
 
         AklToussaintHeuristic akltoussaint = new AklToussaintHeuristic();
-        Algorithm hullAlgo = new QuickHull();
+        Algorithm hullAlgo = new GiftWrapping();
 
         // first through akl-toussaint and then gift wrapping
         LinkedList aklResult = akltoussaint.useAlgorithm(input);

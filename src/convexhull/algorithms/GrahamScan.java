@@ -68,7 +68,9 @@ public class GrahamScan implements Algorithm {
         while (iNode != null) {
             Point2D.Double last = hullPoints.getTail().getPoint();
             while (triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()) <= 0) {
-                System.out.println(triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()));
+                if (hullPoints.getTail().getPrev() == null) {
+                    break;
+                }
                 last = hullPoints.getTail().getPoint();
                 LinkedListNode newLast = hullPoints.getTail().getPrev();
                 newLast.setNext(null);
@@ -80,8 +82,6 @@ public class GrahamScan implements Algorithm {
             hullPoints.insert(iNode.getPoint());
             iNode = iNode.getNext();
         }
-
-        hullPoints.insert(hullPoints.getHead().getPoint());
 
         // stop timer
         System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");

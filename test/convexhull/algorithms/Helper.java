@@ -110,10 +110,27 @@ public class Helper {
         LinkedList algoResult = algorithm.useAlgorithm(input);
 
         if (!Helper.setsMatch(result, algoResult)) {
-            for (LinkedListNode node = algoResult.getHead(); node != null; node = node.getNext()) {
-                System.out.println(node.getPoint());
-            }
             return "Algorithm returns wrong result with: " + inputfile + " and " + resultfile;
+        }
+        return null;
+    }
+    
+    public static String testAlgorithmCollinearPoints(Algorithm algorithm) {
+        System.out.println("useAlgorithm");
+        String inputfile = "test4";
+        // input set
+        LinkedList input = null;
+        try {
+            input = Helper.parseFile(inputfile);
+        } catch (Exception ex) {
+            return "Could not parse input file.";
+        }
+
+        // algorithm results
+        LinkedList algoResult = algorithm.useAlgorithm(input);
+
+        if (!(algoResult.contains(new Point2D.Double(-1.0, -1.0)) && algoResult.contains(new Point2D.Double(3.0, 3.0)))) {
+            return "Algorithm returns wrong result with four collinear points.";
         }
         return null;
     }

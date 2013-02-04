@@ -78,6 +78,14 @@ public class PointPrinter extends JPanel {
                 Shape line = new Line2D.Double(x1, y1, x2, y2);
                 g2d.draw(line);
             }
+            // line to close the hull
+            if (node.getNext() == null) {
+                Point2D.Double point2 = hullPoints.getHead().getPoint();
+                double x2 = (point2.getX() + xCorrection) * xScaler + 10;
+                double y2 = (point2.getY() + yCorrection) * yScaler + 10;
+                Shape line = new Line2D.Double(x1, y1, x2, y2);
+                g2d.draw(line);
+            }
             node = node.getNext();
         }
 

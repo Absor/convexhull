@@ -53,6 +53,7 @@ public class AklToussaintHeuristic implements Algorithm {
         // add octagon points to outsideNodes (they are part of the hull)
         outsideNodes.insertAll(octagonPoints);
 
+        System.out.println(points.getLength() + " " + outsideNodes.getLength());
         System.out.println("Akl-Toussaint heuristic removed " + (points.getLength() - outsideNodes.getLength()) + " nodes.");
         System.out.println("Akl-Toussaint heuristic ran in " + ConvexHull.stopTimer() + "ms.");
 

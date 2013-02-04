@@ -60,8 +60,12 @@ public class QuickHullTest {
             fail(result);
         }
         // test with 3 points
-        if ((result = Helper.testAlgorithm(algorithm, "test3", "result3")) != null ||
-                (result = Helper.testAlgorithm(algorithm, "test3", "test3")) != null) {
+        if (!((result = Helper.testAlgorithm(algorithm, "test3", "result3")) == null ||
+                (result = Helper.testAlgorithm(algorithm, "test3", "test3")) == null)) {
+            fail(result);
+        }
+        // test with 4 collinear points
+        if ((result = Helper.testAlgorithmCollinearPoints(algorithm)) != null) {
             fail(result);
         }
         // test with 100 points

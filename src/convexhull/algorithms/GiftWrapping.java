@@ -32,7 +32,7 @@ public class GiftWrapping implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
-        if (points.getLength() < 3) {
+        if (points.getLength() < 4) {
             return points;
         }
         
@@ -51,7 +51,7 @@ public class GiftWrapping implements Algorithm {
         // Do until hull closes, that is, for all hull points: O(h).
         // Inner loop checks every point of the set: O(n).
         // Run time is O(n*h).
-        do {
+        while(true) {
             // initial candidate for new end point
             LinkedListNode current = points.getHead();
             newEndPoint = current.getPoint();
@@ -69,10 +69,15 @@ public class GiftWrapping implements Algorithm {
                 }
                 current = current.getNext();
             }
+            // if the new end point candidate is the same as the starting point
+            // hull is closed and we can exit the loop
+            if (newEndPoint.equals(minXPoint)) {
+                break;
+            }
             // Add to hull points and update end point.
             hullPoints.insert(newEndPoint);
             endPoint = newEndPoint;
-        } while (!endPoint.equals(minXPoint));
+        }
 
         System.out.println("Gift Wrapping algorithm ran in " + ConvexHull.stopTimer() + "ms.");
 

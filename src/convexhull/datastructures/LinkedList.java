@@ -205,4 +205,21 @@ public class LinkedList {
         // when fast reaches the end, slow is half way there
         return slow;
     }
+    
+    /**
+     * Checks if a given point is in the linked list.
+     * 
+     * @param point point to search for.
+     * @return true if point is in the list, otherwise false.
+     */
+    public boolean contains(Point2D.Double point) {
+        LinkedListNode node = this.getHead();
+        while (node != null) {
+            if (node.getPoint().equals(point)) {
+                return true;
+            }
+            node = node.getNext();
+        }
+        return false;
+    }
 }
