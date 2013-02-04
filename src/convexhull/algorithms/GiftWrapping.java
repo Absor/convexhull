@@ -59,7 +59,7 @@ public class GiftWrapping implements Algorithm {
                     double triangleArea = triangleArea(endPoint, newEndPoint, temp);
                     // If temp is left of line from endpoint to candidate
                     // (area positive), update candidate.
-                    if (triangleArea > 0) {
+                    if (triangleArea >= 0) {
                         newEndPoint = temp;
                     }
                 }

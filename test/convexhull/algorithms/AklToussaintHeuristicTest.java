@@ -55,6 +55,10 @@ public class AklToussaintHeuristicTest {
      */
     @Test
     public void testUseAlgorithm() {
+        // test with 2 points
+        testAlgorithm("test2", "result2");
+        // test with 3 points
+        testAlgorithm("test3", "result3");
         // test with 100 points
         testAlgorithm("test100", "result100");
         // test with 10000 points

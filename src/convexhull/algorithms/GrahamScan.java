@@ -13,9 +13,33 @@ import java.awt.geom.Point2D;
 public class GrahamScan implements Algorithm {
 
     /**
+     * Graham scan algorithm.
      *
-     * @param points
-     * @return
+     * Quote from Wikipedia: http://en.wikipedia.org/wiki/Graham_scan
+     *
+     * The first step in this algorithm is to find the point with the lowest
+     * y-coordinate. If the lowest y-coordinate exists in more than one point in
+     * the set, the point with the lowest x-coordinate out of the candidates
+     * should be chosen. Call this point P. This step takes O(n), where n is the
+     * number of points in question.
+     *
+     * Next, the set of points must be sorted in increasing order of the angle
+     * they and the point P make with the x-axis. Any general-purpose sorting
+     * algorithm is appropriate for this, for example heapsort (which is O(n log
+     * n)). The algorithm proceeds by considering each of the points in the
+     * sorted array in sequence. For each point, it is determined whether moving
+     * from the two previously considered points to this point is a "left turn"
+     * or a "right turn". If it is a "right turn", this means that the
+     * second-to-last point is not part of the convex hull and should be removed
+     * from consideration. This process is continued for as long as the set of
+     * the last three points is a "right turn". As soon as a "left turn" is
+     * encountered, the algorithm moves on to the next point in the sorted
+     * array. (If at any stage the three points are collinear, one may opt
+     * either to discard or to report it, since in some applications it is
+     * required to find all points on the boundary of the convex hull.)
+     *
+     * @param points set of points to find the convex hull for
+     * @return linked list of convex hull points
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
@@ -37,10 +61,10 @@ public class GrahamScan implements Algorithm {
 
         iNode = iNode.getNext().getNext();
 
+        // Graham scan
         while (iNode != null) {
             Point2D.Double last = hullPoints.getTail().getPoint();
             while (triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()) <= 0) {
-                System.out.println(triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()));
                 last = hullPoints.getTail().getPoint();
                 LinkedListNode newLast = hullPoints.getTail().getPrev();
                 newLast.setNext(null);
@@ -48,34 +72,12 @@ public class GrahamScan implements Algorithm {
                 hullPoints.setLength(hullPoints.getLength() - 1);
                 hullPoints.setTail(newLast);
             }
-            System.out.println("");
             hullPoints.insert(last);
             hullPoints.insert(iNode.getPoint());
             iNode = iNode.getNext();
         }
 
-//        // find index k1 of first point not equal to points[0]
-//        int k1;
-//        for (k1 = 1; k1 < N; k1++)
-//            if (!points[0].equals(points[k1])) break;
-//        if (k1 == N) return;        // all points equal
-//
-//        // find index k2 of first point not collinear with points[0] and points[k1]
-//        int k2;
-//        for (k2 = k1 + 1; k2 < N; k2++)
-//            if (Point2D.ccw(points[0], points[k1], points[k2]) != 0) break;
-//        hull.push(points[k2-1]);    // points[k2-1] is second extreme point
-//
-//        // Graham scan; note that points[N-1] is extreme point different from points[0]
-//        for (int i = k2; i < N; i++) {
-//            Point2D top = hull.pop();
-//            while (Point2D.ccw(hull.peek(), top, points[i]) <= 0) {
-//                top = hull.pop();
-//            }
-//            hull.push(top);
-//            hull.push(points[i]);
-//        }
-
+        hullPoints.insert(hullPoints.getHead().getPoint());
 
         // stop timer
         System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");
