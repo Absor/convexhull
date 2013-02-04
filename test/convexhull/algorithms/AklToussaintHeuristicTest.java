@@ -86,14 +86,14 @@ public class AklToussaintHeuristicTest {
         }
 
         AklToussaintHeuristic akltoussaint = new AklToussaintHeuristic();
-        GiftWrapping gift = new GiftWrapping();
+        Algorithm hullAlgo = new QuickHull();
 
         // first through akl-toussaint and then gift wrapping
         LinkedList aklResult = akltoussaint.useAlgorithm(input);
-        LinkedList giftResult = gift.useAlgorithm(aklResult);
+        LinkedList hull = hullAlgo.useAlgorithm(aklResult);
 
         // check results
-        if (!Helper.setsMatch(result, giftResult)) {
+        if (!Helper.setsMatch(result, hull)) {
             fail("Algorithm returns wrong result with: " + inputfile);
         }
     }

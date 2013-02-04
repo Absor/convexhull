@@ -43,6 +43,9 @@ public class GrahamScan implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
+        if (points.getLength() < 3) {
+            return points;
+        }
         // run timer
         ConvexHull.startTimer();
 
@@ -64,7 +67,8 @@ public class GrahamScan implements Algorithm {
         // Graham scan
         while (iNode != null) {
             Point2D.Double last = hullPoints.getTail().getPoint();
-            while (triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()) <= 0) {
+            while (triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()) < 0) {
+                System.out.println(triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()));
                 last = hullPoints.getTail().getPoint();
                 LinkedListNode newLast = hullPoints.getTail().getPrev();
                 newLast.setNext(null);

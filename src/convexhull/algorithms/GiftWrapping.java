@@ -69,7 +69,6 @@ public class GiftWrapping implements Algorithm {
                 }
                 current = current.getNext();
             }
-            System.out.println(endPoint);
             // Add to hull points and update end point.
             hullPoints.insert(newEndPoint);
             endPoint = newEndPoint;
