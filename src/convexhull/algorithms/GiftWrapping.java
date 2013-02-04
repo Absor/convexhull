@@ -100,12 +100,8 @@ public class GiftWrapping implements Algorithm {
      */
     private double triangleArea(Point2D.Double p0, Point2D.Double p1, Point2D.Double p2) {
         double triangleArea =
-                (p0.getX() * p1.getY()
-                + p1.getX() * p2.getY()
-                + p2.getX() * p0.getY()
-                - p2.getX() * p1.getY()
-                - p1.getX() * p0.getY()
-                - p0.getX() * p2.getY());
+                (p1.getX() - p0.getX()) * (p2.getY() - p0.getY())
+                - (p1.getY() - p0.getY()) * (p2.getX() - p0.getX());
         return triangleArea;
     }
 }

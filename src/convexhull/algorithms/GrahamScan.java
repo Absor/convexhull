@@ -28,23 +28,32 @@ public class GrahamScan implements Algorithm {
         // sort points with merge sort O(n*log n)
         points.sort(new AngleComparator(minYPoint));
 
-//        //TODO algorithm itself - minYPoint is ready as the first in list
-//        LinkedListNode mNode = points.getHead().getNext();
-//        LinkedListNode iNode = mNode.getNext();
-//        while (mNode.getNext() != null) {
-//            Point2D.Double point1 = mNode.getPrev().getPoint();
-//            Point2D.Double point2 = mNode.getPoint();
-//            Point2D.Double point3 = iNode.getPoint();
-//            while (triangleArea(point1, point2, point3) < -2E-15 || Math.abs(0 - triangleArea(point1, point2, point3)) < -2E-15) {
-//                System.out.println(triangleArea(point1, point2, point3));
-//                mNode = mNode.getPrev();
-//                point1 = mNode.getPrev().getPoint();
-//                point2 = mNode.getPoint();
-//            }
-//
-//            mNode = mNode.getNext();
-//        }
-        
+        LinkedList hullPoints = new LinkedList();
+
+        LinkedListNode iNode = points.getHead();
+        // first two points are hull points
+        hullPoints.insert(iNode.getPoint());
+        hullPoints.insert(iNode.getNext().getPoint());
+
+        iNode = iNode.getNext().getNext();
+
+        while (iNode != null) {
+            Point2D.Double last = hullPoints.getTail().getPoint();
+            while (triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()) <= 0) {
+                System.out.println(triangleArea(hullPoints.getTail().getPoint(), last, iNode.getPoint()));
+                last = hullPoints.getTail().getPoint();
+                LinkedListNode newLast = hullPoints.getTail().getPrev();
+                newLast.setNext(null);
+                hullPoints.getTail().setPrev(null);
+                hullPoints.setLength(hullPoints.getLength() - 1);
+                hullPoints.setTail(newLast);
+            }
+            System.out.println("");
+            hullPoints.insert(last);
+            hullPoints.insert(iNode.getPoint());
+            iNode = iNode.getNext();
+        }
+
 //        // find index k1 of first point not equal to points[0]
 //        int k1;
 //        for (k1 = 1; k1 < N; k1++)
@@ -71,7 +80,7 @@ public class GrahamScan implements Algorithm {
         // stop timer
         System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");
 
-        return points;
+        return hullPoints;
     }
 
     // Finds the point with minimum y coordinate.
@@ -99,12 +108,8 @@ public class GrahamScan implements Algorithm {
      */
     private double triangleArea(Point2D.Double p0, Point2D.Double p1, Point2D.Double p2) {
         double triangleArea =
-                (p0.getX() * p1.getY()
-                + p1.getX() * p2.getY()
-                + p2.getX() * p0.getY()
-                - p2.getX() * p1.getY()
-                - p1.getX() * p0.getY()
-                - p0.getX() * p2.getY());
+                (p1.getX() - p0.getX()) * (p2.getY() - p0.getY())
+                - (p1.getY() - p0.getY()) * (p2.getX() - p0.getX());
         return triangleArea;
     }
 }
