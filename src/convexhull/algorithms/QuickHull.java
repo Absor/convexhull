@@ -26,61 +26,51 @@ public class QuickHull implements Algorithm {
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
         ConvexHull.startTimer();
-        Point2D.Double minX = null;
-        Point2D.Double maxX = null;
-        Point2D.Double current = null;
-        LinkedListNode node = points.getHead();
-        while (node != null) { // Find the points with the smallest and greatest X coordinates
-            current = node.getPoint();
-            if (minX == null || minX.getX() > current.getX()) {
-                minX = current;
-            }
-            if (maxX == null || maxX.getX() < current.getX()) {
-                maxX = current;
-            }
-            node = node.getNext();
-        }
 
-        // Next, split the data into two lists depending on which side of the line (minX,maxX) they lie.
-        // Points that lie on the line may be ignored.
+        Point2D.Double minX = findMin(points.getHead());
+        Point2D.Double maxX = findMax(points.getHead());
 
         LinkedList positive = new LinkedList();
         LinkedList negative = new LinkedList();
 
-        node = points.getHead();
-        double sign;
-        positive.insert(minX);
-        positive.insert(maxX);
-        negative.insert(maxX);
-        negative.insert(minX);
+        pruneInapplicablePoints(minX, minX, maxX, points.getHead(), positive, negative);
+        return mergeResults(iterate(positive), iterate(negative));
+        /*
+         System.out.println("Algorithm ran in " + ConvexHull.stopTimer() + "ms");
+         */
+    }
 
-        while (node != null) { // iterate over all points and split them
-            sign = checkRotation(minX, maxX, node.getPoint());
-            if (sign < 0) {
-                negative.insert(node.getPoint());
-
+    /**
+     * Finds the point with the maximum x coordinate from the inputted list
+     *
+     * @param head 1st element of the list
+     * @return Pointer to the maximum element
+     */
+    private Point2D.Double findMax(LinkedListNode head) {
+        Point2D.Double max = null;
+        for (LinkedListNode current = head; current != null; current = current.getNext()) {
+            if (max == null || max.getX() < current.getPoint().getX()) {
+                max = current.getPoint();
             }
-            if (sign > 0) {
-                positive.insert(node.getPoint());
+        }
+        return max;
+    }
+
+    /**
+     * Finds the point with the minimum x coordinate from the inputted list
+     *
+     * @param head 1st element of the list
+     * @return Pointer to the minimum element
+     */
+    private Point2D.Double findMin(LinkedListNode head) {
+        Point2D.Double min = null;
+        for (LinkedListNode current = head; current != null; current = current.getNext()) {
+            if (min == null || min.getX() > current.getPoint().getX()) {
+                min = current.getPoint();
             }
-            node = node.getNext();
-        }
 
-
-        LinkedList pos = iterate(positive);
-        if (pos != null) {
-            node = pos.getHead();
         }
-        LinkedList neg = iterate(negative);
-        while (node != null) {
-            neg.insert(node.getPoint());
-            node = node.getNext();
-        }
-        // Insert the first point as the last, thus closing the polygon.
-        // This is in compliance with the Matlab output of the convex hull.
-        neg.insert(neg.getHead().getPoint());
-        System.out.println("Algorithm ran in " + ConvexHull.stopTimer() + "ms");
-        return neg;
+        return min;
 
     }
 
@@ -116,52 +106,28 @@ public class QuickHull implements Algorithm {
         }
 
         // Aux. variables
-        LinkedListNode head = points.getHead();
-        Point2D.Double A = head.getPoint();
-        Point2D.Double B = head.getNext().getPoint();
 
-        LinkedListNode current;
+        Point2D.Double A = points.getHead().getPoint();
+        Point2D.Double B = points.getHead().getNext().getPoint();
         LinkedList negative = new LinkedList();
         LinkedList positive = new LinkedList();
-        
-        double dist;
-        double maxDist = 0;
-        double sign;
 
         // Find a point from the inserted list that has the maximum distance from the line AB     
-        Point2D.Double P = findPivotPoint(A, B, head);
+        Point2D.Double P = findPivotPoint(A, B, points.getHead());
         // Triangle ABP is the "pivot triangle"; lines AP and BP divide the dataset,
         // if extended indefinitely.
         // P is part of the convex hull
-        
+
         // If no candidates are found, we return only the endpoints of the line AB and
         // terminate the recursion.
         // Pathological case.
-        if(P == null) {
+        if (P == null) {
             positive.insert(A);
             positive.insert(B);
             return positive;
         }
-        current = head;
-        positive.insert(A);
-        positive.insert(P);
-        negative.insert(P);
-        negative.insert(B);
 
-        // We loop through all the inserted points.
-        // Let C be our current point. If triangle APC is traversed clockwise,
-        // C can contribute to the convex hull. Otherwise, it can be discarded.
-
-        // Same is true for the triangle PBC.
-        while (current != null) {
-            if (checkRotation(A, P, current.getPoint()) > 0) {
-                positive.insert(current.getPoint());
-            }
-            if (checkRotation(P, B, current.getPoint()) > 0) {
-                negative.insert(current.getPoint());
-            }
-            current = current.getNext();
-        }
+        pruneInapplicablePoints(A, B, P, points.getHead(), positive, negative);
 
         // We have divided the dataset with respect to the lines AP and BP.
         // Now we recursively iterate.
@@ -169,21 +135,36 @@ public class QuickHull implements Algorithm {
         LinkedList res1 = iterate(positive);
         LinkedList res2 = iterate(negative);
 
-        // Merge results.
+        // Merge & return results.
+        return mergeResults(res1, res2);
 
+    }
+
+    /**
+     * Merges two lists into one.
+     *
+     * @param res1 1st list
+     * @param res2 2nd list
+     * @return concatenation of res1 and res2
+     */
+    private LinkedList mergeResults(LinkedList res1, LinkedList res2) {
         LinkedList result = new LinkedList();
-        current = res1.getHead();
+        LinkedListNode current = null;
+        if (res1 != null) {
+            current = res1.getHead();
 
-        while (current != null) {
-            result.insert(current.getPoint());
-            current = current.getNext();
+            while (current != null) {
+                result.insert(current.getPoint());
+                current = current.getNext();
+            }
         }
-        current = res2.getHead();
-        while (current != null) {
-            result.insert(current.getPoint());
-            current = current.getNext();
+        if (res2 != null) {
+            current = res2.getHead();
+            while (current != null) {
+                result.insert(current.getPoint());
+                current = current.getNext();
+            }
         }
-
         return result;
     }
 
@@ -209,8 +190,9 @@ public class QuickHull implements Algorithm {
     }
 
     /**
-     * Finds a point P from the inputted list so that P = argmax(dist(AB,P)).
-     * If there is no P so that dist(AB,P) > 0, return null.
+     * Finds a point P from the inputted list so that P = argmax(dist(AB,P)). If
+     * there is no P so that dist(AB,P) > 0, return null.
+     *
      * @param A First point
      * @param B Second point
      * @param head List
@@ -234,5 +216,39 @@ public class QuickHull implements Algorithm {
             return null;
         }
         return P;
+    }
+
+    /**
+     *
+     * We loop through inputted list. We can disregard points that lie inside
+     * the triangle ABP.
+     *
+     * If a point lies on the other side of the line AP (conversely, line BP)
+     * than the interior points of the aforementioned triangle, it is included
+     * in the list "positive" (conversely, the list "negative").
+     *
+     * @param A First point of the triangle
+     * @param B 2nd point of the triangle
+     * @param P pivot point
+     * @param head beginning of the list of points
+     * @param positive 1st list
+     * @param negative 2nd list
+     *
+     */
+    private void pruneInapplicablePoints(Point2D.Double A, Point2D.Double B, Point2D.Double P, LinkedListNode head, LinkedList positive, LinkedList negative) {
+        // Initialize the lists..
+        positive.insert(A);
+        positive.insert(P);
+        negative.insert(P);
+        negative.insert(B);
+        // Loop throught the points.
+        for (LinkedListNode current = head; current != null; current = current.getNext()) {
+            if (checkRotation(A, P, current.getPoint()) > 0) {
+                positive.insert(current.getPoint());
+            }
+            if (checkRotation(P, B, current.getPoint()) > 0) {
+                negative.insert(current.getPoint());
+            }
+        }
     }
 }
