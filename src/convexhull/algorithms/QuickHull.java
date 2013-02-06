@@ -26,7 +26,9 @@ public class QuickHull implements Algorithm {
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
         ConvexHull.startTimer();
-
+        if (points.getLength() < 4) {
+            return points;
+        }
         Point2D.Double minX = findMin(points.getHead());
         Point2D.Double maxX = findMax(points.getHead());
 
@@ -104,9 +106,7 @@ public class QuickHull implements Algorithm {
         if (points.getLength() < 4) {
             return trivialHull(points);
         }
-
         // Aux. variables
-
         Point2D.Double A = points.getHead().getPoint();
         Point2D.Double B = points.getHead().getNext().getPoint();
         LinkedList negative = new LinkedList();
@@ -114,19 +114,15 @@ public class QuickHull implements Algorithm {
 
         // Find a point from the inserted list that has the maximum distance from the line AB     
         Point2D.Double P = findPivotPoint(A, B, points.getHead());
-        // Triangle ABP is the "pivot triangle"; lines AP and BP divide the dataset,
-        // if extended indefinitely.
-        // P is part of the convex hull
 
         // If no candidates are found, we return only the endpoints of the line AB and
         // terminate the recursion.
-        // Pathological case.
         if (P == null) {
             positive.insert(A);
             positive.insert(B);
             return positive;
         }
-
+        // Split the data:
         pruneInapplicablePoints(A, B, P, points.getHead(), positive, negative);
 
         // We have divided the dataset with respect to the lines AP and BP.
@@ -134,8 +130,6 @@ public class QuickHull implements Algorithm {
 
         LinkedList res1 = iterate(positive);
         LinkedList res2 = iterate(negative);
-
-        // Merge & return results.
         return mergeResults(res1, res2);
 
     }
@@ -172,7 +166,7 @@ public class QuickHull implements Algorithm {
      * If input for iterate() is trivial, this method is called
      *
      * @param points List of points of length <4.
-     * @return Empty list for <1 point, otherwise trivial hulls of the input
+     * @return Empty list for <1 point, otherwise trivial hull of the input
      * list.
      */
     private LinkedList trivialHull(LinkedList points) {
@@ -202,7 +196,7 @@ public class QuickHull implements Algorithm {
         Point2D.Double tempPoint, P;
         double dist;
         double maxDist = 0;
-        P = A;
+        P = null;
         for (LinkedListNode current = head; current != null; current = current.getNext()) {
             tempPoint = current.getPoint();
             // This is not the normal Euclidean distance, but linearly equivalent to it.
@@ -211,9 +205,6 @@ public class QuickHull implements Algorithm {
                 maxDist = dist;
                 P = tempPoint;
             }
-        }
-        if (maxDist == 0) {
-            return null;
         }
         return P;
     }
