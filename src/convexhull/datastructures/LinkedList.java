@@ -38,7 +38,7 @@ public class LinkedList {
         }
         this.length++;
     }
-    
+
     /**
      * Adds all points from another linked list to this list.
      *
@@ -205,17 +205,20 @@ public class LinkedList {
         // when fast reaches the end, slow is half way there
         return slow;
     }
-    
+
     /**
      * Checks if a given point is in the linked list.
-     * 
+     *
      * @param point point to search for.
      * @return true if point is in the list, otherwise false.
      */
     public boolean contains(Point2D.Double point) {
         LinkedListNode node = this.getHead();
         while (node != null) {
-            if (node.getPoint().equals(point)) {
+            System.out.println("testi");
+            if (point == null && node.getPoint() == null) {
+                return true;
+            } else if (point != null && node.getPoint() != null && node.getPoint().equals(point)) {
                 return true;
             }
             node = node.getNext();

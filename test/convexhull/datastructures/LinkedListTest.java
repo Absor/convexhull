@@ -254,12 +254,14 @@ public class LinkedListTest {
     @Test
     public void testContains() {
         System.out.println("contains");
-        Double point = null;
         LinkedList instance = new LinkedList();
-        boolean expResult = false;
-        boolean result = instance.contains(point);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // should not contain anything
+        assertFalse(instance.contains(null));
+        instance.insert(null);
+        // should now contain null
+        assertTrue(instance.contains(null));
+        instance.insert(new Point2D.Double(1, 2));
+        // should now contain point(1,2)
+        assertTrue(instance.contains(new Point2D.Double(1, 2)));
     }
 }
