@@ -42,16 +42,15 @@ public class AklToussaintHeuristic implements Algorithm {
     public LinkedList useAlgorithm(LinkedList points) {
         ConvexHull.startTimer();
 
-        LinkedList octagonPoints = this.octagonPoints(points);
+        LinkedList octagonPoints = octagonPoints(points);
+        System.out.println(octagonPoints.getLength());
         // need at least a triangle to remove points
-        if (octagonPoints.getLength() < 3) {
-            System.out.println("Akl-Toussaint didn't remove any points.");
+        if (points.getLength() < 4 || octagonPoints.getLength() < 3) {
+            System.out.println("Akl-Toussaint heuristic removed 0 nodes.");
             return points;
         }
         // go through all points to remove points that are inside the octagon
         LinkedList outsideNodes = removePointsInsideOctagon(points, octagonPoints);
-        // add octagon points to outsideNodes (they are part of the hull)
-        outsideNodes.insertAll(octagonPoints);
 
         System.out.println("Akl-Toussaint heuristic removed " + (points.getLength() - outsideNodes.getLength()) + " nodes.");
         System.out.println("Akl-Toussaint heuristic ran in " + ConvexHull.stopTimer() + "ms.");

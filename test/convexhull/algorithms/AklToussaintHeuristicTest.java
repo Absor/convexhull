@@ -58,7 +58,7 @@ public class AklToussaintHeuristicTest {
         // test with 2 points
         testAlgorithm("test2", "result2");
         // test with 3 points
-        testAlgorithm("test3", "result3");
+        testAlgorithm("test3", "test3");
         // test with 100 points
         testAlgorithm("test100", "result100");
         // test with 10000 points
@@ -94,7 +94,7 @@ public class AklToussaintHeuristicTest {
 
         // check results
         if (!Helper.setsMatch(result, hull)) {
-            fail("Algorithm returns wrong result with: " + inputfile);
+            fail("Algorithm returns wrong result with: " + inputfile + " and " + resultfile);
         }
     }
 }
