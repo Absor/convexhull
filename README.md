@@ -2,17 +2,16 @@
 ## Konveksin ruhon algoritmit
 
 ### Dokumentaatio
-* [Määrittelydokumentti](convexhull/blob/master/documentation/definitions.pdf?raw=true)
-* [Testausdokumentti](convexhull/blob/master/documentation/testing.pdf?raw=true)
-* [Käyttöohjeet](convexhull/blob/master/documentation/using.pdf?raw=true)
-* [Toteutusdokumentti](convexhull/blob/master/documentation/implementation.pdf?raw=true)
+* [Määrittelydokumentti](documentation/definitions.pdf?raw=true)
+* [Testausdokumentti](documentation/testing.pdf?raw=true)
+* [Käyttöohjeet](documentation/using.pdf?raw=true)
+* [Toteutusdokumentti](documentation/implementation.pdf?raw=true)
 
 ### Viikkoraportit
-* [viikko1](convexhull/blob/master/weeklyreports/week1)
-* [viikko2](convexhull/blob/master/weeklyreports/week2)
-* [viikko3](convexhull/blob/master/weeklyreports/week3)
-* [viikko4](convexhull/blob/master/weeklyreports/week4)
-* [viikko5](convexhull/blob/master/weeklyreports/week5)
+* [viikko1](weeklyreports/week1)
+* [viikko2](weeklyreports/week2)
+* [viikko3](weeklyreports/week3)
+* [viikko4](weeklyreports/week4)
+* [viikko5](weeklyreports/week5)
 
-### jar
-* [viikko5](convexhull/blob/master/jar/ConvexHull.jar?raw=true)
+### [jar](jar/ConvexHull.jar?raw=true)
