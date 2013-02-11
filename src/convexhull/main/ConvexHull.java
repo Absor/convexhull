@@ -212,7 +212,7 @@ public class ConvexHull {
         while (!ok) {
             if (input.equals("draw")) {
                 System.out.println("Drawing points on screen.");
-                drawOnScreen(allPoints, hullPoints);
+                drawOnScreen(allPoints, aklPoints ,hullPoints);
                 ok = true;
             } else if (input.equals("nodraw")) {
                 System.out.println("Not drawing points on screen.");
@@ -303,10 +303,10 @@ public class ConvexHull {
         return endTime - startTime;
     }
 
-    private static void drawOnScreen(LinkedList allPoints, LinkedList hullPoints) {
+    private static void drawOnScreen(LinkedList allPoints, LinkedList aklPoints, LinkedList hullPoints) {
         JFrame frame = new JFrame("Points");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new PointPrinter(allPoints, hullPoints));
+        frame.add(new PointPrinter(allPoints, aklPoints, hullPoints));
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
