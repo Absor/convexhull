@@ -32,10 +32,11 @@ public class PointPrinter extends JPanel {
     /**
      *
      * @param allPoints
+     * @param aklPoints 
      * @param hullPoints
      */
     public PointPrinter(LinkedList allPoints, LinkedList aklPoints, LinkedList hullPoints) {
-        setBackground(Color.BLACK);
+        setBackground(Color.WHITE);
         this.hullPoints = hullPoints;
         this.aklPoints = aklPoints;
         this.allPoints = allPoints;
@@ -67,8 +68,8 @@ public class PointPrinter extends JPanel {
             yScaler /= pointAreaHeight;
         }
 
-        // print axles with black
-        g2d.setColor(Color.GRAY);
+        // print axles
+        g2d.setColor(Color.BLACK);
 
         Shape xAxle = new Line2D.Double(0, yScaler * yCorrection + 10, width + 20, yScaler * yCorrection + 10);
         g2d.draw(xAxle);
@@ -129,7 +130,7 @@ public class PointPrinter extends JPanel {
             node = node.getNext();
         }
 
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(Color.BLACK);
         g2d.drawString("X: [" + minX + "," + maxX + "]", 10, 20);
         g2d.drawString("Y: [" + minY + "," + maxY + "]", 10, 35);
     }
