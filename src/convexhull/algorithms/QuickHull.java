@@ -7,11 +7,34 @@ import java.awt.geom.Point2D;
 
 /**
  *
- * Class for QuickHull algo Wikipedia: Quick Hull is a method of computing the
+ * Class for QuickHull algo. Wikipedia: Quick Hull is a method of computing the
  * convex hull of a finite set of points in the plane. It uses a divide and
  * conquer approach similar to that of QuickSort, which its name derives from.
  * Its average case complexity is considered to be O(n * log(n)), whereas in the
- * worst case it takes O(n2) (quadratic).
+ * worst case it takes O(n2) (quadratic). Under average circumstances the
+ * algorithm works quite well, but processing usually becomes slow in cases of
+ * high symmetry or points lying on the circumference of a circle.
+ *
+ * The algorithm can be broken down to the following steps:
+ *
+ * 1. Find the points with minimum and maximum x coordinates, those are bound to
+ * be part of the convex.
+ *
+ * 2. Use the line formed by the two points to divide the set in two subsets of
+ * points, which will be processed recursively.
+ *
+ * 3. Determine the point, on one side of the line, with the maximum distance
+ * from the line. The two points found before along with this one form a
+ * triangle.
+ *
+ * 4. The points lying inside of that triangle cannot be part of the convex hull
+ * and can therefore be ignored in the next steps.
+ *
+ * 5. Repeat the previous two steps on the two lines formed by the triangle (not
+ * the initial line). Keep on doing so on until no more points are left, the
+ * recursion has come to an end and the points selected constitute the convex
+ * hull.
+ *
  *
  * @author Aleksi Markkanen
  */
@@ -34,12 +57,12 @@ public class QuickHull implements Algorithm {
 
         LinkedList positive = new LinkedList();
         LinkedList negative = new LinkedList();
-        LinkedList result = new LinkedList();
+        LinkedList result;
 
         pruneInapplicablePoints(minX, minX, maxX, points.getHead(), positive, negative);
         result = mergeResults(iterate(positive), iterate(negative));
 
-        System.out.println("Algorithm ran in " + ConvexHull.stopTimer() + "ms");
+        System.out.println("QuickHull algorithm ran in " + ConvexHull.stopTimer() + " ms.");
         return result;
     }
 
