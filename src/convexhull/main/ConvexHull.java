@@ -125,8 +125,6 @@ public class ConvexHull {
         }
         ok = false;
 
-        LinkedList hullPoints = aklPoints;
-
         Algorithm algorithmToUse = null;
 
         // algorithm picking
@@ -154,18 +152,20 @@ public class ConvexHull {
             }
             System.out.println();
         }
-
+        
+        LinkedList hullPoints = aklPoints;
+        
         System.out.println(iterations + " iterations.");
         startTimer();
         for (int i = 0; i < iterations; i++) {
             hullPoints = algorithmToUse.useAlgorithm(aklPoints);
         }
         double totalTime = stopTimer();
-        System.out.println("Total run time: " + totalTime + "ms");
-        System.out.println("Average run time: " + (totalTime / iterations) + "ms");
-        hullPoints = algorithmToUse.useAlgorithm(aklPoints);
+        System.out.println("Total run time: " + totalTime + " ms.");
+        System.out.println("Average run time: " + (totalTime / iterations) + " ms.");
 
         System.out.println("Output: a list of " + hullPoints.getLength() + " points.");
+        System.out.println();
 
         if (args.length >= 5) {
             input = args[4];
