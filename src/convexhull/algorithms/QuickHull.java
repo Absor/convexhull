@@ -34,12 +34,13 @@ public class QuickHull implements Algorithm {
 
         LinkedList positive = new LinkedList();
         LinkedList negative = new LinkedList();
+        LinkedList result = new LinkedList();
 
         pruneInapplicablePoints(minX, minX, maxX, points.getHead(), positive, negative);
-        return mergeResults(iterate(positive), iterate(negative));
-        /*
-         System.out.println("Algorithm ran in " + ConvexHull.stopTimer() + "ms");
-         */
+        result = mergeResults(iterate(positive), iterate(negative));
+
+        System.out.println("Algorithm ran in " + ConvexHull.stopTimer() + "ms");
+        return result;
     }
 
     /**
