@@ -3,7 +3,6 @@ package convexhull.datastructures;
 import convexhull.algorithms.Helper;
 import convexhull.comparators.AngleComparator;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.junit.After;
@@ -82,7 +81,7 @@ public class LinkedListTest {
         // empty list length 0
         assertEquals(0, points.getLength());
         try {
-            points = Helper.parseFile("test100");
+            points = Helper.parseFile("testmaterial/test100");
         } catch (Exception ex) {
             fail("Could not parse input file.");
         }
@@ -98,7 +97,7 @@ public class LinkedListTest {
         System.out.println("sort");
         LinkedList points1 = null;
         try {
-            points1 = Helper.parseFile("test100");
+            points1 = Helper.parseFile("testmaterial/test100");
         } catch (Exception ex) {
             fail("Could not parse input file.");
         }
@@ -132,7 +131,7 @@ public class LinkedListTest {
         System.out.println("sort2");
         LinkedList points = null;
         try {
-            points = Helper.parseFile("test100");
+            points = Helper.parseFile("testmaterial/test100");
         } catch (Exception ex) {
             fail("Could not parse input file.");
         }

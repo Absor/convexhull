@@ -53,7 +53,7 @@ public class ConvexHullTest {
     @Test
     public void testMain() {
         System.out.println("main");
-        String[] args = {"test100", "at", "gift", "OUT", "nodraw"};
+        String[] args = {"testmaterial/test100", "at", "gift", "OUT", "nodraw"};
         ConvexHull.main(args);
         // just should not crash :P
     }

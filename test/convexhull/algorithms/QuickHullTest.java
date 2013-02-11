@@ -56,12 +56,12 @@ public class QuickHullTest {
         Algorithm algorithm = new QuickHull();
         String result;
         // test with 2 points
-        if ((result = Helper.testAlgorithm(algorithm, "test2", "result2")) != null) {
+        if ((result = Helper.testAlgorithm(algorithm, "testmaterial/test2", "testmaterial/result2")) != null) {
             fail(result);
         }
         // test with 3 points
-        if (!((result = Helper.testAlgorithm(algorithm, "test3", "result3")) == null ||
-                (result = Helper.testAlgorithm(algorithm, "test3", "test3")) == null)) {
+        if (!((result = Helper.testAlgorithm(algorithm, "testmaterial/test3", "testmaterial/result3")) == null ||
+                (result = Helper.testAlgorithm(algorithm, "testmaterial/test3", "testmaterial/test3")) == null)) {
             fail(result);
         }
         // test with 4 collinear points
@@ -69,15 +69,15 @@ public class QuickHullTest {
             fail(result);
         }
         // test with 100 points
-        if ((result = Helper.testAlgorithm(algorithm, "test100", "result100")) != null) {
+        if ((result = Helper.testAlgorithm(algorithm, "testmaterial/test100", "testmaterial/result100")) != null) {
             fail(result);
         }
         // test with 10000 points
-        if ((result = Helper.testAlgorithm(algorithm, "test10000", "result10000")) != null) {
+        if ((result = Helper.testAlgorithm(algorithm, "testmaterial/test10000", "testmaterial/result10000")) != null) {
             fail(result);
         }
         // test with a ready hull of points
-        if ((result = Helper.testAlgorithm(algorithm, "result100", "result100")) != null) {
+        if ((result = Helper.testAlgorithm(algorithm, "testmaterial/result100", "testmaterial/result100")) != null) {
             fail(result);
         }
     }

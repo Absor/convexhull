@@ -117,7 +117,7 @@ public class Helper {
     
     public static String testAlgorithmCollinearPoints(Algorithm algorithm) {
         System.out.println("useAlgorithm");
-        String inputfile = "test4";
+        String inputfile = "testmaterial/test4";
         // input set
         LinkedList input = null;
         try {

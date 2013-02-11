@@ -56,15 +56,15 @@ public class AklToussaintHeuristicTest {
     @Test
     public void testUseAlgorithm() {
         // test with 2 points
-        testAlgorithm("test2", "result2");
+        testAlgorithm("testmaterial/test2", "testmaterial/result2");
         // test with 3 points
-        testAlgorithm("test3", "test3");
+        testAlgorithm("testmaterial/test3", "testmaterial/test3");
         // test with 100 points
-        testAlgorithm("test100", "result100");
+        testAlgorithm("testmaterial/test100", "testmaterial/result100");
         // test with 10000 points
-        testAlgorithm("test10000", "result10000");
+        testAlgorithm("testmaterial/test10000", "testmaterial/result10000");
         // test with a ready hull of points
-        testAlgorithm("result100", "result100");
+        testAlgorithm("testmaterial/result100", "testmaterial/result100");
     }
 
     private void testAlgorithm(String inputfile, String resultfile) {

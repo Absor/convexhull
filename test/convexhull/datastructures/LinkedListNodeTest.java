@@ -1,7 +1,6 @@
 package convexhull.datastructures;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
