@@ -65,7 +65,15 @@ public class QuickHullTest {
             fail(result);
         }
         // test with 4 collinear points
-        if ((result = Helper.testAlgorithmCollinearPoints(algorithm)) != null) {
+        if ((result = Helper.testAlgorithmCollinearPoints4(algorithm)) != null) {
+            fail(result);
+        }
+        // test with 100 collinear points
+        if ((result = Helper.testAlgorithmCollinearPoints100(algorithm)) != null) {
+            fail(result);
+        }
+        // test with 10000 collinear points
+        if ((result = Helper.testAlgorithmCollinearPoints10000(algorithm)) != null) {
             fail(result);
         }
         // test with 100 points
@@ -78,6 +86,14 @@ public class QuickHullTest {
         }
         // test with a ready hull of points
         if ((result = Helper.testAlgorithm(algorithm, "testmaterial/result100", "testmaterial/result100")) != null) {
+            fail(result);
+        }
+        // test with points in a circle
+        if ((result = Helper.testAlgorithm(algorithm, "testmaterial/circle10000", "testmaterial/circle10000")) != null) {
+            fail(result);
+        }
+        // test with points in a circle
+        if ((result = Helper.testAlgorithm(algorithm, "testmaterial/circle100000", "testmaterial/circle100000")) != null) {
             fail(result);
         }
     }

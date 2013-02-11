@@ -90,7 +90,7 @@ public class Helper {
     }
     
     public static String testAlgorithm(Algorithm algorithm, String inputfile, String resultfile) {
-        System.out.println("useAlgorithm");
+        System.out.println("useAlgorithm " + inputfile + " " + resultfile);
         // input set
         LinkedList input = null;
         try {
@@ -115,8 +115,8 @@ public class Helper {
         return null;
     }
     
-    public static String testAlgorithmCollinearPoints(Algorithm algorithm) {
-        System.out.println("useAlgorithm");
+    public static String testAlgorithmCollinearPoints4(Algorithm algorithm) {
+        System.out.println("useAlgorithm test4");
         String inputfile = "testmaterial/test4";
         // input set
         LinkedList input = null;
@@ -131,6 +131,46 @@ public class Helper {
 
         if (!(algoResult.contains(new Point2D.Double(-1.0, -1.0)) && algoResult.contains(new Point2D.Double(3.0, 3.0)))) {
             return "Algorithm returns wrong result with four collinear points.";
+        }
+        return null;
+    }
+    
+    public static String testAlgorithmCollinearPoints100(Algorithm algorithm) {
+        System.out.println("useAlgorithm line100");
+        String inputfile = "testmaterial/line100";
+        // input set
+        LinkedList input = null;
+        try {
+            input = Helper.parseFile(inputfile);
+        } catch (Exception ex) {
+            return "Could not parse input file.";
+        }
+
+        // algorithm results
+        LinkedList algoResult = algorithm.useAlgorithm(input);
+
+        if (!(algoResult.contains(new Point2D.Double(1.0, 100.0)) && algoResult.contains(new Point2D.Double(100.0, 1.0)))) {
+            return "Algorithm returns wrong result with 100 collinear points.";
+        }
+        return null;
+    }
+    
+    public static String testAlgorithmCollinearPoints10000(Algorithm algorithm) {
+        System.out.println("useAlgorithm line10000");
+        String inputfile = "testmaterial/line10000";
+        // input set
+        LinkedList input = null;
+        try {
+            input = Helper.parseFile(inputfile);
+        } catch (Exception ex) {
+            return "Could not parse input file.";
+        }
+
+        // algorithm results
+        LinkedList algoResult = algorithm.useAlgorithm(input);
+
+        if (!(algoResult.contains(new Point2D.Double(1.0, 1.0)) && algoResult.contains(new Point2D.Double(100.0, 100.0)))) {
+            return "Algorithm returns wrong result with 10000 collinear points.";
         }
         return null;
     }

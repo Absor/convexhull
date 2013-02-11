@@ -8,7 +8,6 @@ import convexhull.algorithms.QuickHull;
 import convexhull.datastructures.LinkedList;
 import convexhull.datastructures.LinkedListNode;
 import convexhull.graphics.PointPrinter;
-import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -30,9 +29,10 @@ public class ConvexHull {
      *
      * @param args[0] input filename
      * @param args[1] at or noat to choose whether to use the Akl-Toussaint
-     * @param args[2] algorithm chooser string (gift/quick/graham)
-     * @param args[3] output filename or print to print to console
-     * @param args[3] draw or nodraw to draw points on screen
+     * @param args[2] amount of iterations to do
+     * @param args[3] algorithm chooser string (gift/quick/graham)
+     * @param args[4] output filename or print to print to console
+     * @param args[5] draw or nodraw to draw points on screen
      */
     public static void main(String[] args) {
         LinkedList allPoints = null;
@@ -99,6 +99,26 @@ public class ConvexHull {
         }
         ok = false;
 
+        int iterations = 0;
+        
+        while (!ok) {
+            try {
+                iterations = Integer.parseInt(input);
+                ok = true;
+            } catch (Exception e) {
+                System.out.println("Bad argument: \"" + input + "\"");
+                System.out.print("Input new argument: ");
+                input = in.nextLine();
+            }
+        }
+
+        if (args.length >= 4) {
+            input = args[3];
+        } else {
+            input = "";
+        }
+        ok = false;
+
         LinkedList hullPoints = aklPoints;
 
         while (!ok) {
@@ -118,17 +138,6 @@ public class ConvexHull {
                 Algorithm grahamScan = new GrahamScan();
                 hullPoints = grahamScan.useAlgorithm(aklPoints);
                 ok = true;
-            } else if (input.equals("all")) {
-                System.out.println("Using Gift Wrapping algorithm.");
-                Algorithm giftWrapping = new GiftWrapping();
-                giftWrapping.useAlgorithm(aklPoints);
-                System.out.println("Using QuickHull algorithm.");
-                Algorithm quickHull = new QuickHull();
-                quickHull.useAlgorithm(aklPoints);
-                System.out.println("Using Graham scan algorithm.");
-                Algorithm grahamScan = new GrahamScan();
-                grahamScan.useAlgorithm(aklPoints);
-                return;
             } else {
                 System.out.println("Bad argument: \"" + input + "\"");
                 System.out.println("Valid arguments:");
@@ -142,8 +151,8 @@ public class ConvexHull {
         }
         System.out.println("Output: a list of " + hullPoints.getLength() + " points.");
 
-        if (args.length >= 4) {
-            input = args[3];
+        if (args.length >= 5) {
+            input = args[4];
         } else {
             input = "";
         }
@@ -173,8 +182,8 @@ public class ConvexHull {
             System.out.println();
         }
 
-        if (args.length >= 5) {
-            input = args[4];
+        if (args.length >= 6) {
+            input = args[5];
         } else {
             input = "";
         }

@@ -215,7 +215,6 @@ public class LinkedList {
     public boolean contains(Point2D.Double point) {
         LinkedListNode node = this.getHead();
         while (node != null) {
-            System.out.println("testi");
             if (point == null && node.getPoint() == null) {
                 return true;
             } else if (point != null && node.getPoint() != null && node.getPoint().equals(point)) {

@@ -56,6 +56,7 @@ public class GiftWrapping implements Algorithm {
             LinkedListNode current = points.getHead();
             newEndPoint = current.getPoint();
             current = current.getNext();
+            double totalArea = 0.0;
             while (current != null) {
                 Point2D.Double temp = current.getPoint();
                 // ignore if temp is the current end point
@@ -63,8 +64,13 @@ public class GiftWrapping implements Algorithm {
                     double triangleArea = triangleArea(endPoint, newEndPoint, temp);
                     // If temp is left of line from endpoint to candidate
                     // (area positive), update candidate.
+                    totalArea += triangleArea;
                     if (triangleArea >= 0) {
                         newEndPoint = temp;
+                    }
+                    if (totalArea == 0.0 && current.getNext() == null) {
+                        // all collinear so return all
+                        return points;
                     }
                 }
                 current = current.getNext();
