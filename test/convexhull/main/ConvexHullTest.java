@@ -5,7 +5,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -53,7 +52,7 @@ public class ConvexHullTest {
     @Test
     public void testMain() {
         System.out.println("main");
-        String[] args = {"testmaterial/test100", "at", "gift", "OUT", "nodraw"};
+        String[] args = {"testmaterial/test100", "at", "10", "gift", "OUT", "nodraw"};
         ConvexHull.main(args);
         // just should not crash :P
     }

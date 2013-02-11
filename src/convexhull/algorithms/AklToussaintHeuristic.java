@@ -40,7 +40,6 @@ public class AklToussaintHeuristic implements Algorithm {
      */
     @Override
     public LinkedList useAlgorithm(LinkedList points) {
-        ConvexHull.startTimer();
 
         LinkedList octagonPoints = octagonPoints(points);
         System.out.println(octagonPoints.getLength());
@@ -53,7 +52,6 @@ public class AklToussaintHeuristic implements Algorithm {
         LinkedList outsideNodes = removePointsInsideOctagon(points, octagonPoints);
 
         System.out.println("Akl-Toussaint heuristic removed " + (points.getLength() - outsideNodes.getLength()) + " nodes.");
-        System.out.println("Akl-Toussaint heuristic ran in " + ConvexHull.stopTimer() + "ms.");
 
         return outsideNodes;
     }

@@ -36,9 +36,6 @@ public class GiftWrapping implements Algorithm {
             return points;
         }
         
-        // Algorithm run timer
-        ConvexHull.startTimer();
-
         // Find the point with minimum x coordinate: O(n).
         Point2D.Double minXPoint = findMinX(points);
 
@@ -84,8 +81,6 @@ public class GiftWrapping implements Algorithm {
             hullPoints.insert(newEndPoint);
             endPoint = newEndPoint;
         }
-
-        System.out.println("Gift Wrapping algorithm ran in " + ConvexHull.stopTimer() + "ms.");
 
         return hullPoints;
     }

@@ -46,8 +46,6 @@ public class GrahamScan implements Algorithm {
         if (points.getLength() < 3) {
             return points;
         }
-        // run timer
-        ConvexHull.startTimer();
 
         // find point with minimum y-coordinate O(n)
         Point2D.Double minYPoint = findMinY(points);
@@ -82,9 +80,6 @@ public class GrahamScan implements Algorithm {
             hullPoints.insert(iNode.getPoint());
             iNode = iNode.getNext();
         }
-
-        // stop timer
-        System.out.println("Graham Scan algorithm ran in " + ConvexHull.stopTimer() + "ms.");
 
         return hullPoints;
     }
