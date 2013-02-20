@@ -113,6 +113,8 @@ public class ConvexHull {
                 ok = true;
             } catch (Exception e) {
                 System.out.println("Bad argument: \"" + input + "\"");
+                System.out.println("Valid arguments:");
+                System.out.println("A number of iterations to run the algorithm for (integer).");
                 System.out.print("Input new argument: ");
                 input = in.nextLine();
             }
