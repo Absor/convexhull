@@ -33,7 +33,8 @@ public class ConvexHull {
      * @param args[3] algorithm chooser string (gift/quick/graham)
      * @param args[4] output filename, print to "print" to console or "noout" to
      * do nothing
-     * @param args[5] draw or nodraw to draw points on screen
+     * @param args[5] draw with awesome colours: yes/no
+     * @param args[6] draw or nodraw to draw points on screen
      */
     public static void main(String[] args) {
         LinkedList allPoints = null;
@@ -203,9 +204,36 @@ public class ConvexHull {
             }
             System.out.println();
         }
-
+        
         if (args.length >= 6) {
             input = args[5];
+        } else {
+            input = "";
+        }
+        ok = false;
+
+        boolean awesomeColours = false;
+        while (!ok) {
+            if (input.equals("yes")) {
+                System.out.println("Drawing with awesome colours!");
+                awesomeColours = true;
+                ok = true;
+            } else if (input.equals("no")) {
+                System.out.println("Drawing with boring colours.");
+                ok = true;
+            } else {
+                System.out.println("Bad argument: \"" + input + "\"");
+                System.out.println("Valid arguments:");
+                System.out.println("yes : draw with awesome colours.");
+                System.out.println("no : draw with boring colours.");
+                System.out.print("Input new argument: ");
+                input = in.nextLine();
+            }
+            System.out.println();
+        }
+
+        if (args.length >= 7) {
+            input = args[6];
         } else {
             input = "";
         }
@@ -214,7 +242,7 @@ public class ConvexHull {
         while (!ok) {
             if (input.equals("draw")) {
                 System.out.println("Drawing points on screen.");
-                drawOnScreen(allPoints, aklPoints ,hullPoints);
+                drawOnScreen(allPoints, aklPoints ,hullPoints, awesomeColours);
                 ok = true;
             } else if (input.equals("nodraw")) {
                 System.out.println("Not drawing points on screen.");
@@ -305,10 +333,10 @@ public class ConvexHull {
         return endTime - startTime;
     }
 
-    private static void drawOnScreen(LinkedList allPoints, LinkedList aklPoints, LinkedList hullPoints) {
+    private static void drawOnScreen(LinkedList allPoints, LinkedList aklPoints, LinkedList hullPoints, boolean awesomeColours) {
         JFrame frame = new JFrame("Points");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new PointPrinter(allPoints, aklPoints, hullPoints));
+        frame.add(new PointPrinter(allPoints, aklPoints, hullPoints, awesomeColours));
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

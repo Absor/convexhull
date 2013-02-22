@@ -28,6 +28,7 @@ public class PointPrinter extends JPanel {
     private double pointAreaWidth;
     private double pointAreaHeight;
     private double maxX, minX, maxY, minY;
+    private boolean awesomeColours;
 
     /**
      *
@@ -35,11 +36,16 @@ public class PointPrinter extends JPanel {
      * @param aklPoints 
      * @param hullPoints
      */
-    public PointPrinter(LinkedList allPoints, LinkedList aklPoints, LinkedList hullPoints) {
-        setBackground(Color.WHITE);
+    public PointPrinter(LinkedList allPoints, LinkedList aklPoints, LinkedList hullPoints, boolean awesomeColours) {
         this.hullPoints = hullPoints;
         this.aklPoints = aklPoints;
         this.allPoints = allPoints;
+        this.awesomeColours = awesomeColours;
+        if (awesomeColours) {
+            setBackground(Color.BLACK);
+        } else {
+            setBackground(Color.WHITE);
+        }
         findMax();
     }
 
@@ -69,15 +75,23 @@ public class PointPrinter extends JPanel {
         }
 
         // print axles
-        g2d.setColor(Color.BLACK);
+        if (awesomeColours) {
+            g2d.setColor(Color.GRAY);
+        } else {
+            g2d.setColor(Color.BLACK);
+        }
 
         Shape xAxle = new Line2D.Double(0, yScaler * yCorrection + 10, width + 20, yScaler * yCorrection + 10);
         g2d.draw(xAxle);
         Shape yAxle = new Line2D.Double(xScaler * xCorrection + 10, 0, xScaler * xCorrection + 10, height + 20);
         g2d.draw(yAxle);
         
-        // print hull points with blue rings and hull with blue line
-        g2d.setColor(Color.BLUE);
+        // print hull points
+        if (awesomeColours) {
+            g2d.setColor(Color.MAGENTA);
+        } else {
+            g2d.setColor(Color.BLUE);
+        }
 
         LinkedListNode node = this.hullPoints.getHead();
         while (node != null) {
@@ -104,8 +118,12 @@ public class PointPrinter extends JPanel {
             node = node.getNext();
         }
 
-        // print all points with green
-        g2d.setColor(Color.GREEN);
+        // print all points
+        if (awesomeColours) {
+            g2d.setColor(Color.BLUE);
+        } else {
+            g2d.setColor(Color.GREEN);
+        }
 
         node = this.allPoints.getHead();
         while (node != null) {
@@ -117,8 +135,12 @@ public class PointPrinter extends JPanel {
             node = node.getNext();
         }
         
-        // print aklPoints with red
-        g2d.setColor(Color.RED);
+        // print aklPoints
+        if (awesomeColours) {
+            g2d.setColor(Color.GREEN);
+        } else {
+            g2d.setColor(Color.RED);
+        }
 
         node = this.aklPoints.getHead();
         while (node != null) {
@@ -130,7 +152,11 @@ public class PointPrinter extends JPanel {
             node = node.getNext();
         }
 
-        g2d.setColor(Color.BLACK);
+        if (awesomeColours) {
+            g2d.setColor(Color.GRAY);
+        } else {
+            g2d.setColor(Color.BLACK);
+        }
         g2d.drawString("X: [" + minX + "," + maxX + "]", 10, 20);
         g2d.drawString("Y: [" + minY + "," + maxY + "]", 10, 35);
     }
