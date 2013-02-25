@@ -1,0 +1,5 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Chosen algorithms and data structures}{3}{section.2}
+\contentsline {section}{\numberline {3}Inputs}{4}{section.3}
+\contentsline {section}{\numberline {4}Computational complexity}{5}{section.4}

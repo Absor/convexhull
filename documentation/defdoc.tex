@@ -1,0 +1,161 @@
+\documentclass[a4paper,12pt,leqno,titlepage]{article}
+\usepackage{hyperref} %linkitys
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{moreverb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[english]{babel}
+%\usepackage[finnish]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{amssymb}
+\newcommand{\R}{\mathbb{R}} %lukujoukkosymbolit
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\logM}{\mathcal{M}}
+\newcommand{\bigO}{\mathcal{O}}
+\setlength{\parindent}{0pt} %kappalejakoa
+\setlength{\parskip}{2ex}
+\newcommand{\compcent}[1]{\vcenter{\hbox{$#1\circ$}}}
+\newcommand{\comp}{\mathbin{\mathchoice
+{\compcent\scriptstyle}{\compcent\scriptstyle}
+{\compcent\scriptscriptstyle}{\compcent\scriptscriptstyle}}}
+
+\hyphenpenalty=750
+\setlength{\emergencystretch}{1.5 em} % Tavutusasetukset suomen kielelle
+
+\hypersetup{
+pdfborder = {0 0 0 0}, %linkkien värejä etc kikkailua
+colorlinks = true,
+linkcolor = black,
+urlcolor = blue,
+citecolor = red,
+}
+
+
+\usepackage{lastpage} %sivumäärä alaviitteeseen
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\cfoot{Page \thepage/\pageref{LastPage}} % \\ Opiskelijanumero 013126382}
+
+
+\begin{document}
+\begin{titlepage}
+\title{Data structures project, \\
+Definitions document}
+\author{Heikki Haapala and Aleksi Markkanen\\
+Student numbers 014090190 and 013126382\\
+\pageref{LastPage} pages}
+\date{\today}
+\end{titlepage}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+
+
+
+
+%Määrittelydokumentti
+%Mitä algoritmeja ja tietorakenteita toteutat työssäsi
+%Mitä ongelmaa ratkaiset ja miksi valitsit kyseiset algoritmit/tietorakenteet
+%Mitä syötteitä ohjelma saa ja miten näitä käytetään
+%Tavoitteena olevat aika- ja tilavaativuudet (m.m. O-analyysi)
+%Lähteet
+
+
+\section{Introduction}
+The topic of choice for the project is the problem of finding the convex hull for a set of points.
+This is a problem in the field of computational geometry.
+%Valitsin aiheekseni konveksin peitteen ongelman, joka kuuluu laskennallisen geometrian piiriin.
+The convex hull of a set of points can be defined thusly.
+%Olkoon $S = \{(x_1,y_1),\ldots,(x_n,y_n)\}$ (äärellinen) joukko tason pisteitä.
+Let $S = \{(x_1,y_1),\ldots,(x_n,y_n)\}$ be a finite set of points that lie on a plane.
+%Tällöin joukon $S$ virittämä \emph{convex hull} on pienin konveksi joukko $C$, jolle $S \subset C$.
+Then we say that the convex hull of the set $S$ is the smallest convex set $C$ that satisfies that $S \subset C$.
+%Helposti nähdään, että jos $S' \subset S$ niin vastaaville \emph{convex hulleille} $C$ ja $C'$ pätee $C' \subset C$.
+It is easy to see that if $S' \subset S$ then for the convex hulls $C$ and $C'$, respectively, it holds that $C' \subset C$.
+
+%Pätee myös, että $$ C = \left\{ \sum_{i=1}^n \alpha_ix_i | x\in S, \sum_{i=1}^n \alpha_i = 1 \right\}. $$
+
+%Koska ongelmanmäärittelyssä $S$ on äärellinen, joukko $C$ on konveksi polygoni.
+%Tällöin ongelman ratkaisu on lista $C$:n vertexeistä.
+Since $S$ is finite, the set $C$ is a convex polygon.
+Thus, we know $C$ uniquely from the set of its vertices.
+
+%Harjoitustyössäni vertailen kahden algoritmin keskinäistä suoriutumista eri tilanteissa.
+We will compare the performance of several algorithms in different situations.
+\pagebreak
+\section{Chosen algorithms and data structures}
+We will implement three different algorithms: \emph{Gift-wrapping algorithm}, \emph{Graham scan} and \emph{Quickhull}.
+We also implement the \emph{Akl-Toussaint heuristics} to discard large amount of points as a preprosessing step.
+%Päätin toteuttaa kaksi eri algoritmia \emph{Akl-Toussaint-heuristiikalla} ja ilman.
+%Valitsemani algoritmit ovat \emph{Gift-wrapping algorithm} sekä \emph{Graham scan}.
+
+We will also need a sorting algorithm since the \emph{Graham scan} supposes that the input is ordered.
+Points will be stored in a linked list.
+%Näiden algoritmien lisäksi tarvitsen myös järjestysalgoritmin, sillä kummatkin edellämainituista algoritmeista olettavat pistejoukon $S$ olevan leksikografisesti järjestetyssä listassa.
+%Järjestysalgoritmiksi valitsin \emph{Heapsortin} hyvän aikavaativuuden vuoksi. Käytän siis binäärikekoa tietorakenteenani.
+
+\pagebreak
+\section{Inputs}
+%Ohjelmalle annetaan syötteenä lista pisteistä, joiden \emph{convex hull} tulee selvittää.
+%Syöte järjestetään pisteparin $(x,y)$ luonnolliseen leksikografiseen järjestykseen.
+Our program will take as input a list of points for which the convex hull needs to be computed.
+%First step is to sort the input.
+
+When using the \emph{Akl-Toussaint heuristics} we will choose from the inputted points those with the largest and smallest $x$ and $y$ coordinates.
+We will also pick points that have the minimum and maximum sums and differences of $x$ and $y$ coordinates.
+We can safely discard all the points that lie in the thusly formed octagon.
+%\emph{Akl-Toussaint-heuristiikkaa} käytettäessä pistejoukosta valitaan $x$- ja $y$-koordinaateiltaan suurimmat ja pienimmät.
+%Jos näin saadaan neljä eri pistettä, pisteet muodostavat konveksin nelikulmion, ja valitut neljä pistettä kuuluvat koko pistejoukon \emph{convex hulliin}.
+%Tällöin voimme poistaa tarkastelusta pisteet, jotka jäävät näin muodostetun nelikulmion sisäpuolelle.
+
+%Järjestämisen ja esikäsittelyn jälkeen pisteet syötetään algoritmeille.
+After the preprosessing we will input the points to the algorithms of choice.
+
+\pagebreak
+\section{Computational complexity}
+
+%As the chosen algorithms suppose that the input is sorted, the lower bound for the time complexity is $\bigO(n\log n)$.
+%Koska valitsemani algoritmit olettavat syötteen olevan järjestetty, alaraja koko ohjelman aikavaativuudelle on $\bigO(n\log n)$.
+%Valitsin \emph{Heapsortin}, joka tunnetusti toimii ajassa $\bigO(n\log n)$.
+%We will sort the input using \emph{Mergesort} that has the time complexity of $\bigO(n\log n)$.
+
+%\emph{Gift-wrapping algorithm} on kiinnostava algoritmi, sillä sen aikavaativuus riippuu syötteen lisäksi myös tulosteesta.
+%Algoritmin aikavaativuus on $\bigO(hn)$ missä $h$ on vertexien määrä.
+%Vertexien määrä voi riippua korkeintaan lineaarisesti syötteen pituudesta, joten algoritmi kuuluu luokkaan $\Theta(n^2)$.
+\emph{Gift-wrapping algorithm} is an output sensitive algorithm.
+Its time complexity depends on its output.
+The time complexity is $\bigO(hn)$ where $h$ is the amount of vertices of the convex hull.
+As the amount of vertices can only depend linearly on the input length, the worst performance is $\Theta(n^2)$.
+
+\emph{Graham scan} has the time complexity of $\bigO(n)$ for ordered input.
+We will sort the input using \emph{Mergesort} that has the time complexity of $\bigO(n\log n)$.
+This brings the total complexity to $\bigO(n\log n)$.
+
+\emph{Quickhull} has the average case complexity of $\bigO(n\log n)$ but it can degenerate to $\bigO(n^2)$ in the worst case.
+
+Space complexity is in every case $\bigO(1)$.
+
+
+\pagebreak
+
+
+\begin{thebibliography}{9}
+\bibitem{wiki}
+
+Convex hull algorithms,
+
+Wikipedia, the free encyclopedia
+
+\url{http://en.wikipedia.org/wiki/Convex_hull_algorithms}
+
+
+\end{thebibliography}
+
+\end{document}
