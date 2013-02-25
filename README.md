@@ -4,7 +4,7 @@
 ### Dokumentaatio
 * [Määrittelydokumentti](documentation/definitions.pdf?raw=true)
 * [Testausdokumentti](documentation/testing.pdf?raw=true)
-* [Käyttöohjeet](documentation/using.pdf?raw=true)
+* [Käyttöohjeet](documentation/instruction.pdf?raw=true)
 * [Toteutusdokumentti](documentation/implementation.pdf?raw=true)
 
 ### Viikkoraportit

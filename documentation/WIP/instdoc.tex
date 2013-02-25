@@ -1,0 +1,162 @@
+\documentclass[a4paper,12pt,leqno,titlepage]{article}
+\usepackage{hyperref} %linkitys
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{moreverb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[english]{babel}
+%\usepackage[finnish]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{amssymb}
+\newcommand{\R}{\mathbb{R}} %lukujoukkosymbolit
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\logM}{\mathcal{M}}
+\newcommand{\bigO}{\mathcal{O}}
+\setlength{\parindent}{0pt} %kappalejakoa
+\setlength{\parskip}{2ex}
+\newcommand{\compcent}[1]{\vcenter{\hbox{$#1\circ$}}}
+\newcommand{\comp}{\mathbin{\mathchoice
+{\compcent\scriptstyle}{\compcent\scriptstyle}
+{\compcent\scriptscriptstyle}{\compcent\scriptscriptstyle}}}
+
+%\hyphenpenalty=750
+%\setlength{\emergencystretch}{1.5 em} % Tavutusasetukset suomen kielelle
+
+\hypersetup{
+pdfborder = {0 0 0 0}, %linkkien värejä etc kikkailua
+colorlinks = true,
+linkcolor = black,
+urlcolor = blue,
+citecolor = red,
+}
+
+
+\usepackage{lastpage} %sivumäärä alaviitteeseen
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\cfoot{Page \thepage/\pageref{LastPage}} % \\ Opiskelijanumero 013126382}
+
+
+\begin{document}
+\begin{titlepage}
+\title{Data structures project, \\
+Instructions manual}
+\author{Heikki Haapala and Aleksi Markkanen\\
+Student numbers 014090190 and 013126382\\
+\pageref{LastPage} pages}
+\date{\today}
+\end{titlepage}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+
+
+
+\begin{comment}
+Käyttöohje
+Miten ohjelma suoritetaan, miten eri toiminnallisuuksia käytetään
+Minkä muotoisia syötteitä ohjelma hyväksyy
+Missä kansiossa on jar ja ajamiseen tarvittavat testitiedostot.
+\end{comment}
+
+\section{Running the program}
+The program requires Java Runtime Environment version 7.
+
+The packaged program \texttt{ConvexHull.jar} can be found in the project subfolder \texttt{jar}.
+The program can be run on command line by typing (in the jar folder):
+
+\texttt{java -jar ConvexHull.jar}
+
+The program asks all required arguments which can be typed in the command line.
+
+The program can also be run by adding the arguments after the main command:
+
+\texttt{java -jar ConvexHull.jar arg1 arg2 arg3 ...}
+
+Basic test material can be found in the project subfolder \texttt{testmaterial}.
+
+\pagebreak
+\section{Arguments}
+The program accepts the arguments in the following order:
+\begin{enumerate}
+\item input filename
+
+The location of the input file. Accepts points file formatted with one point per line, x-coordinate first followed by whitespace and y-coordinate, for example \emph{Octave} output.
+
+\item \texttt{at} or \texttt{noat}
+
+Chooser for Akl-Toussaint heuristic. \texttt{at} to use and \texttt{noat} to not use the heuristic.
+
+\item integer
+
+The number of iterations to run the main algorithm for (not Akl-Toussaint).
+
+\item \texttt{gift}, \texttt{quick} or \texttt{graham}
+
+Chooser for the main algorithm.
+\texttt{gift} to use Gift wrapping algorithm,
+\texttt{quick} to use QuickHull algorithm or
+\texttt{graham} to use Graham scan algorithm.
+
+\item output filename or \texttt{print}
+
+The location of the output file, will be overwritten or \texttt{print} to print hull points to console.
+
+\item \texttt{yes} or \texttt{no}
+
+\texttt{yes} to draw with black background. \texttt{no} to draw with white background.
+
+\item \texttt{draw} or \texttt{nodraw}
+
+\texttt{draw} to show graphical output of the points. \texttt{nodraw} to skip graphical output.
+\end{enumerate}
+
+\pagebreak
+%\section{Ohjelman toiminnan empiirisen testauksen tulosten esittäminen graafisessa muodossa}
+\section{Example run}
+\begin{verbatim}
+user@localhost:~/jar$ java -jar ConvexHull.jar
+../testmaterial/test100 at 100 quick print yes nodraw
+
+Points read from file: ../testmaterial/test100
+Input: a list of 100 points.
+
+
+Using Akl-Toussaint heuristic.
+7
+Akl-Toussaint heuristic removed 89 nodes.
+Akl-Toussaint heuristic ran in 1ms.
+
+Using QuickHull algorithm.
+
+100 iterations.
+Total run time: 11.0 ms.
+Average run time: 0.11 ms.
+Output: a list of 11 points.
+
+Printing hull points to console (x y).
+-1.187863496743761 2.295679969813418
+-0.4306985997200181 2.141215375336973
+0.6889983525066655 1.605248823316989
+1.856457253218937 0.8404406772993155
+2.050621638328523 0.508194457316787
+2.638621913585121 -1.575950443795056
+0.4117650626370341 -2.869145785655391
+-1.000108998272335 -1.972846564433562
+-1.612219329446485 -1.527331902358966
+-2.014959422427117 -1.226536673500165
+-2.278175791373962 1.894395038709398
+
+Drawing with awesome colours!
+
+Not drawing points on screen.
+\end{verbatim}
+
+\end{document}
