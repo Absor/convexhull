@@ -82,41 +82,48 @@ Testing was conducted with and without the \emph{Akl-Toussaint heuristic}.
 
 We also implemented a simple iteration functionality to the program and this allowed us to capture average running times.
 This eliminates interferance from other running processes.
-\texttt{octave}
-
-\begin{verbatim}
-public void foo(int bar) {
-
-
-}
-
-\end{verbatim}
-
-\pagebreak
-\section{Running the Tests}
 
 \pagebreak
 %\section{Ohjelman toiminnan empiirisen testauksen tulosten esittäminen graafisessa muodossa}
 \section{Graphical Presentation of the Results of the Empirical Testing of the Correctness of the Program}
+In the following pictures the base point set are be coloured in green if Akl-Toussaint was used and red otherwise.
+Points left after Akl-Toussaint heuristic are coloured in red.
+Points of the convex hull are coloured in blue with blue lines connecting them.
+
 \begin{figure}[h!]
-\caption{A picture of a gull.} %convex hull}
+\caption{A basic test with 10000 points, Gift wrapping and Akl-Toussaint heuristic used.} %convex hull}
 \centering
-\includegraphics[width=\textwidth]{gull.png}
+\includegraphics[width=\textwidth]{test10000.png}
 \end{figure}
 
 \pagebreak
 
+\begin{figure}[t!]
+\caption{Gift wrapping used on a set of 10000 collinear points, all points included in hull.} %convex hull}
+\label{fig:colli1}
+\centering
+\includegraphics[width=.6\textwidth]{line10000.png}
+\end{figure}
 
-\begin{thebibliography}{9}
-\bibitem{wiki}
+\begin{figure}[t!]
+\caption{QuickHull used on the same set of 10000 collinear points, only end points included in hull.} %convex hull}
+\label{fig:colli2}
+\centering
+\includegraphics[width=.6\textwidth]{line10000-2.png}
+\end{figure}
 
-Convex hull algorithms,
+\clearpage
+\pagebreak
 
-Wikipedia, the free encyclopedia
+As seen from figures (\ref{fig:colli1}) and (\ref{fig:colli2}) we allowed differences in output with collinear point sets. Only condition was that the algorithm had to include both end points of the set.
 
-\url{http://en.wikipedia.org/wiki/Convex_hull_algorithms}
+\begin{figure}[h!]
+\caption{A test with 100000 points in a circle, all points included in the hull.} %convex hull}
+\label{fig:circle}
+\centering
+\includegraphics[width=\textwidth]{circle100000.png}
+\end{figure}
 
-
-\end{thebibliography}
+We also tested algorithm performance with worst case scenarios like seen in figure (\ref{fig:circle}).
 
 \end{document}
